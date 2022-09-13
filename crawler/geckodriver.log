@@ -1,0 +1,152 @@
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/libreoffice/help /usr/share/libreoffice/help none bind,ro 0 0): cannot create directory "/usr/share/libreoffice/help": permission denied
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/xubuntu-docs /usr/share/xubuntu-docs none bind,ro 0 0): cannot open directory "/var/lib": permission denied
+1663036571258	geckodriver	INFO	Listening on 127.0.0.1:37055
+1663036571642	mozrunner::runner	INFO	Running command: "/snap/firefox/current/firefox.launcher" "--marionette" "--remote-debugging-port" "56519" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilevug7Wz"
+Gtk-Message: 23:36:11.692: Failed to load module "canberra-gtk-module"
+Gtk-Message: 23:36:11.693: Failed to load module "canberra-gtk-module"
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1663036572090	Marionette	INFO	Marionette enabled
+1663036572093	Marionette	INFO	Listening on port 41905
+WebDriver BiDi listening on ws://localhost:56519
+ATTENTION: default value of option mesa_glthread overridden by environment.
+Read port: 41905
+1663036572197	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilevug7Wz/search.json.mozlz4", (void 0)))
+Missing chrome or resource URL: resource://gre/modules/UpdateListener.sys.mjs
+DevTools listening on ws://localhost:56519/devtools/browser/67894b4f-4fa3-4a91-8b26-22425ba7ce37
+Missing chrome or resource URL: resource://gre/modules/UpdateListener.sys.mjs
+console.error: "Error during quit-application-granted: [Exception... \"File error: Not found\"  nsresult: \"0x80520012 (NS_ERROR_FILE_NOT_FOUND)\"  location: \"JS frame :: resource:///modules/BrowserGlue.jsm :: _onQuitApplicationGranted/tasks< :: line 2013\"  data: no]"
+1663036663605	Marionette	INFO	Stopped listening on port 41905
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+Sandbox: Unexpected EOF, op 0 flags 00 path /proc/cpuinfo
+1663036667344	geckodriver	INFO	Listening on 127.0.0.1:57051
+1663036667839	mozrunner::runner	INFO	Running command: "/snap/firefox/current/firefox.launcher" "--marionette" "--remote-debugging-port" "55679" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileKEikPt"
+Gtk-Message: 23:37:47.887: Failed to load module "canberra-gtk-module"
+Gtk-Message: 23:37:47.888: Failed to load module "canberra-gtk-module"
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1663036668262	Marionette	INFO	Marionette enabled
+1663036668264	Marionette	INFO	Listening on port 38547
+WebDriver BiDi listening on ws://localhost:55679
+ATTENTION: default value of option mesa_glthread overridden by environment.
+Read port: 38547
+1663036668384	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileKEikPt/search.json.mozlz4", (void 0)))
+Missing chrome or resource URL: resource://gre/modules/UpdateListener.sys.mjs
+DevTools listening on ws://localhost:55679/devtools/browser/4b2eb494-f8f2-4b06-bc15-aeabfb8eed49
+JavaScript warning: https://www.mykhel.com/common/build/js/jquery-1.9.2.min.js?v=1.0.257, line 2: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+JavaScript warning: https://pagead2.googlesyndication.com/bg/JI0Pcydj_YJwFyiv8pAtPmsHnnPx6gDBxLt0n0XpIm8.js line 2 > eval line 7364 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://pagead2.googlesyndication.com/bg/JI0Pcydj_YJwFyiv8pAtPmsHnnPx6gDBxLt0n0XpIm8.js line 2 > eval line 7531 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://pagead2.googlesyndication.com/bg/JI0Pcydj_YJwFyiv8pAtPmsHnnPx6gDBxLt0n0XpIm8.js line 2 > eval line 6138 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript warning: https://pagead2.googlesyndication.com/bg/JI0Pcydj_YJwFyiv8pAtPmsHnnPx6gDBxLt0n0XpIm8.js line 2 > eval line 7265 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript warning: https://pagead2.googlesyndication.com/bg/JI0Pcydj_YJwFyiv8pAtPmsHnnPx6gDBxLt0n0XpIm8.js line 2 > eval line 1231 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript warning: https://pagead2.googlesyndication.com/bg/JI0Pcydj_YJwFyiv8pAtPmsHnnPx6gDBxLt0n0XpIm8.js line 2 > eval line 657 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript warning: https://pix.adrta.com/cdnf.js?v=22.110, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+Missing chrome or resource URL: resource://gre/modules/UpdateListener.sys.mjs
+console.error: "Error during quit-application-granted: [Exception... \"File error: Not found\"  nsresult: \"0x80520012 (NS_ERROR_FILE_NOT_FOUND)\"  location: \"JS frame :: resource:///modules/BrowserGlue.jsm :: _onQuitApplicationGranted/tasks< :: line 2013\"  data: no]"
+1663036864086	Marionette	INFO	Stopped listening on port 38547
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+1663036866848	geckodriver	INFO	Listening on 127.0.0.1:34723
+1663036867339	mozrunner::runner	INFO	Running command: "/snap/firefox/current/firefox.launcher" "--marionette" "--remote-debugging-port" "47171" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilep0RScK"
+Gtk-Message: 23:41:07.387: Failed to load module "canberra-gtk-module"
+Gtk-Message: 23:41:07.388: Failed to load module "canberra-gtk-module"
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1663036867770	Marionette	INFO	Marionette enabled
+1663036867773	Marionette	INFO	Listening on port 42851
+WebDriver BiDi listening on ws://localhost:47171
+ATTENTION: default value of option mesa_glthread overridden by environment.
+Read port: 42851
+1663036867906	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilep0RScK/search.json.mozlz4", (void 0)))
+Missing chrome or resource URL: resource://gre/modules/UpdateListener.sys.mjs
+DevTools listening on ws://localhost:47171/devtools/browser/199077f5-8d7b-4cf1-8b30-55764c783aec
+JavaScript warning: https://www.mykhel.com/common/build/js/jquery-1.9.2.min.js?v=1.0.257, line 2: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+JavaScript warning: https://pagead2.googlesyndication.com/bg/JI0Pcydj_YJwFyiv8pAtPmsHnnPx6gDBxLt0n0XpIm8.js line 2 > eval line 5606 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://pagead2.googlesyndication.com/bg/JI0Pcydj_YJwFyiv8pAtPmsHnnPx6gDBxLt0n0XpIm8.js line 2 > eval line 4201 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: uncaught exception: 7
+JavaScript warning: https://pagead2.googlesyndication.com/bg/JI0Pcydj_YJwFyiv8pAtPmsHnnPx6gDBxLt0n0XpIm8.js line 2 > eval line 6486 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript warning: https://pagead2.googlesyndication.com/bg/JI0Pcydj_YJwFyiv8pAtPmsHnnPx6gDBxLt0n0XpIm8.js line 2 > eval line 3916 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+Missing chrome or resource URL: resource://gre/modules/UpdateListener.sys.mjs
+console.error: "Error during quit-application-granted: [Exception... \"File error: Not found\"  nsresult: \"0x80520012 (NS_ERROR_FILE_NOT_FOUND)\"  location: \"JS frame :: resource:///modules/BrowserGlue.jsm :: _onQuitApplicationGranted/tasks< :: line 2013\"  data: no]"
+1663036934797	Marionette	INFO	Stopped listening on port 42851
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+Sandbox: Unexpected EOF, op 0 flags 00 path /proc/cpuinfo
+1663037340381	geckodriver	INFO	Listening on 127.0.0.1:36449
+1663037340879	mozrunner::runner	INFO	Running command: "/snap/firefox/current/firefox.launcher" "--marionette" "--remote-debugging-port" "36909" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileMisakd"
+Gtk-Message: 23:49:00.926: Failed to load module "canberra-gtk-module"
+Gtk-Message: 23:49:00.927: Failed to load module "canberra-gtk-module"
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1663037341305	Marionette	INFO	Marionette enabled
+1663037341308	Marionette	INFO	Listening on port 38441
+WebDriver BiDi listening on ws://localhost:36909
+ATTENTION: default value of option mesa_glthread overridden by environment.
+Read port: 38441
+1663037341423	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileMisakd/search.json.mozlz4", (void 0)))
+Missing chrome or resource URL: resource://gre/modules/UpdateListener.sys.mjs
+DevTools listening on ws://localhost:36909/devtools/browser/27ff983f-a2f6-4fac-bae3-33ef79b06e67
+JavaScript warning: https://www.mykhel.com/common/build/js/jquery-1.9.2.min.js?v=1.0.257, line 2: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+JavaScript warning: https://pagead2.googlesyndication.com/bg/JI0Pcydj_YJwFyiv8pAtPmsHnnPx6gDBxLt0n0XpIm8.js line 2 > eval line 1992 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://pagead2.googlesyndication.com/bg/JI0Pcydj_YJwFyiv8pAtPmsHnnPx6gDBxLt0n0XpIm8.js line 2 > eval line 4214 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://pagead2.googlesyndication.com/bg/JI0Pcydj_YJwFyiv8pAtPmsHnnPx6gDBxLt0n0XpIm8.js line 2 > eval line 4743 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: uncaught exception: 7
+JavaScript warning: https://pagead2.googlesyndication.com/bg/JI0Pcydj_YJwFyiv8pAtPmsHnnPx6gDBxLt0n0XpIm8.js line 2 > eval line 2774 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript warning: https://pagead2.googlesyndication.com/bg/JI0Pcydj_YJwFyiv8pAtPmsHnnPx6gDBxLt0n0XpIm8.js line 2 > eval line 5310 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript warning: https://pagead2.googlesyndication.com/bg/JI0Pcydj_YJwFyiv8pAtPmsHnnPx6gDBxLt0n0XpIm8.js line 2 > eval line 6982 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript warning: https://pagead2.googlesyndication.com/bg/JI0Pcydj_YJwFyiv8pAtPmsHnnPx6gDBxLt0n0XpIm8.js line 2 > eval line 2128 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript warning: https://pagead2.googlesyndication.com/bg/JI0Pcydj_YJwFyiv8pAtPmsHnnPx6gDBxLt0n0XpIm8.js line 2 > eval line 3937 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript warning: https://pagead2.googlesyndication.com/bg/JI0Pcydj_YJwFyiv8pAtPmsHnnPx6gDBxLt0n0XpIm8.js line 2 > eval line 2948 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+Missing chrome or resource URL: resource://gre/modules/UpdateListener.sys.mjs
+console.error: "Error during quit-application-granted: [Exception... \"File error: Not found\"  nsresult: \"0x80520012 (NS_ERROR_FILE_NOT_FOUND)\"  location: \"JS frame :: resource:///modules/BrowserGlue.jsm :: _onQuitApplicationGranted/tasks< :: line 2013\"  data: no]"
+1663037504157	Marionette	INFO	Stopped listening on port 38441
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+1663037505378	geckodriver	INFO	Listening on 127.0.0.1:55263
+1663037505867	mozrunner::runner	INFO	Running command: "/snap/firefox/current/firefox.launcher" "--marionette" "--remote-debugging-port" "33675" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileu633NZ"
+Gtk-Message: 23:51:45.915: Failed to load module "canberra-gtk-module"
+Gtk-Message: 23:51:45.915: Failed to load module "canberra-gtk-module"
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1663037506290	Marionette	INFO	Marionette enabled
+1663037506292	Marionette	INFO	Listening on port 33601
+WebDriver BiDi listening on ws://localhost:33675
+ATTENTION: default value of option mesa_glthread overridden by environment.
+Read port: 33601
+1663037506450	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileu633NZ/search.json.mozlz4", (void 0)))
+Missing chrome or resource URL: resource://gre/modules/UpdateListener.sys.mjs
+DevTools listening on ws://localhost:33675/devtools/browser/eb6c6bc2-395f-4ab9-a851-95f2aad99b10
+JavaScript warning: https://www.mykhel.com/common/build/js/jquery-1.9.2.min.js?v=1.0.257, line 2: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+JavaScript warning: https://pagead2.googlesyndication.com/bg/JI0Pcydj_YJwFyiv8pAtPmsHnnPx6gDBxLt0n0XpIm8.js line 2 > eval line 1549 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://pix.adrta.com/cdnf.js?v=22.110, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://pagead2.googlesyndication.com/bg/JI0Pcydj_YJwFyiv8pAtPmsHnnPx6gDBxLt0n0XpIm8.js line 2 > eval line 7117 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: uncaught exception: 7
+JavaScript warning: https://pagead2.googlesyndication.com/bg/JI0Pcydj_YJwFyiv8pAtPmsHnnPx6gDBxLt0n0XpIm8.js line 2 > eval line 5664 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript warning: https://pagead2.googlesyndication.com/bg/JI0Pcydj_YJwFyiv8pAtPmsHnnPx6gDBxLt0n0XpIm8.js line 2 > eval line 6847 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+Missing chrome or resource URL: resource://gre/modules/UpdateListener.sys.mjs
+console.error: "Error during quit-application-granted: [Exception... \"File error: Not found\"  nsresult: \"0x80520012 (NS_ERROR_FILE_NOT_FOUND)\"  location: \"JS frame :: resource:///modules/BrowserGlue.jsm :: _onQuitApplicationGranted/tasks< :: line 2013\"  data: no]"
+1663037546786	Marionette	INFO	Stopped listening on port 33601
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+Sandbox: Unexpected EOF, op 0 flags 00 path /proc/cpuinfo
