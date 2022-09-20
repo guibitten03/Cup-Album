@@ -19,3 +19,4 @@ def Collector(Entity):
         sb.append(f"\n\tCount_packages: {self.__name}")
         sb.Append(f"\n\tNot stickeds: {self.__not_stickeds}")
         sb.append(f"\n\tAlbum: {self.__album}")
+        return sb
