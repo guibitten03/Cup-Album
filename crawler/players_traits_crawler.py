@@ -63,11 +63,6 @@ class PlayersCrawler:
 		
 		player_info['title'] = team_title
 		player_info['name'] = player_details.find("div", {"class" : "os-profile-name"}).text
-		
-		player_informations = player_details.find("ul", {"class" : "clearfix"}).find_all("li")
-		player_informations = []
-
-
 
 
 if __name__ == "__main__":
