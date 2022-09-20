@@ -23,6 +23,8 @@ class Transactions():
 
         s.set_stock = s.set_stock - quantidade 
 
+        return f"Compra tealizada com sucesso"
+
     def trade(Collector, Collector, ):
 
 
