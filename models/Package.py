@@ -9,4 +9,7 @@ class Package(Entity):
 
 
     def open(self) -> list:
+        # Sortear stickers
         return self.stickers
+
+    def random_stickers(self) -> None:
