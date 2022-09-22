@@ -1,22 +1,55 @@
-from utilities import StringBuilder
+# from utilities import StringBuilder
+from importlib.resources import Package
+from Entity import Entity
 
-def Collector(Entity):
 
-    def __init__(self):
-        super.__init__()
-        self.__name = ""
-        self.__album = Album()
-        self.__count_packages = 0
-        self.__not_stickeds = list()
-        self.__money = 0.0
+class Collector(Entity):
+
+    idClass=0
+
+    def __init__(self, name, money):
+        self.id = Collector.idClass
+        Collector.idClass += 1
+        self.name = name
+        # self.album = Album()
+        self.count_packages = 0
+        self.not_stickeds = list()
+        self.money = money
+    
+    def openPackages(self,n : int):
+        self.not_stickeds += Package().open()
+
+    def insert(c):
+        f = open("collector.txt","a")
+        f.write("{},{},{},{},{}".format(
+            c.id,c.name,c.money,c.count_packages,c.not_stickeds))
+        f.close()
+    def remove(c):
+        
+
+
+    def get_id(self):
+        return self.id
+    def get_name(self):
+        return self.name
+    def get_money(self):
+        return self.money
+    def get_count_packages(self):
+        return self.count_packages
+    def get_not_stickeds(self):
+        return self.not_stickeds
+    
+    def set_name(self,name : str):
+        self.name = name
+    def set_money(self,money : float):
+        self.money = money
+    def set_count_packages(self,count_packages : int):
+        self.count_packages = count_packages
+    def set_not_stickeds(self,not_stickeds : list):
+        self.not_stickeds = not_stickeds
+
+
     
     def __str__(self):
-        sb = StringBuilder()
-        sb.append("{")
-        sb.append(f"\n\tId: {self.id}")
-        sb.append(f"\n\tNome: {self.__name}")
-        sb.append(f"\n\tMoney: {self.__money}")
-        sb.append(f"\n\tCount_packages: {self.__name}")
-        sb.Append(f"\n\tNot stickeds: {self.__not_stickeds}")
-        sb.append(f"\n\tAlbum: {self.__album}")
-        return sb
+        return "Id: {},Name: {},Money: {},Packages: {},Not stickseds: {}".format(
+            self.id,self.name,self.money,self.count_packages,self.not_stickeds)
