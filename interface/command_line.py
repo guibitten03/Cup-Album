@@ -42,7 +42,7 @@ class command_lines():
     @staticmethod
     def home():
         
-        options = ['collector', 'sticker aubum', 'stikers', 'exit']
+        options = ['collector', 'sticker album', 'stikers', 'exit']
         LOOP = True
 
         while(LOOP):
@@ -56,7 +56,7 @@ class command_lines():
 
             elif user_choice == 1:
                 command_lines.__clear()
-                command_lines.Sticker_aubum()
+                command_lines.Sticker_album()
 
             elif user_choice == 2:
                 command_lines.__clear()
@@ -99,13 +99,13 @@ class command_lines():
 
 
     @staticmethod
-    def Sticker_aubum():
+    def Sticker_album():
         options = []
         LOOP = True
 
         while LOOP:
             command_lines.__clear()
-            command_lines.__message('sticker aubum')
+            command_lines.__message('sticker album')
             command_lines.__click_to_exit()
             LOOP = False
 
