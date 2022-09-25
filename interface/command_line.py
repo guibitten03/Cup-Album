@@ -8,7 +8,14 @@ except ImportError as impErr:
     print("Use: pip install simple_term_menu")
     exit(1)
 
-import pyfiglet
+try:
+    import pyfiglet  ######
+except ImportError as impErr:
+    print(f"[Error]: Failed to import --> {impErr.args[0]}.")
+    print("Use: pip install pyfiglet")
+    exit(1)
+
+
 
 class command_lines():
 
