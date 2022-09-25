@@ -80,8 +80,9 @@ class command_lines():
                 LOOP = False
             
             elif user_choise == options_add:
-                # cria e salva um collector
-                print('aqui')
+                command_lines.__clear()
+                command_lines.__message('Create collector')
+                #cria colecionador 
                 command_lines.__click_to_exit()        
 
             ## Função q seleciona um collector atraves do nome
@@ -110,7 +111,6 @@ class command_lines():
                 print(options[user_choise])
                 command_lines.__click_to_exit()
 
-
     @staticmethod
     def Stikers():
         options = ['view', 'ADD sticker', 'Delete', 'Exit']
@@ -131,15 +131,16 @@ class command_lines():
                 command_lines.__click_to_exit()
 
             elif user_choise == 1: 
-                #add sticker
-                print('add sticker')
+                command_lines.__clear()
+                command_lines.__message('Create stiker')
+                #cria stiker
                 command_lines.__click_to_exit()
             
             elif user_choise == 0:
                 #view novo menu
                 print('view novo menu')
                 command_lines.__click_to_exit()
-            
-            
+
+
 
 command_lines.home()
