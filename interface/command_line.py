@@ -51,19 +51,15 @@ class command_lines():
             user_choice = command_lines.__choice(options, title = 'choose one option')
 
             if user_choice == 0:
-                command_lines.__clear()
                 command_lines.Collector()
 
             elif user_choice == 1:
-                command_lines.__clear()
                 command_lines.Sticker_album()
 
             elif user_choice == 2:
-                command_lines.__clear()
                 command_lines.Stikers()
 
             elif user_choice == 3:
-                command_lines.__clear()
                 LOOP = False
     
     @staticmethod
@@ -73,14 +69,10 @@ class command_lines():
         options_exit = len(options)-1
         options_add = options_exit -1
         LOOP = True
-
-        #command_lines.__clear() ##teste
-        #command_lines.__message('Collector') ##teste
-
         
         while LOOP:
-            command_lines.__clear()  #teste
-            command_lines.__message('Collector') #teste
+            command_lines.__clear()  
+            command_lines.__message('Collector') 
 
             user_choise = command_lines.__choice(options, title='choose a collector')    
             
@@ -97,27 +89,57 @@ class command_lines():
                 print(options[user_choise])
                 command_lines.__click_to_exit() 
 
-
     @staticmethod
     def Sticker_album():
-        options = []
+        #uma opção para cada colecionador na permenencia, colocar um atributo com o nome de cada colecionador
+        options = ['colecionador1','colecionador2','colecionador3','Exit']
+        options_exit = len(options)-1
         LOOP = True
 
         while LOOP:
             command_lines.__clear()
             command_lines.__message('sticker album')
-            command_lines.__click_to_exit()
-            LOOP = False
+
+            user_choise = command_lines.__choice(options)
+
+            if user_choise == options_exit:
+                LOOP = False
+
+            else:
+                #new page
+                print(options[user_choise])
+                command_lines.__click_to_exit()
+
 
     @staticmethod
     def Stikers():
-        options = []
+        options = ['view', 'ADD sticker', 'Delete', 'Exit']
         LOOP = True
 
         while LOOP:
             command_lines.__clear()
             command_lines.__message('stikers')
-            command_lines.__click_to_exit()
-            LOOP = False
+
+            user_choise = command_lines.__choice(options)
+
+            if user_choise == 3: 
+                LOOP = False
+
+            elif user_choise == 2:
+                #deletar
+                print('deletar')
+                command_lines.__click_to_exit()
+
+            elif user_choise == 1: 
+                #add sticker
+                print('add sticker')
+                command_lines.__click_to_exit()
+            
+            elif user_choise == 0:
+                #view novo menu
+                print('view novo menu')
+                command_lines.__click_to_exit()
+            
+            
 
 command_lines.home()
