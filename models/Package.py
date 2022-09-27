@@ -1,4 +1,4 @@
-from xml.dom.minidom import Entity
+from Entity import Entity
 
 class Package(Entity):
     def __init__(self) -> None:
@@ -13,3 +13,4 @@ class Package(Entity):
         return self.stickers
 
     def random_stickers(self) -> None:
+        pass

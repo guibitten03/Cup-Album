@@ -29,8 +29,9 @@ class Entity(ABC):
 
 	@abstractmethod
 	def __init__(self, t: Type) -> None:
-		self.id = Entity.id_per_type[t]
-		Entity.id_per_type[t] = Entity.id_per_type[t] + 1
+		# self.id = Entity.id_per_type[t]
+		self.id = 0
+		# Entity.id_per_type[t] = Entity.id_per_type[t] + 1
 
 	@abstractmethod
 	def __str__() -> str:

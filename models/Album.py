@@ -1,4 +1,4 @@
-from xml.dom.minidom import Entity
+from Entity import Entity
 from Sticker import *
 
 
@@ -9,20 +9,40 @@ class Album(Entity):
 
         self.album = {}
         self.album_size = 0
+        self.positions_label = ['Goalkeeper', 'Defender', 'Midfielder', 'Foward']
+        self.max_size_positions_allowed = [1, 4, 3, 3]
+        self.positions = self.define_default_positions()
+
+
+    def define_default_positions(self):
+        positions = {}
+
+        max_allowed = 0
+        for position in self.positions_label:
+            positions[position] = 0, self.max_size_positions_allowed[max_allowed]
+            max_allowed += 1 
+            
+        return positions
 
 
     def stick(self, sticker) -> None:
-        if not self.album[sticker.team]:
-            self.album[sticker.team] = [sticker]
 
+        if not self.album[sticker.team]:
+            self.album[sticker.team] = [self.positions.copy(), sticker]
         else:
+            if self.album[sticker.team][0][sticker.position][0] > self.album[sticker.team][0][sticker.position][1]:
+                return f"Maximun of {sticker.position}s are achieved" 
+
             self.album[sticker.team].append(sticker)
+            self.album[sticker.team][0][sticker.position][0] += 1
 
         self.album_size += 1
 
+
     def get_album(self): return self.album
     def get_album_size(self): return self.album_size
-    
+
+
     def set_album(self, album): self.album = album
     def set_album_size(self, size): self.album_size = size
 
@@ -32,8 +52,8 @@ class Album(Entity):
 # 1 - Olhar album\n
 # 2 - Album está completo?'''))
 
-#         while True:
-#             match:
+#         while True: 
+#             match(input):
 #                 case 0:
 #                     break
 #                 case 1:
@@ -44,10 +64,13 @@ class Album(Entity):
 #                             for players in self.album[team]:
 #                                 print("{}: {}".format(self.album[team]))
 
-    def __str__(self) -> str:
-        return "{} stickers are in album\n".format(self.album_size) 
-    
+    def __str__(self):
+        album = Album()
+        print(album.album_size)
     
 if __name__ == "__main__":
     album = Album()
-    print(album.album_size)
+    sti = Sticker('Gui', 3, 'Brazil', 171, 65, 'Foward')
+    
+    album.stick(sti)
+    print(album.album)
