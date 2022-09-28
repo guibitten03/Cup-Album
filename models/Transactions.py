@@ -5,6 +5,8 @@ class Transactions():
 
     def __init__(self, price: float) -> None:
         self.__price__ = price
+        #troca dois colecionadores 
+        #
 
     def set_price(self, price: float) -> None:
         self.__price__ = price
@@ -23,8 +25,8 @@ class Transactions():
         s.set_stock(s.get_stock() - quantidade )
 
         return f"Compra realizada com sucesso"
-
-    def trade(c1: Collector, c2: Collector, s_id_1_to_2: int, s_id_2_to_1: int) -> str:
+#separar metodos
+    def trade(c1: Pessoa, s_id_1: int, s_id_2: int) -> str:
         
         if c1.stiker_in_not_stickeds(s_id_1_to_2) == 0 or c2.stiker_in_not_stickeds(s_id_2_to_1):
             return "Não foi possivel realizar a troca"

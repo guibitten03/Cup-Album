@@ -1,8 +1,7 @@
-from asyncio.windows_events import NULL
 from Pessoa import Pessoa
 from persistence import Persistence
 
-class Collectors(Persistence):
+class CollectorPersistence(Persistence):
 
     def __init__(self) -> None:
         self.collectors = [] #Lista de pessoas
@@ -13,10 +12,11 @@ class Collectors(Persistence):
     def delete(self, p : Pessoa) -> None:
         self.collectors.remove(p)
     
-    def modify(self,id : int,pes : Pessoa) -> None:
+    def modify(self,id : int, name : str= "", money : float= -1) -> None:
         for i,p in enumerate(self.collectors):
             if p.id == id:
-              self.collectors[i] = pes  
+                p.name = name if name >= 0 else p.name 
+                p.money = money if money >= 0 else p.money 
 
     def search_by_id(self, id : int) -> Pessoa:
         

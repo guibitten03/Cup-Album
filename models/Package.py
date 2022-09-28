@@ -12,4 +12,4 @@ class Package(Entity):
         # Sortear stickers
         return self.stickers
 
-    def random_stickers(self) -> None:
+    def random_stickers(self) -> None: pass

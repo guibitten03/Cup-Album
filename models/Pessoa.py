@@ -3,14 +3,12 @@ from importlib.resources import Package
 from Entity import Entity
 
 
-class Pessoa(Entity):
+class Collector(Entity):
 
-    idClass=0
-
-
+#album ter um colecionador
+#
     def __init__(self, name, money):
-        self.id = Pessoa.idClass
-        Pessoa.idClass += 1
+        super.__init__(Pessoa)
         self.name = name
         # self.album = Album()
         self.count_packages = 0
@@ -19,9 +17,6 @@ class Pessoa(Entity):
     
     def openPackages(self,n : int):
         self.not_stickeds += Package().open()
-
-      
-
 
     def get_id(self):
         return self.id
@@ -44,7 +39,6 @@ class Pessoa(Entity):
         self.not_stickeds = not_stickeds
 
 
-    
     def __str__(self):
         return "Id: {},Name: {},Money: {},Packages: {},Not stickseds: {}".format(
             self.id,self.name,self.money,self.count_packages,self.not_stickeds)
