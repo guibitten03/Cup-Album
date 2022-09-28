@@ -3,13 +3,14 @@ from importlib.resources import Package
 from Entity import Entity
 
 
-class Collector(Entity):
+class Pessoa(Entity):
 
     idClass=0
 
+
     def __init__(self, name, money):
-        self.id = Collector.idClass
-        Collector.idClass += 1
+        self.id = Pessoa.idClass
+        Pessoa.idClass += 1
         self.name = name
         # self.album = Album()
         self.count_packages = 0
@@ -19,13 +20,7 @@ class Collector(Entity):
     def openPackages(self,n : int):
         self.not_stickeds += Package().open()
 
-    def insert(c):
-        f = open("collector.txt","a")
-        f.write("{},{},{},{},{}".format(
-            c.id,c.name,c.money,c.count_packages,c.not_stickeds))
-        f.close()
-    def remove(c):
-        
+      
 
 
     def get_id(self):

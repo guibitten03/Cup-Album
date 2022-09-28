@@ -1,5 +1,5 @@
 from Shop import Shop
-from Collector import Collector
+from models.Pessoa import Collector
 
 class Transactions():
 
