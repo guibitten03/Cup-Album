@@ -7,7 +7,6 @@ class Sticker(Entity):
 
     def __init__(self, name, birth_date, team, height, weight, position) -> None:
         super().__init__()
-
         self.name: str = name
         birth_date: datetime = birth_date
         team: str = team
