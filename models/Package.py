@@ -1,8 +1,8 @@
-from xml.dom.minidom import Entity
+from Entity import Entity
 
 class Package(Entity):
     def __init__(self) -> None:
-        super().__init__()
+        super().__init__(Package)
 
         self.stickers = []
         self.nb_stickers = 5
