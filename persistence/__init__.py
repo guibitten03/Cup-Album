@@ -1,3 +1,4 @@
-from persistence.Persistence import IPersistence
-from persistence.Collector_Persistence import CollectorPersistence
-__all__ = [ 'IPersistence','CollectorPersistence',]
+from Persistence import IPersistence
+from Sticker_Persistence import StickerPersistence
+
+__all__ = [ 'IPersistence', 'StickerPersistence', ]

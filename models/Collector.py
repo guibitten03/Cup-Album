@@ -3,8 +3,8 @@ from models.Entity import Entity
 
 class Collector(Entity):
 
-    def __init__(self,name : str, id : int=-1):
-        super().__init__(Collector)
+    def __init__(self,name : str,**kwargs):
+        super().__init__(Collector,**kwargs)
         self.name = name
 
     def get_id(self):

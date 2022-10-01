@@ -49,5 +49,5 @@ class CollectorPersistence(IPersistence):
         with open("collector.txt","w+") as f:
             for line in f:
                 data = line.split(",")
-                c = Collector(data[1],data[0])
+                c = Collector(data[1],id = data[0])
                 CollectorPersistence.insert(c)
