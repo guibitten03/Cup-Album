@@ -1,11 +1,10 @@
 from simple_term_menu import TerminalMenu
-from persistence import *
+#from persistence import *
 from copy import deepcopy
-from models import * 
+#models import * 
 import pyfiglet  
 import os
 
-"""
 #aqui para testes
 class StickerPersistence():
     #pra facilitar no menu deixa esses atributos estaticos 👍
@@ -21,7 +20,10 @@ class StickerPersistence():
 
     def modify(self, team_modify: str = None, position_modify: str = None, name_modify: str = None):
         print("função modify")
-"""
+
+    def search_id(self, id):
+        print("função search")
+        return 1 #retorna o obj ou None se não existir
 
 class command_lines():
 
@@ -96,19 +98,18 @@ class command_lines():
                 LOOP = False
     
     @staticmethod
-    def Stikers(stiker_persistence):
+    def Stikers(stiker_persistence) -> None:
+
         options = ['[1] Insert', 
                    '[2] Remove', 
                    '[3] Modify', 
                    '[4] Search', 
-                   '[5] Exit']
-
-        insert_list_teams = deepcopy(stiker_persistence.teams)
-        insert_list_teams.append("Other")
-
-        stiker_list_position = stiker_persistence.position
+                   '[5] Exit']     
 
         modify_list = ['[1] Team', '[2] Position', '[3] Name', '[4] Exit']
+        stiker_list_position = stiker_persistence.position
+        stiker_list_teams = deepcopy(stiker_persistence.teams)
+        stiker_list_teams.append("Other")
 
         LOOP = True
 
@@ -122,7 +123,7 @@ class command_lines():
                 command_lines.__clear()
                 command_lines.__message('Insert stikers')
 
-                insert_teams = insert_list_teams[command_lines.__choice(insert_list_teams, title = 'Team name:')]
+                insert_teams = stiker_list_teams[command_lines.__choice(stiker_list_teams, title = 'Team name:')]
                 if insert_teams == "Other":
                     insert_teams = command_lines.__get_input('Team name: ')
 
@@ -148,14 +149,19 @@ class command_lines():
                 command_lines.__clear()
                 command_lines.__message('Remove stikers')
 
-                print(f"    Remove ID {remove_id} stiker")
-                if command_lines.__choice(['[1] Remove', '[2] Cancel']) == 0:
-                    stiker_persistence.remove(remove_id)
-                    print("    successful stiker remove")
+                if stiker_persistence.search_id(remove_id) == None:
+                    print(f"There is no sticker with id {remove_id}")
                     command_lines.__click_to_exit()
+
                 else:
-                    print("    sticker not removed")
-                    command_lines.__click_to_exit()
+                    print(f"    Remove ID {remove_id} stiker")
+                    if command_lines.__choice(['[1] Remove', '[2] Cancel']) == 0:
+                        stiker_persistence.remove(remove_id)
+                        print("    successful stiker remove")
+                        command_lines.__click_to_exit()
+                    else:
+                        print("    sticker not removed")
+                        command_lines.__click_to_exit()
 
             elif user_choise == 2: 
                 command_lines.__clear()
@@ -163,73 +169,80 @@ class command_lines():
 
                 modify_id = command_lines.__get_input('stiker id: ', int_type = True)
 
-                modify_loop = True
+                if stiker_persistence.search_id(modify_id) == None:
+                    print(f"There is no sticker with id {modify_id}")
+                    command_lines.__click_to_exit()
 
-                while modify_loop:
-                    command_lines.__clear()
-                    command_lines.__message('Modify stikers')
-                    print(f"Modify ID {modify_id} sticker")
+                else:
+                    modify_loop = True
 
-                    modify_choise = command_lines.__choice(modify_list)
-
-                    if modify_choise == 0:
-                        modify_team = command_lines.__get_input('New team: ')
-
+                    while modify_loop:
                         command_lines.__clear()
                         command_lines.__message('Modify stikers')
-                        print(f"Modify ID {modify_id} sticker\n\n    New team: {modify_team}")
+                        print(f"Modify ID {modify_id} sticker")
 
-                        if command_lines.__choice(["Modify team", 'Cancel']) == 0:
-                            stiker_persistence.modify(team_modify = modify_team) ##função de modify
-                            print("    Team successful modify")
-                            command_lines.__click_to_exit()
-                        else:
-                            print("    Team not modify")
-                            command_lines.__click_to_exit()
+                        modify_choise = command_lines.__choice(modify_list)
 
-                    elif modify_choise == 1:
-                        modify_position = command_lines.__choice(modify_list, title = 'New position: ')
+                        if modify_choise == 0:
+                            modify_team = stiker_list_teams[command_lines.__choice(stiker_list_teams, title = '\nNew team:')]
+                            if modify_team == "Other":
+                                modify_team = command_lines.__get_input('Team name: ')
+                                
+                            command_lines.__clear()
+                            command_lines.__message('Modify stikers')
+                            print(f"Modify ID {modify_id} sticker\n\n    New team: {modify_team}")
 
-                        command_lines.__clear()
-                        command_lines.__message('Modify stikers')
-                        print(f"Modify ID {modify_id} sticker\n\n    New position: {modify_position}")
+                            if command_lines.__choice(["Modify team", 'Cancel']) == 0:
+                                stiker_persistence.modify(team_modify = modify_team) ##função de modify
+                                print("    Team successful modify")
+                                command_lines.__click_to_exit()
+                            else:
+                                print("    Team not modify")
+                                command_lines.__click_to_exit()
 
-                        if command_lines.__choice(["Modify position", 'Cancel']) == 0:
-                            stiker_persistence.modify(position_modify = modify_position) ##função de modify
-                            print("    position successful modify")
-                            command_lines.__click_to_exit()
-                        else:
-                            print("    position not modify")
-                            command_lines.__click_to_exit()
+                        elif modify_choise == 1:
+                            modify_position = command_lines.__choice(stiker_list_position, title = '\nNew position: ')
 
+                            command_lines.__clear()
+                            command_lines.__message('Modify stikers')
+                            print(f"Modify ID {modify_id} sticker\n\n    New position: {modify_position}")
 
-                    elif modify_choise == 2:
-                        modify_name = command_lines.__get_input('New name: ')
+                            if command_lines.__choice(["Modify position", 'Cancel']) == 0:
+                                stiker_persistence.modify(position_modify = modify_position) ##função de modify
+                                print("    position successful modify")
+                                command_lines.__click_to_exit()
+                            else:
+                                print("    position not modify")
+                                command_lines.__click_to_exit()
 
-                        command_lines.__clear()
-                        command_lines.__message('Modify stikers')
-                        print(f"Modify ID {modify_id} sticker\n\n    New name: {modify_name}")
+                        elif modify_choise == 2:
+                            modify_name = command_lines.__get_input('\nNew name: ')
 
-                        if command_lines.__choice(["Modify name", 'Cancel']) == 0:
-                            stiker_persistence.modify(name_modify = modify_name) ##função de modify
-                            print("    name successful modify")
-                            command_lines.__click_to_exit()
-                        else:
-                            print("    name not modify")
-                            command_lines.__click_to_exit()
+                            command_lines.__clear()
+                            command_lines.__message('Modify stikers')
+                            print(f"Modify ID {modify_id} sticker\n\n    New name: {modify_name}")
 
-                    elif modify_choise == 3:
-                        modify_loop = False
-            
+                            if command_lines.__choice(["Modify name", 'Cancel']) == 0:
+                                stiker_persistence.modify(name_modify = modify_name) ##função de modify
+                                print("    name successful modify")
+                                command_lines.__click_to_exit()
+                            else:
+                                print("    name not modify")
+                                command_lines.__click_to_exit()
+
+                        elif modify_choise == 3:
+                            modify_loop = False
+
             elif user_choise == 3:
                 print("mo grande fazer depois")
+                command_lines.__click_to_exit()
 
             elif user_choise == 4:
                 #salvar alteracoes
                 LOOP = False
 
     @staticmethod
-    def Collector():
+    def Collector() -> None:
         print("ainda não fiz")
         return
         options = ['[1] Insert', 
@@ -262,7 +275,7 @@ class command_lines():
                 command_lines.__click_to_exit() 
 
     @staticmethod
-    def Album():
+    def Album() -> None:
         print("ainda nao fiz")
         return
         options = ['[1] colar adesivo', 
@@ -290,7 +303,7 @@ class command_lines():
                 command_lines.__click_to_exit()
     
     @staticmethod
-    def Trade():
+    def Trade() -> None:
         print("ainda nao fiz")
         return
         options = ['[1] Trade', '[2] Remove', '[3] Modify', '[4] Search', '[5] Exit']
@@ -298,8 +311,4 @@ class command_lines():
         command_lines.__message('stikers')
         command_lines.__click_to_exit()
     
-
-
-
-
 command_lines.home()
