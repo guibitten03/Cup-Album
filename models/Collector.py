@@ -1,10 +1,10 @@
-from models import Entity
+from models.Entity import Entity
 
 
 class Collector(Entity):
 
-    def __init__(self, name : str):
-        super.__init__(Collector)
+    def __init__(self,name : str, id : int=-1):
+        super().__init__(Collector)
         self.name = name
 
     def get_id(self):
@@ -15,4 +15,4 @@ class Collector(Entity):
         self.name = name
 
     def __str__(self):
-        return "Id: {},Name: {}".format(self.id, self.name)
+        return "Id: {}, Name: {}".format(self.id, self.name)

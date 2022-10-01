@@ -1,51 +1,53 @@
-from Pessoa import Pessoa
-from persistence import Persistence
+from models.Collector import Collector
+from persistence.Persistence import IPersistence
 
-class CollectorPersistence(Persistence):
 
-    def __init__(self) -> None:
-        self.collectors = [] #Lista de pessoas
+class CollectorPersistence(IPersistence):
 
-    def insert(self, p : Pessoa) -> None:
-        self.collectors.append(p)
+    collectors = dict()
+
+    @staticmethod
+    def insert(c : Collector) -> None:
+        CollectorPersistence.collectors[c.id] = c
     
-    def delete(self, p : Pessoa) -> None:
-        self.collectors.remove(p)
+    @staticmethod
+    def delete(id : int) -> None:
+        if id in CollectorPersistence.collectors:
+            CollectorPersistence.collectors.pop(id)
     
-    def modify(self,id : int, name : str= "", money : float= -1) -> None:
-        for i,p in enumerate(self.collectors):
-            if p.id == id:
-                p.name = name if name >= 0 else p.name 
-                p.money = money if money >= 0 else p.money 
+    @staticmethod
+    def modify(id : int, name : str) -> None:
+        if id in CollectorPersistence.collectors:
+            CollectorPersistence.collectors[id].name = name
 
-    def search_by_id(self, id : int) -> Pessoa:
-        
-        for p in self.collectors:
-            if p.id == id:
-                return p
-        return NULL    
-    
-    def search_by_str(self, name : str) -> Pessoa:
-        
-        for p in self.collectors:
-            if p.name == name:
-                return p
-        return NULL
-    
-    def save(collectors):
-        f = open("collector.txt","a")
-        for p in collectors:
-            f.write("{}\t{}\t{}\t{}\t{}".format(
-                p.id,p.name,p.money,p.count_packages,','.join(p.not_stickeds)))
-        f.close()
+    @staticmethod
+    def search_by_id(id : int) -> Collector:
+        if id in CollectorPersistence.collectors:
+            return CollectorPersistence.collectors[id]
+        return None
 
+    @staticmethod
+    def search_by_str( name : str) -> Collector:        
+        for _,c in CollectorPersistence.collectors.items():
+            if c.name == name:
+                return c
+        return None
+    
+    def view_data()-> None:
+        for _,c in CollectorPersistence.collectors.items():
+            print(c)
+    
+    @staticmethod
+    def save():
+        with open("collector.txt", "w") as f:
+            for _,c in CollectorPersistence.collectors.items():
+                f.write("{},{}\n".format(c.id,c.name))
+
+    @staticmethod
     def load():
-        load_collectors = Collectors()
-        with open("collector.txt","r") as f:
+        CollectorPersistence.collectors.clear()
+        with open("collector.txt","w+") as f:
             for line in f:
-                data = line.split("\t")
-                p = Pessoa(data[1],data[2])
-                p.set_count_packages(data[3])
-                p.set_not_stickeds(data[4].split(","))
-                load_collectors.collectors.append(p)
-        return load_collectors
+                data = line.split(",")
+                c = Collector(data[1],data[0])
+                CollectorPersistence.insert(c)
