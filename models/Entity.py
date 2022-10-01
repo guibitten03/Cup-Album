@@ -33,7 +33,7 @@ class Entity(ABC):
 	def __init__(self, t: Type, **kwargs) -> None:
 		if 'id' in kwargs:
 			self.id = kwargs['id']
-			Entity.id_per_type[t] = max(Entity.id_per_type[t], self.id)
+			Entity.id_per_type[t] = max(Entity.id_per_type[t], self.id + 1)
 		else:
 			self.id = Entity.id_per_type[t]
 			Entity.id_per_type[t] = Entity.id_per_type[t] + 1
