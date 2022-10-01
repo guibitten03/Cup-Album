@@ -1,4 +1,4 @@
-from Persistence import IPersistence
+from persistence.Persistence import IPersistence
 
 class StickerPersistence(IPersistence):
     #pra facilitar no menu deixa esses atributos estaticos 👍

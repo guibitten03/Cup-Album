@@ -1,7 +1,6 @@
 from models.Collector import Collector
 from persistence.Persistence import IPersistence
 
-
 class CollectorPersistence(IPersistence):
 
     collectors = dict()
@@ -33,6 +32,7 @@ class CollectorPersistence(IPersistence):
                 return c
         return None
     
+    @staticmethod
     def view_data()-> None:
         for _,c in CollectorPersistence.collectors.items():
             print(c)
@@ -46,8 +46,9 @@ class CollectorPersistence(IPersistence):
     @staticmethod
     def load():
         CollectorPersistence.collectors.clear()
-        with open("collector.txt","w+") as f:
+        with open("collector.txt","a+") as f:
+            f.seek(0)
             for line in f:
                 data = line.split(",")
-                c = Collector(data[1],id = data[0])
+                c = Collector(data[1].rstrip(),id = int(data[0]))
                 CollectorPersistence.insert(c)
