@@ -3,14 +3,14 @@ from models.Entity import Entity
 
 class Trade(Entity):
 
-    def __init__(self,collector1 : str,collector2 : str,
-                    sticker1: int, sticker2 : int, **kwargs):
+    def __init__(self,collector1 : str,sticker1: int,
+                collector2 : str, sticker2 : int, date: str="", **kwargs):
         super().__init__(Trade,**kwargs)
         self.collector1 = collector1
         self.collector2 = collector2
         self.sticker1 = sticker1
         self.sticker2 = sticker2
-        self.date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        self.date = date if date != "" else datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     
     def get_id(self) -> str:
         return self.id
@@ -35,5 +35,5 @@ class Trade(Entity):
         self.sticker2 = sticker2
     
     def __str__(self):
-        return "{}, Id: {}, Collector1: {}, Sticker1: {}, Collector2: {}, Sticker2: {}".format(
-                self.date,self.collector1,self.sticker1,self.collector2,self.sticker2)
+        return "Id: {}, {}, Collector1: {}, Sticker1: {}, Collector2: {}, Sticker2: {}".format(
+                self.id,self.date, self.collector1,self.sticker1,self.collector2,self.sticker2)

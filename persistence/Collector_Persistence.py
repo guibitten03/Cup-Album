@@ -1,5 +1,5 @@
-from models.Collector import Collector
-from persistence.Persistence import IPersistence
+from models import Collector
+from persistence import IPersistence
 
 class CollectorPersistence(IPersistence):
 
