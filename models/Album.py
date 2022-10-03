@@ -1,4 +1,4 @@
-from models.Entity import Entity
+from Entity import Entity
 from models.Sticker import *
 
 
