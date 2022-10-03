@@ -4,23 +4,23 @@ from Sticker import *
 
 class Album(Entity):
 
-    def __init__(self, name, owner) -> None:
-        super().__init__(Album)
+    def __init__(self, name, owner, **kwargs) -> None:
+        super().__init__(Album, **kwargs)
 
         self.name = name
         self.owner = owner
         self.album = {}
-        self.positions_label = ['Goalkeeper', 'Defender', 'Midfilder', 'Foward']
         self.positions = self.init_position_dict()
         self.album_size = 0
 
 
     def init_position_dict(self):
+        stick = Sticker()
         positions_size = {}
         sizes = [1,4,3,3]
 
         index = 0
-        for position in self.positions_label:
+        for position in stick.positions:
             positions_size[position] = [0, sizes[index]]
             index += 1
         return positions_size

@@ -4,10 +4,11 @@ from datetime import datetime
 
 class Sticker(Entity):
 
-    id: int = 0
+    teams = ['Brasil', 'Argentina', '...']
+    positions = ['Goalkeeper', 'Defender', 'Midfilder', 'Foward']
 
-    def __init__(self, name, team, position) -> None:
-        super().__init__(Sticker)
+    def __init__(self, name, team, position, **kwargs) -> None:
+        super().__init__(Sticker, **kwargs)
 
         self.name: str = name
         self.team: str = team
