@@ -10,7 +10,7 @@ class CollectorPersistence(IPersistence):
         CollectorPersistence.collectors[c.id] = c
     
     @staticmethod
-    def delete(id : int) -> None:
+    def remove(id : int) -> None:
         if id in CollectorPersistence.collectors:
             CollectorPersistence.collectors.pop(id)
     

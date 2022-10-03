@@ -1,30 +1,9 @@
 from simple_term_menu import TerminalMenu
-#from persistence import *
+from persistence import *
 from copy import deepcopy
-#models import * 
+from models import * 
 import pyfiglet  
 import os
-
-
-#aqui para testes
-class StickerPersistence():
-    #pra facilitar no menu deixa esses atributos estaticos 👍
-    teams = ['Brasil', 'Argentina', '...'] #lista com o nome dos times
-    position = ['atacante', 'meia-direita', 'goleiro', '...'] 
-
-    
-    def insert(self, x, y, z):
-        print("função insert")
-
-    def remove(self, x):
-        print("função remove")
-
-    def modify(self, team_modify: str = None, position_modify: str = None, name_modify: str = None):
-        print("função modify")
-
-    def search_id(self, id):
-        print("função search")
-        return 1 #retorna o obj ou None se não existir
 
 class command_lines():
 
@@ -150,7 +129,7 @@ class command_lines():
                 command_lines.__clear()
                 command_lines.__message('Remove stickers')
 
-                if sticker_persistence.search_id(remove_id) == None:
+                if sticker_persistence.search_by_id(remove_id) == None:
                     print(f"There is no sticker with id {remove_id}")
                     command_lines.__click_to_exit()
 
@@ -170,7 +149,7 @@ class command_lines():
 
                 modify_id = command_lines.__get_input('sticker id: ', int_type = True)
 
-                if sticker_persistence.search_id(modify_id) == None:
+                if sticker_persistence.search_by_id(modify_id) == None:
                     print(f"There is no sticker with id {modify_id}")
                     command_lines.__click_to_exit()
 
@@ -243,7 +222,7 @@ class command_lines():
                 LOOP = False
 
     @staticmethod
-    def Collector(collector_persistence) -> None:
+    def Collector() -> None:
 
         options = ['[1] Insert', 
                    '[2] Remove', 
@@ -286,18 +265,18 @@ class command_lines():
                 command_lines.__clear()
                 command_lines.__message('Remove collector')
 
-                if collector_persistence.search_id(remove_id) == None:
+                if CollectorPersistence.search_by_id(remove_id) == None:
                     print(f"There is no collector with id {remove_id}")
                     command_lines.__click_to_exit()
 
                 else:
                     print(f"    Remove ID {remove_id} collector")
                     if command_lines.__choice(['[1] Remove', '[2] Cancel']) == 0:
-                        collector_persistence.remove(remove_id)
-                        print("    successful collector remove")
+                        CollectorPersistence.remove(remove_id)
+                        print("\n    successful collector remove")
                         command_lines.__click_to_exit()
                     else:
-                        print("    collector not removed")
+                        print("\n    collector not removed")
                         command_lines.__click_to_exit()
 
             elif user_choise == 2:
@@ -345,5 +324,3 @@ class command_lines():
         command_lines.__clear()
         command_lines.__message('stickers')
         command_lines.__click_to_exit()
-    
-command_lines.home()

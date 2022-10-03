@@ -10,7 +10,7 @@ class TradePersistence(IPersistence):
         TradePersistence.trades[t.id] = t
     
     @staticmethod
-    def delete(id : int) -> None:
+    def remove(id : int) -> None:
         if id in TradePersistence.trades:
             TradePersistence.trades.pop(id)
     

@@ -12,7 +12,7 @@ class IPersistence(ABC):
 		pass
 
 	@abstractmethod
-	def delete():
+	def remove():
 		pass
 
 	@abstractmethod

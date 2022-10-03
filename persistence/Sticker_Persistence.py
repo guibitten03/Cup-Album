@@ -15,6 +15,6 @@ class StickerPersistence():
     def modify(self, team_modify: str = None, position_modify: str = None, name_modify: str = None):
         print("função modify")
 
-    def search_id(self, id):
+    def search_by_id(self, id):
         print("função search")
         return 1 #retorna o obj ou None se não existir
