@@ -1,5 +1,5 @@
 import json
-from models.Album import Album
+from models import Album
 from persistence.Persistence import IPersistence
 
 class AlbumPersistence(IPersistence):
@@ -16,10 +16,11 @@ class AlbumPersistence(IPersistence):
             AlbumPersistence.albuns.pop(id)
     
     @staticmethod
-    def modify(id : int, name : str, owner : str) -> None:
+    def modify(id : int, name : str = "", owner : str = "") -> None:
         if id in AlbumPersistence.albuns:
-            AlbumPersistence.albuns[id].name = name
-            AlbumPersistence.albuns[id].owner = owner
+            album = AlbumPersistence.albuns[id]
+            album[id].name = name if name != "" else album.name
+            album[id].owner = owner if owner != "" else album.owner
 
     @staticmethod
     def search_by_id(id : int) -> Album:
@@ -29,15 +30,15 @@ class AlbumPersistence(IPersistence):
 
     @staticmethod
     def search_by_str(name : str) -> Album:        
-        for _, s in AlbumPersistence.albuns.items():
-            if s.name == name:
-                return s
+        for _, album in AlbumPersistence.albuns.items():
+            if album.name == name:
+                return album
         return None
     
     @staticmethod
     def view_data()-> None:
-        for _, s in AlbumPersistence.albuns.items():
-            print(s)
+        for _, album in AlbumPersistence.albuns.items():
+            print(album)
     
     @staticmethod
     def save():
@@ -51,5 +52,3 @@ class AlbumPersistence(IPersistence):
         with open("album.txt") as f:
             AlbumPersistence.albuns = json.loads(f)
             
-            
-

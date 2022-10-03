@@ -1,3 +1,4 @@
+import json
 from models.Sticker import Sticker
 from persistence.Persistence import IPersistence
 
@@ -15,9 +16,12 @@ class StickerPersistence(IPersistence):
             StickerPersistence.stickers.pop(id)
     
     @staticmethod
-    def modify(id : int, name : str) -> None:
+    def modify(id : int, name : str = "", team = "", position = "") -> None:
+        sticker = StickerPersistence.stickers[id]
         if id in StickerPersistence.stickers:
-            StickerPersistence.stickers[id].name = name
+            sticker.name = name if name != "" else sticker.name
+            sticker.team = team if team != "" else sticker.team
+            sticker.position = position if position != "" else sticker.position
 
     @staticmethod
     def search_by_id(id : int) -> Sticker:
@@ -36,19 +40,15 @@ class StickerPersistence(IPersistence):
     def view_data()-> None:
         for _, s in StickerPersistence.stickers.items():
             print(s)
-    
+            
     @staticmethod
     def save():
-        with open("collector.txt", "w") as f:
-            for _,s in StickerPersistence.stickers.items():
-                f.write("{},{}\n".format(s.id, s.name))
+        with open("sticker.txt", "w") as f:
+            for album in StickerPersistence.stickers:
+                json.dumps(album, f)
 
     @staticmethod
     def load():
         StickerPersistence.stickers.clear()
-        with open("sticker.txt","a+") as f:
-            f.seek(0)
-            for line in f:
-                data = line.split(",")
-                c = Sticker(data[1].rstrip(),id = int(data[0]))
-                StickerPersistence.insert(c)
+        with open("sticker.txt") as f:
+            StickerPersistence.stickers = json.loads(f)
