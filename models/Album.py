@@ -1,12 +1,14 @@
 from Entity import Entity
-from models.Sticker import *
+from Sticker import *
 
 
 class Album(Entity):
 
-    def __init__(self) -> None:
+    def __init__(self, name, owner) -> None:
         super().__init__(Album)
 
+        self.name = name
+        self.owner = owner
         self.album = {}
         self.positions_label = ['Goalkeeper', 'Defender', 'Midfilder', 'Foward']
         self.positions = self.init_position_dict()
@@ -37,6 +39,27 @@ class Album(Entity):
             self.album[sticker.team][sticker.position][0] += 1
 
         self.album_size += 1
+        
+    def remove_sticker(self, name, team, position) -> None:
+        if not len(self.album[team]) > 0: 
+            print(f"There are any players in {team}...")
+            return
+        if not self.album[team][position][0] > 0:
+            print(f"There are any {position}s in {team}...")
+            return 
+        
+        index_player : int
+        for player in range(2, len(self.album[team][position])):
+            if self.album[team][position][player].name == name:
+                index_player = player
+                break
+            if player == (len(self.album[team][position]) - 1):
+                print(f"There are any player with name {name}...")
+                return
+            
+        self.album[team][position].pop(index_player)
+        self.album[team][position][0] -= 1
+        self.album_size -= 1
                 
                 
     def show_album(self):
@@ -44,50 +67,51 @@ class Album(Entity):
             print(f"{team}:")
             for position in self.album[team].keys():
                 if len(self.album[team][position]) > 2:
-                    print(f"{position}:")
+                    print(f"\t{position}s:")
+                    string = ""
                     for player in range(2, len(self.album[team][position])):
-                        print(self.album[team][position][player])
+                        string = string + '\t' + self.album[team][position][player].name
+                    print(string + '\n')
                 
 
+    def get_album_name(self) -> str: return self.name
+    def get_album_owner(self) -> str: return self.owner
     def get_album(self): return self.album
     def get_album_size(self): return self.album_size
     
+    def set_album_name(self, name) -> str: self.name = name
+    def set_album_owner(self, owner) -> str: self.owner = owner
     def set_album(self, album): self.album = album
     def set_album_size(self, size): self.album_size = size
-
-#     def menu(self):
-#         input = int(input('''Selecione uma opção:\n
-# 0 - Sair\n
-# 1 - Olhar album\n
-# 2 - Album está completo?'''))
-
-#         while True:
-#             match(input):
-#                 case 0:
-#                     break
-#                 case 1:
-#                     if self.album_size == 0:
-#                         print("Você ainda não colou figurinhas no album")
-#                     else:   
-#                         for team in self.album.keys():
-#                             for players in self.album[team]:
-#                                 print("{}: {}".format(self.album[team]))
+    
 
     def __str__(self) -> str:
         return "{} stickers are in album\n".format(self.album_size) 
     
     
 if __name__ == "__main__":
-    album = Album()
+    album = Album('Grande', 'Homem')
     
-    s1 = Sticker('Gui', 3, 'Brazil', 1, 2, 'Foward')
-    s2 = Sticker('Gui', 3, 'Brazil', 1, 2, 'Foward')
-    s3 = Sticker('Gui', 3, 'Brazil', 1, 2, 'Foward')
-    s4 = Sticker('Gui', 3, 'Brazil', 1, 2, 'Foward')
-    s5 = Sticker('Gui', 3, 'Brazil', 1, 2, 'Foward')
+    s1 = Sticker('Gui', 'Brazil', 'Foward')
+    s2 = Sticker('Gui', 'Brazil', 'Foward')
+    s3 = Sticker('Gui', 'Brazil', 'Foward')
+    s4 = Sticker('Gui', 'Brazil', 'Midfilder')
+    s5 = Sticker('Gui', 'Brazil', 'Midfilder')
+    s6 = Sticker('Gui', 'Brazil', 'Midfilder')
+    s7 = Sticker('Gui', 'Brazil', 'Defender')
+    s8 = Sticker('Gui', 'Brazil', 'Defender')
+    s9 = Sticker('Gui', 'Brazil', 'Defender')
+    s10 = Sticker('Gui', 'Brazil', 'Defender')
+        
     album.stick(s1)
     album.stick(s2)
     album.stick(s3)
     album.stick(s4)
     album.stick(s5)
+    album.stick(s6)
+    album.stick(s7)
+    album.stick(s7)
+    album.stick(s8)
+    album.stick(s9)
+    album.stick(s10)
     album.show_album()
