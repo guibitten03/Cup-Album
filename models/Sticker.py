@@ -4,7 +4,7 @@ from datetime import datetime
 
 class Sticker(Entity):
 
-    teams = ['Brasil', 'Argentina', '...']
+    teams = ['Brasil', 'Argentina', '...'] 
     positions = ['Goalkeeper', 'Defender', 'Midfilder', 'Foward']
 
     def __init__(self, name, team, position, **kwargs) -> None:
