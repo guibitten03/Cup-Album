@@ -1,3 +1,4 @@
+from gc import collect
 from simple_term_menu import TerminalMenu
 from persistence import *
 from copy import deepcopy
@@ -173,7 +174,7 @@ class command_lines():
                             print(f"Modify ID {modify_id} sticker\n\n    New team: {modify_team}")
 
                             if command_lines.__choice(["Modify team", 'Cancel']) == 0:
-                                sticker_persistence.modify(team_modify = modify_team) ##função de modify
+                                sticker_persistence.modify(modify_id, team = modify_team) ##função de modify
                                 print("    Team successful modify")
                                 command_lines.__click_to_exit()
                             else:
@@ -188,7 +189,7 @@ class command_lines():
                             print(f"Modify ID {modify_id} sticker\n\n    New position: {modify_position}")
 
                             if command_lines.__choice(["Modify position", 'Cancel']) == 0:
-                                sticker_persistence.modify(position_modify = modify_position) ##função de modify
+                                sticker_persistence.modify(modify_id, position = modify_position) ##função de modify
                                 print("    position successful modify")
                                 command_lines.__click_to_exit()
                             else:
@@ -203,7 +204,7 @@ class command_lines():
                             print(f"Modify ID {modify_id} sticker\n\n    New name: {modify_name}")
 
                             if command_lines.__choice(["Modify name", 'Cancel']) == 0:
-                                sticker_persistence.modify(name_modify = modify_name) ##função de modify
+                                sticker_persistence.modify(modify_id, name = modify_name) ##função de modify
                                 print("    name successful modify")
                                 command_lines.__click_to_exit()
                             else:
@@ -249,9 +250,12 @@ class command_lines():
                 print(f"    Collector Name: {insert_name}\n")
 
                 if command_lines.__choice(['[1] Insert', '[2] Cancel']) == 0:
-                    ##add collector
+
+                    CollectorPersistence.insert(Collector(insert_name))
+
                     print("    Collector successfully inserted")
                     command_lines.__click_to_exit()
+
                 else:
                     print("    Collector not inserted")
                     command_lines.__click_to_exit()
@@ -260,7 +264,7 @@ class command_lines():
                 command_lines.__clear()
                 command_lines.__message('Remove collector')
 
-                remove_id = command_lines.__get_input('Collector id: ', int_type = True)
+                remove_id = (int)(command_lines.__get_input('Collector id: ', int_type = True))
                 
                 command_lines.__clear()
                 command_lines.__message('Remove collector')
@@ -275,15 +279,41 @@ class command_lines():
                         CollectorPersistence.remove(remove_id)
                         print("\n    successful collector remove")
                         command_lines.__click_to_exit()
+                        
                     else:
                         print("\n    collector not removed")
                         command_lines.__click_to_exit()
 
             elif user_choise == 2:
-                pass
+                command_lines.__clear()
+                command_lines.__message('Modify Collectors')
+
+                modify_id = (int)(command_lines.__get_input('Collector id: ', int_type = True))
+
+                command_lines.__clear()
+                command_lines.__message('Modify Collectors')
+
+                if CollectorPersistence.search_by_id(modify_id) == None:
+                    print(f"There is no Collector with id {modify_id}")
+                    command_lines.__click_to_exit()
+                
+                else:
+                    
+                    print(f"Modify ID {modify_id} collectors\n")
+
+                    modify_name = command_lines.__get_input('New name: ')
+
+                    if command_lines.__choice(["Modify name", 'Cancel']) == 0:
+                        CollectorPersistence.modify(modify_id, name = modify_name) 
+                        print("\n    Name successful modify")
+                        command_lines.__click_to_exit()
+
+                    else:
+                        print("    Name not modify")
+                        command_lines.__click_to_exit()
 
             elif user_choise == 3:
-                pass
+                print("ainda não pronto")
 
             elif user_choise == 4:
                 LOOP = False

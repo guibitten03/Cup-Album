@@ -1,5 +1,5 @@
-from Entity import Entity
-from Sticker import *
+from models.Entity import Entity
+from models.Sticker import *
 
 
 class Album(Entity):

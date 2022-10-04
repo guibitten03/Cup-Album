@@ -1,5 +1,5 @@
 from operator import ne
-from Entity import Entity
+from models.Entity import Entity
 from datetime import datetime
 
 class Sticker(Entity):
