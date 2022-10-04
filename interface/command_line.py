@@ -1,5 +1,3 @@
-from encodings import search_function
-from gc import collect
 from simple_term_menu import TerminalMenu
 from persistence import *
 from copy import deepcopy
@@ -45,7 +43,6 @@ class command_lines():
         
         return x
         
-
     @staticmethod
     def home() -> None:
 
@@ -149,7 +146,7 @@ class command_lines():
                 command_lines.__clear()
                 command_lines.__message('Modify stickers')
 
-                modify_id = command_lines.__get_input('sticker id: ', int_type = True)
+                modify_id = (int)(command_lines.__get_input('sticker id: ', int_type = True))
 
                 if StickerPersistence.search_by_id(modify_id) == None:
                     print(f"There is no sticker with id {modify_id}")
@@ -216,8 +213,48 @@ class command_lines():
                             modify_loop = False
 
             elif user_choise == 3:
-                print("mo grande fazer depois")
-                command_lines.__click_to_exit()
+                    command_lines.__clear()
+                    command_lines.__message('Search stikers')
+
+                    search_choise = command_lines.__choice(['[1] By id','[2] By name', '[3] show all stikers'])
+                    
+                    if search_choise == 0:
+
+                        search_id = (int)(command_lines.__get_input('stiker id: ', int_type=True))
+
+                        stiker_search = StickerPersistence.search_by_id(search_id)
+
+                        if stiker_search == None:
+                            print(f"\n    There is no stiker with id {search_id}")
+                            command_lines.__click_to_exit()
+
+                        else:
+                            command_lines.__clear()
+                            command_lines.__message('Search stikers')
+                            print(stiker_search)
+                            command_lines.__click_to_exit()
+
+                    elif search_choise == 1:
+
+                        search_name = command_lines.__get_input('stiker name: ')
+                        
+                        stiker_search = StickerPersistence.search_by_str(search_name)
+
+                        if stiker_search == None:
+                            print(f"\n    There is no stiker with name {search_name}")
+                            command_lines.__click_to_exit()
+
+                        else:
+                            command_lines.__clear()
+                            command_lines.__message('Search stikers')
+                            print(stiker_search)
+                            command_lines.__click_to_exit()
+
+                    elif search_choise == 2:
+                        command_lines.__clear()
+                        command_lines.__message('Search stikers')
+                        StickerPersistence.view_data()
+                        command_lines.__click_to_exit()
 
             elif user_choise == 4:
                 #salvar alteracoes
@@ -317,29 +354,46 @@ class command_lines():
                 command_lines.__clear()
                 command_lines.__message('Search Collectors')
 
-                search_choise = command_lines.__choice(['[1] By id','[2] By name', '[3] show all collectors', '[4] Exit'])
+                search_choise = command_lines.__choice(['[1] By id','[2] By name', '[3] show all collectors'])
                 
                 if search_choise == 0:
 
-                    search_id = (int)(command_lines.__get_input('Collector id: '))
+                    search_id = (int)(command_lines.__get_input('Collector id: ', int_type=True))
 
-                    command_lines.__clear()
-                    command_lines.__message('Search Collectors')
+                    collector_search = CollectorPersistence.search_by_id(search_id)
 
+                    if collector_search == None:
+                        print(f"\n    There is no Collector with id {search_id}")
+                        command_lines.__click_to_exit()
+
+                    else:
+                        command_lines.__clear()
+                        command_lines.__message('Search Collectors')
+                        print(collector_search)
+                        command_lines.__click_to_exit()
 
                 elif search_choise == 1:
-                    command_lines.__clear()
-                    command_lines.__message('Search Collectors')
 
-#                    search_
+                    search_name = command_lines.__get_input('Collector name: ')
+                    
+                    collector_search = CollectorPersistence.search_by_str(search_name)
+
+                    if collector_search == None:
+                        print(f"\n    There is no Collector with name {search_name}")
+                        command_lines.__click_to_exit()
+
+                    else:
+                        command_lines.__clear()
+                        command_lines.__message('Search Collectors')
+                        print(collector_search)
+                        command_lines.__click_to_exit()
 
                 elif search_choise == 2:
                     command_lines.__clear()
                     command_lines.__message('Search Collectors')
+                    CollectorPersistence.view_data()
+                    command_lines.__click_to_exit()
 
-                elif search_choise == 3:
-                    pass
-                
             elif user_choise == 4:
                 LOOP = False
 
