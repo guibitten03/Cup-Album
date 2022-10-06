@@ -3,8 +3,8 @@ from models.Entity import Entity
 
 class Trade(Entity):
 
-    def __init__(self,collector1 : str,sticker1: int,
-                collector2 : str, sticker2 : int, date: str="", **kwargs):
+    def __init__(self,collector1 : str, sticker1: int,
+                      collector2 : str, sticker2: int, date: str="", **kwargs):
         super().__init__(Trade,**kwargs)
         self.collector1 = collector1
         self.collector2 = collector2
