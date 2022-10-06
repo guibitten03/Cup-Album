@@ -1,3 +1,4 @@
+from turtle import position
 from simple_term_menu import TerminalMenu
 from persistence import *
 from copy import deepcopy
@@ -399,16 +400,13 @@ class command_lines():
 
     @staticmethod
     def Album() -> None:
-        print("ainda nao fiz")
-        return
-        options = ['[1] colar adesivo', 
+        options = ['[1] sticker paste', 
                    '[2] Remove sticker', 
                    '[3] Insert', 
                    '[4] Remove', 
                    '[5] Modify', 
                    '[6] Search', 
                    '[7] Exit']
-        options_exit = len(options)-1
         LOOP = True
 
         while LOOP:
@@ -417,19 +415,239 @@ class command_lines():
 
             user_choise = command_lines.__choice(options)
 
-            if user_choise == options_exit:
+            if user_choise == 0:
+                command_lines.__clear()
+                command_lines.__message('sticker paste')
+
+                paste_id = (int)(command_lines.__get_input('Album id: ', int_type = True))
+
+                paste_album = AlbumPersistence.search_by_id(paste_id)
+
+                if paste_album == None:
+                    print(f"    There is no album with id {paste_id}")
+                    command_lines.__click_to_exit()
+                
+                else:
+                    paste_sticker_id = (int)(command_lines.__get_input('Sticker id: ', int_type = True))
+
+                    paste_sticker = StickerPersistence.search_by_id(paste_sticker_id)
+
+                    if paste_sticker:
+                        print(f"    There is no sticker with id {paste_sticker_id}")
+                        command_lines.__click_to_exit()
+
+                    else:
+                        command_lines.__clear()
+                        command_lines.__message('sticker paste')
+
+                        print('\n', paste_sticker)
+
+                        if command_lines.__choice(['[1] Paste', '[2] Cancel']) == 0:
+                            paste_album.stick(paste_sticker_id)
+                            print('\n    Sticker successfully pasted')
+                            command_lines.__clear()
+                        else:
+                            print('\n    Sticker not pasted')
+                            command_lines.__clear()
+
+            elif user_choise == 1:
+                command_lines.__clear()
+                command_lines.__message('Remove sticker')
+
+                remove_id = (int)(command_lines.__get_input('Album id: ', int_type = True))
+
+                remove_album = AlbumPersistence.search_by_id(remove_id)
+
+                if remove_album == None:
+                    print(f"    There is no collector with id {remove_id}")
+                    command_lines.__click_to_exit()
+                
+                else:
+                    remove_sticker_name = command_lines.__get_input('Sticker name: ')
+                    remove_sticker_team = command_lines.__get_input('Sticker team: ')
+                    remove_sticker_position = command_lines.__get_input('Sticker position: ')
+
+                    remove_sticker = remove_album.sticker_in_album(name=remove_sticker_name, team=remove_sticker_team, position=remove_sticker_position)
+
+                    if remove_sticker == None:
+                        command_lines.__click_to_exit()
+
+                    else:
+                        command_lines.__clear()
+                        command_lines.__message('Remove sticker')
+
+                        print('\n', remove_sticker)
+
+                        if command_lines.__choice(['[1] Remove', '[2] Cancel']) == 0:
+                            remove_album.remove_sticker(name=remove_sticker_name, team=remove_sticker_team, position=remove_sticker_position)
+                            print('\n    Sticker successfully Remove')
+                            command_lines.__clear()
+                        else:
+                            print('\n    Sticker not Remove')
+                            command_lines.__clear()
+
+            elif user_choise == 2:
+                command_lines.__clear()
+                command_lines.__message('Insert album')
+
+                insert_id = (int)(command_lines.__get_input('Collector id: ', int_type = True))
+                insert_collector = CollectorPersistence.search_by_id(insert_id)
+
+                if insert_collector == None:
+                    print(f"\n    There is no album with id {insert_id}")
+                    command_lines.__click_to_exit()
+                else:
+                    insert_name = command_lines.__get_input('Album name: ')
+                    
+                    if command_lines.__choice(['[1] Insert','[2] Cancel']) == 0:
+                        AlbumPersistence.insert(Album(insert_name, insert_collector))
+                        print('    Album successfully inserted')
+                        command_lines.__click_to_exit()
+
+                    else:
+                        print('    Album not inserted')
+                        command_lines.__click_to_exit()
+    
+            elif user_choise == 3:
+                command_lines.__clear()
+                command_lines.__message('Remove album')
+
+                remove_id = (int)(command_lines.__get_input('Album id: ', int_type = True))
+                remove_album = AlbumPersistence.search_by_id(remove_id)
+
+                if remove_album == None:
+                    print(f"\n    There is no album with id {remove_id}")
+                    command_lines.__click_to_exit()
+
+                else:
+                    command_lines.__clear()
+                    command_lines.__message('Remove album')
+
+                    print('\n', remove_album)
+
+                    if command_lines.__choice(['[1] remove','[2] Cancel']) == 0:
+                        AlbumPersistence.remove(remove_id)
+                        print('    Album successfully removed')
+                        command_lines.__click_to_exit()
+
+                    else:
+                        print('    Album not removed')
+                        command_lines.__click_to_exit()
+            
+            elif user_choise == 4:
+                command_lines.__clear()
+                command_lines.__message('Modify album')
+
+                modify_id = (int)(command_lines.__get_input('Album id: ', int_type = True))
+                modify_album = AlbumPersistence.search_by_id(modify_id)
+
+                if modify_album == None:
+                    print(f"\n    There is no album with id {modify_id}")
+                    command_lines.__click_to_exit()
+
+                else:
+                    modify_loop = True
+
+                    while modify_loop:
+                        command_lines.__clear()
+                        command_lines.__message('Modify album')
+
+                        modify_choice = command_lines.__choice(['[1] Modify name','[2] Modify Collector', '[3] Exit'])
+
+                        if modify_choice == 2:
+                            modify_loop = False
+                        
+                        elif modify_choice == 1:
+                            modify_collector_id = (int)(command_lines.__get_input('New collector id: ', int_type= True))
+                            modify_collector = CollectorPersistence.search_by_id(modify_collector_id)
+                            if modify_collector == None:
+                                print('\n    There is no album with id {modify_collector_id}')
+                                command_lines.__click_to_exit()
+                            else:
+                                command_lines.__clear()
+                                command_lines.__message('Modify album')
+                                print(f'    New Collector\n{modify_collector}')
+                                if command_lines.__choice(['[1] Modify','[2] Cancel']) == 0:
+                                    AlbumPersistence.modify(owner=modify_collector)
+                                    print('\n    Album successfully modify')
+                                    command_lines.__click_to_exit()
+
+                                else:
+                                    print('\n    Album not modify')
+                                    command_lines.__click_to_exit()
+
+                        elif modify_choice == 0:
+                            modify_name = command_lines.__get_input("New name:")
+
+                            command_lines.__clear()
+                            command_lines.__message('Modify album')
+
+                            print(f'    New name\n{modify_collector}')
+                            if command_lines.__choice(['[1] Modify','[2] Cancel']) == 0:
+                                AlbumPersistence.modify(name=modify_name)
+                                print('\n    Album successfully modify')
+                                command_lines.__click_to_exit()
+
+                            else:
+                                print('\n    Album not modify')
+                                command_lines.__click_to_exit()
+
+            elif user_choise == 5:
+                command_lines.__clear()
+                command_lines.__message('Search album')
+
+                search_choise = command_lines.__choice(['[1] By id','[2] By name', '[3] show all collectors'])
+                
+                if search_choise == 0:
+
+                    search_id = (int)(command_lines.__get_input('Album id: ', int_type=True))
+
+                    Album_search = AlbumPersistence.search_by_id(search_id)
+
+                    if Album_search == None:
+                        print(f"\n    There is no Album with id {search_id}")
+                        command_lines.__click_to_exit()
+
+                    else:
+                        command_lines.__clear()
+                        command_lines.__message('Search Albums')
+                        print(Album_search)
+                        command_lines.__click_to_exit()
+
+                elif search_choise == 1:
+
+                    search_name = command_lines.__get_input('Album name: ')
+                    
+                    Album_search = AlbumPersistence.search_by_str(search_name)
+
+                    if Album_search == None:
+                        print(f"\n    There is no Album with name {search_name}")
+                        command_lines.__click_to_exit()
+
+                    else:
+                        command_lines.__clear()
+                        command_lines.__message('Search Albums')
+                        print(Album_search)
+                        command_lines.__click_to_exit()
+
+                elif search_choise == 2:
+                    command_lines.__clear()
+                    command_lines.__message('Search Albums')
+                    AlbumPersistence.view_data()
+                    command_lines.__click_to_exit()
+
+            elif user_choise == 6:
                 LOOP = False
 
-            else:
-                #new page
-                print(options[user_choise])
-                command_lines.__click_to_exit()
-    
     @staticmethod
     def Trade() -> None:
-        print("ainda nao fiz")
-        return
-        options = ['[1] Trade', '[2] Remove', '[3] Modify', '[4] Search', '[5] Exit']
+        options = ['[1] Trade', 
+                   '[2] Remove', 
+                   '[3] Modify', 
+                   '[4] Search', 
+                   '[5] Exit']
+        LOOP = True
+        
         command_lines.__clear()
         command_lines.__message('stickers')
         command_lines.__click_to_exit()

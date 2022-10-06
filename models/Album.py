@@ -40,13 +40,13 @@ class Album(Entity):
 
         self.album_size += 1
         
-    def remove_sticker(self, name, team, position) -> None:
+    def remove_sticker(self, name, team, position) -> bool:
         if not len(self.album[team]) > 0: 
             print(f"There are any players in {team}...")
-            return
+            return False
         if not self.album[team][position][0] > 0:
             print(f"There are any {position}s in {team}...")
-            return 
+            return False
         
         index_player : int
         for player in range(2, len(self.album[team][position])):
@@ -55,11 +55,32 @@ class Album(Entity):
                 break
             if player == (len(self.album[team][position]) - 1):
                 print(f"There are any player with name {name}...")
-                return
+                return False
             
         self.album[team][position].pop(index_player)
         self.album[team][position][0] -= 1
         self.album_size -= 1
+        return True
+
+    def sticker_in_album(self, name, team, position) -> Sticker:
+            if not len(self.album[team]) > 0: 
+                print(f"\n    There are any players in {team}...")
+                return None
+            if not self.album[team][position][0] > 0:
+                print(f"\n    There are any {position}s in {team}...")
+                return None
+            
+            index_player : int
+            for player in range(2, len(self.album[team][position])):
+                if self.album[team][position][player].name == name:
+                    index_player = player
+                    break
+                if player == (len(self.album[team][position]) - 1):
+                    print(f"\n    There are any player with name {name}...")
+                    return None
+                
+                return self.album[team][position][index_player]
+
                 
                 
     def show_album(self):
