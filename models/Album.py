@@ -15,12 +15,11 @@ class Album(Entity):
 
 
     def init_position_dict(self):
-        stick = Sticker()
         positions_size = {}
         sizes = [1,4,3,3]
 
         index = 0
-        for position in stick.positions:
+        for position in Sticker.positions:
             positions_size[position] = [0, sizes[index]]
             index += 1
         return positions_size

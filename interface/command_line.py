@@ -432,7 +432,7 @@ class command_lines():
 
                     paste_sticker = StickerPersistence.search_by_id(paste_sticker_id)
 
-                    if paste_sticker:
+                    if paste_sticker == None:
                         print(f"    There is no sticker with id {paste_sticker_id}")
                         command_lines.__click_to_exit()
 
@@ -443,7 +443,7 @@ class command_lines():
                         print('\n', paste_sticker)
 
                         if command_lines.__choice(['[1] Paste', '[2] Cancel']) == 0:
-                            paste_album.stick(paste_sticker_id)
+                            paste_album.stick(paste_sticker)
                             print('\n    Sticker successfully pasted')
                             command_lines.__clear()
                         else:
@@ -596,7 +596,7 @@ class command_lines():
                 command_lines.__clear()
                 command_lines.__message('Search album')
 
-                search_choise = command_lines.__choice(['[1] By id','[2] By name', '[3] show all collectors'])
+                search_choise = command_lines.__choice(['[1] By id','[2] By name', '[3] show all album'])
                 
                 if search_choise == 0:
 
@@ -689,8 +689,7 @@ class command_lines():
                                 command_lines.__click_to_exit()
                     
                             else:
-                                trade_date = command_lines.__get_input('Trade date:')
-                                trade_obj = Trade.trade(trade1_collector.get_name(), trade1_sticker_id, trade2_collector.get_name(), trade2_sticker, trade_date)
+                                trade_obj = Trade(trade1_collector.get_name(), trade1_sticker_id, trade2_collector.get_name(), trade2_sticker_id)
                                 command_lines.__clear()
                                 command_lines.__message('stickers')
                                 print(trade_obj)
@@ -698,6 +697,7 @@ class command_lines():
                                 if command_lines.__choice(['[1] Trade', '[2] Cancel']) == 0:
                                     TradePersistence.insert(trade_obj)
                                     print("\n    Trade successfully finished")
+                                    command_lines.__click_to_exit()
                                 else:
                                     print("\n    Trade not finished")
                                     command_lines.__click_to_exit()
@@ -746,7 +746,7 @@ class command_lines():
 
                         modify_choice = command_lines.__choice(['[1] Modify collector 1','[2] Modify Collector 2', '[3] Modify sticker 1', '[4] Modify sticker 2', '[5] Exit'])
 
-                        if modify_choice == 5:
+                        if modify_choice == 4:
                             modify_loop = False
                         
                         elif modify_choice == 0:
@@ -760,7 +760,7 @@ class command_lines():
                                 command_lines.__message('Modify Trade')
                                 print(f'    New Collector\n{modify_collector1}')
                                 if command_lines.__choice(['[1] Modify','[2] Cancel']) == 0:
-                                    TradePersistence.modify(c1=modify_collector1.get_name())
+                                    TradePersistence.modify(modify_id,c1=modify_collector1.get_name())
                                     print('\n    Trade successfully modify')
                                     command_lines.__click_to_exit()
 
@@ -779,7 +779,7 @@ class command_lines():
                                 command_lines.__message('Modify Trade')
                                 print(f'    New Collector\n{modify_collector2}')
                                 if command_lines.__choice(['[1] Modify','[2] Cancel']) == 0:
-                                    TradePersistence.modify(c2=modify_collector2.get_name())
+                                    TradePersistence.modify(modify_id, c2=modify_collector2.get_name())
                                     print('\n    Trade successfully modify')
                                     command_lines.__click_to_exit()
 
@@ -798,7 +798,7 @@ class command_lines():
                                 command_lines.__message('Modify Trade')
                                 print(f'    New sticker\n{modify_sticker1}')
                                 if command_lines.__choice(['[1] Modify','[2] Cancel']) == 0:
-                                    TradePersistence.modify(s1=modify_sticker1)
+                                    TradePersistence.modify(modify_id, s1=modify_sticker1_id)
                                     print('\n    Trade successfully modify')
                                     command_lines.__click_to_exit()
 
@@ -817,7 +817,7 @@ class command_lines():
                                 command_lines.__message('Modify Trade')
                                 print(f'    New sticker\n{modify_sticker2}')
                                 if command_lines.__choice(['[1] Modify','[2] Cancel']) == 0:
-                                    TradePersistence.modify(s2=modify_sticker2)
+                                    TradePersistence.modify(modify_id, s2=modify_sticker2_id)
                                     print('\n    Trade successfully modify')
                                     command_lines.__click_to_exit()
 
@@ -829,7 +829,7 @@ class command_lines():
                 command_lines.__clear()
                 command_lines.__message('Search Trade')
 
-                search_choice = command_lines.__choice(['[1] Search by id','[2] Search by collector 1', '[3] Search by collector 2', '[4] Search by date'])
+                search_choice = command_lines.__choice(['[1] Search by id','[2] Search by collector 1', '[3] Search by collector 2', '[4] show all trade'])
 
                 if search_choice == 0:
                     search_Trade_id = (int)(command_lines.__get_input('Trade id: ', int_type= True))
@@ -868,16 +868,8 @@ class command_lines():
                         command_lines.__click_to_exit()
                 
                 elif search_choice == 3:
-                    search_date_name = command_lines.__get_input('Trade date: ')
-                    search_date = TradePersistence.search_by_str(date = search_date_name)
-                    if search_date == None:
-                        print(f'\n    There is no collector with name {search_date_name}')
-                        command_lines.__click_to_exit()
-                    else:
-                        command_lines.__clear()
-                        command_lines.__message('Search Trade')
-                        print(f'\n{search_date}')
-                        command_lines.__click_to_exit()
+                    TradePersistence.view_data()
+                    command_lines.__click_to_exit()
 
             elif user_choise == 4:
                 LOOP = False
