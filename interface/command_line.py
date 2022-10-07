@@ -459,32 +459,37 @@ class command_lines():
                 remove_album = AlbumPersistence.search_by_id(remove_id)
 
                 if remove_album == None:
-                    print(f"    There is no collector with id {remove_id}")
+                    print(f"    There is no album with id {remove_id}")
                     command_lines.__click_to_exit()
                 
                 else:
-                    remove_sticker_name = command_lines.__get_input('Sticker name: ')
-                    remove_sticker_team = command_lines.__get_input('Sticker team: ')
-                    remove_sticker_position = command_lines.__get_input('Sticker position: ')
+                    remove_sticker_id = (int)(command_lines.__get_input('Sticker id: ', int_type=True))
 
-                    remove_sticker = remove_album.sticker_in_album(name=remove_sticker_name, team=remove_sticker_team, position=remove_sticker_position)
+                    remove_sticker = StickerPersistence.search_by_id(remove_sticker_id)
 
                     if remove_sticker == None:
+                        print(f"    There is no sticker with id {remove_sticker_id}")
                         command_lines.__click_to_exit()
 
                     else:
-                        command_lines.__clear()
-                        command_lines.__message('Remove sticker')
 
-                        print('\n', remove_sticker)
+                        if remove_album.sticker_in_album(name=remove_sticker.get_name(), team=remove_sticker.get_time(), position=remove_sticker.get_position()) == None:
+                            print("\n    No sticker in album")
+                            command_lines.__click_to_exit()
 
-                        if command_lines.__choice(['[1] Remove', '[2] Cancel']) == 0:
-                            remove_album.remove_sticker(name=remove_sticker_name, team=remove_sticker_team, position=remove_sticker_position)
-                            print('\n    Sticker successfully Remove')
-                            command_lines.__clear()
                         else:
-                            print('\n    Sticker not Remove')
                             command_lines.__clear()
+                            command_lines.__message('Remove sticker')
+
+                            print('\n', remove_sticker)
+
+                            if command_lines.__choice(['[1] Remove', '[2] Cancel']) == 0:
+                                remove_album.remove_sticker(name=remove_sticker.get_name(), team=remove_sticker.get_team, position=remove_sticker.get_position())
+                                print('\n    Sticker successfully Remove')
+                                command_lines.__clear()
+                            else:
+                                print('\n    Sticker not Remove')
+                                command_lines.__clear()
 
             elif user_choise == 2:
                 command_lines.__clear()
@@ -561,14 +566,14 @@ class command_lines():
                             modify_collector_id = (int)(command_lines.__get_input('New collector id: ', int_type= True))
                             modify_collector = CollectorPersistence.search_by_id(modify_collector_id)
                             if modify_collector == None:
-                                print('\n    There is no album with id {modify_collector_id}')
+                                print(f'\n    There is no album with id {modify_collector_id}')
                                 command_lines.__click_to_exit()
                             else:
                                 command_lines.__clear()
                                 command_lines.__message('Modify album')
-                                print(f'    New Collector\n{modify_collector}')
+                                print(f'    New Collector\n    {modify_collector}')
                                 if command_lines.__choice(['[1] Modify','[2] Cancel']) == 0:
-                                    AlbumPersistence.modify(owner=modify_collector)
+                                    AlbumPersistence.modify(modify_id, owner=modify_collector)
                                     print('\n    Album successfully modify')
                                     command_lines.__click_to_exit()
 
@@ -582,9 +587,9 @@ class command_lines():
                             command_lines.__clear()
                             command_lines.__message('Modify album')
 
-                            print(f'    New name\n{modify_collector}')
+                            print(f'    New name\n    {modify_name}')
                             if command_lines.__choice(['[1] Modify','[2] Cancel']) == 0:
-                                AlbumPersistence.modify(name=modify_name)
+                                AlbumPersistence.modify(modify_id, name=modify_name)
                                 print('\n    Album successfully modify')
                                 command_lines.__click_to_exit()
 

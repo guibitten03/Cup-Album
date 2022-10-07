@@ -24,4 +24,4 @@ class Sticker(Entity):
     def set_position(self, position) -> None: self.position
 
     def __str__(self) -> None:
-        return "{}, {}, {}".format(self.name, self.team, self.position)
+        return "{}, {}, {}, {}".format(self.id, self.name, self.team, self.position)

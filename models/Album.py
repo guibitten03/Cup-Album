@@ -78,7 +78,7 @@ class Album(Entity):
                     print(f"\n    There are any player with name {name}...")
                     return None
                 
-                return self.album[team][position][index_player]
+            return self.album[team][position][index_player]
 
                 
                 
