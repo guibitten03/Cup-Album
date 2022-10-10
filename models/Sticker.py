@@ -1,21 +1,25 @@
-from Entity import Entity
-from datetime import datetime
+from models.Entity import Entity
 
 class Sticker(Entity):
 
-    id: int = 0
+    teams = ['Brasil', 'Argentina', '...'] 
+    positions = ['Goalkeeper', 'Defender', 'Midfilder', 'Foward']
 
-    def __init__(self, name, birth_date, team, height, weight, position) -> None:
-        super().__init__(Sticker)
+    def __init__(self, name, team, position, **kwargs) -> None:
+        super().__init__(Sticker, **kwargs)
 
         self.name: str = name
-        self.birth_date: datetime = birth_date
         self.team: str = team
-        self.height: float = height
-        self.weight: float = weight
         self.position: str = position
-        self.probability: float = 0.5
 
+
+    def get_time(self) -> str: return self.team
+    def get_name(self) -> str: return self.name
+    def get_position(self) -> str: return self.position
+    
+    def set_time(self, team) -> None: self.team = team
+    def set_name(self, name) -> None: self.name = name
+    def set_position(self, position) -> None: self.position
 
     def __str__(self) -> None:
-        return "{}, {}, {}".format(self.name, self.team, self.position)
+        return "{}, {}, {}, {}".format(self.id, self.name, self.team, self.position)

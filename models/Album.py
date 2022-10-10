@@ -1,13 +1,16 @@
-from Entity import Entity
-from Sticker import *
+from models.Entity import Entity
+from models.Sticker import *
 
 
 class Album(Entity):
 
-    def __init__(self) -> None:
-        super().__init__(Album)
+    def __init__(self, name, owner, **kwargs) -> None:
+        super().__init__(Album, **kwargs)
 
+        self.name = name
+        self.owner = owner
         self.album = {}
+        self.positions = self.init_position_dict()
         self.album_size = 0
         self.positions_label = ['Goalkeeper', 'Defender', 'Midfielder', 'Foward']
         self.max_size_positions_allowed = [1, 4, 3, 3]
@@ -25,52 +28,98 @@ class Album(Entity):
         return positions
 
 
+    def init_position_dict(self):
+        positions_size = {}
+        sizes = [1,4,3,3]
+
+        index = 0
+        for position in Sticker.positions:
+            positions_size[position] = [0, sizes[index]]
+            index += 1
+        return positions_size
+
+
     def stick(self, sticker) -> None:
+        if not (sticker.team in self.album.keys()):
+            self.album[sticker.team] = self.positions
 
         if not self.album[sticker.team]:
             self.album[sticker.team] = [self.positions.copy(), sticker]
         else:
-            if self.album[sticker.team][0][sticker.position][0] > self.album[sticker.team][0][sticker.position][1]:
-                return f"Maximun of {sticker.position}s are achieved" 
-
-            self.album[sticker.team].append(sticker)
-            self.album[sticker.team][0][sticker.position][0] += 1
+            if self.album[sticker.team][sticker.position][0] == self.album[sticker.team][sticker.position][1]:
+                print(f"There is not more spaces to {sticker.position}s in {sticker.team}")
+                return  
+            
+            self.album[sticker.team][sticker.position].append(sticker)
+            self.album[sticker.team][sticker.position][0] += 1
 
         self.album_size += 1
+        
+    def remove_sticker(self, name, team, position) -> bool:
+        if not len(self.album[team]) > 0: 
+            print(f"There are any players in {team}...")
+            return False
+        if not self.album[team][position][0] > 0:
+            print(f"There are any {position}s in {team}...")
+            return False
+        
+        index_player : int
+        for player in range(2, len(self.album[team][position])):
+            if self.album[team][position][player].name == name:
+                index_player = player
+                break
+            if player == (len(self.album[team][position]) - 1):
+                print(f"There are any player with name {name}...")
+                return False
+            
+        self.album[team][position].pop(index_player)
+        self.album[team][position][0] -= 1
+        self.album_size -= 1
+        return True
 
+    def sticker_in_album(self, name, team, position) -> Sticker:
+            if not len(self.album[team]) > 0: 
+                print(f"\n    There are any players in {team}...")
+                return None
+            if not self.album[team][position][0] > 0:
+                print(f"\n    There are any {position}s in {team}...")
+                return None
+            
+            index_player : int
+            for player in range(2, len(self.album[team][position])):
+                if self.album[team][position][player].name == name:
+                    index_player = player
+                    break
+                if player == (len(self.album[team][position]) - 1):
+                    print(f"\n    There are any player with name {name}...")
+                    return None
+                
+            return self.album[team][position][index_player]
 
+                
+                
+    def show_album(self):
+        for team in self.album.keys():
+            print(f"{team}:")
+            for position in self.album[team].keys():
+                if len(self.album[team][position]) > 2:
+                    print(f"\t{position}s:")
+                    string = ""
+                    for player in range(2, len(self.album[team][position])):
+                        string = string + '\t' + self.album[team][position][player].name
+                    print(string + '\n')
+                
+
+    def get_album_name(self) -> str: return self.name
+    def get_album_owner(self) -> str: return self.owner
     def get_album(self): return self.album
     def get_album_size(self): return self.album_size
-
-
+    
+    def set_album_name(self, name) -> str: self.name = name
+    def set_album_owner(self, owner) -> str: self.owner = owner
     def set_album(self, album): self.album = album
     def set_album_size(self, size): self.album_size = size
-
-#     def menu(self):
-#         input = int(input('''Selecione uma opção:\n
-# 0 - Sair\n
-# 1 - Olhar album\n
-# 2 - Album está completo?'''))
-
-#         while True: 
-#             match(input):
-#                 case 0:
-#                     break
-#                 case 1:
-#                     if self.album_size == 0:
-#                         print("Você ainda não colou figurinhas no album")
-#                     else:   
-#                         for team in self.album.keys():
-#                             for players in self.album[team]:
-#                                 print("{}: {}".format(self.album[team]))
+    
 
     def __str__(self):
-        album = Album()
-        print(album.album_size)
-    
-if __name__ == "__main__":
-    album = Album()
-    sti = Sticker('Gui', 3, 'Brazil', 171, 65, 'Foward')
-    
-    album.stick(sti)
-    print(album.album)
+        return f"{self.id}, {self.owner}, {self.name}"
