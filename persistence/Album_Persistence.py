@@ -42,13 +42,16 @@ class AlbumPersistence(IPersistence):
     
     @staticmethod
     def save():
-        with open("album.txt", "w") as f:
+        with open("data/album.json", "w") as f:
             for album in AlbumPersistence.albuns:
-                json.dumps(album, f)
+                json.dump(album, f)
 
     @staticmethod
     def load():
         AlbumPersistence.albuns.clear()
-        with open("album.txt") as f:
-            AlbumPersistence.albuns = json.loads(f)
+        with open("data/album.json", "a+") as f:
+            f.seek(0)
+            for line in f:
+                print(line)
+            # AlbumPersistence.albuns = json.loads(f)
             

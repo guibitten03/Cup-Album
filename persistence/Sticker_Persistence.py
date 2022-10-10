@@ -43,12 +43,15 @@ class StickerPersistence(IPersistence):
             
     @staticmethod
     def save():
-        with open("sticker.txt", "w") as f:
+        with open("data/sticker.json", "w") as f:
             for album in StickerPersistence.stickers:
-                json.dumps(album, f)
+                json.dump(album, f)
 
     @staticmethod
     def load():
         StickerPersistence.stickers.clear()
-        with open("sticker.txt") as f:
-            StickerPersistence.stickers = json.loads(f)
+        with open("data/sticker.json", "a+") as f:
+            f.seek(0)
+            for line in f:
+                print(line)
+            # StickerPersistence.stickers = json.loads(f.read())
