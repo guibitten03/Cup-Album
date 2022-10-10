@@ -42,16 +42,20 @@ class AlbumPersistence(IPersistence):
     
     @staticmethod
     def save():
-        with open("data/album.json", "w") as f:
-            for album in AlbumPersistence.albuns:
-                json.dump(album, f)
+        with open("album.txt", "w") as f:
+            for _,a in AlbumPersistence.collectors.items():
+                string = f"{a.id}, {a.name}, {a.owner},"
+                for player in a.album:
+                    string += str(player.id) + "|"
+                f.write(string)
 
     @staticmethod
     def load():
-        AlbumPersistence.albuns.clear()
-        with open("data/album.json", "a+") as f:
+        CollectorPersistence.collectors.clear()
+        with open("collector.txt","a+") as f:
             f.seek(0)
             for line in f:
-                print(line)
-            # AlbumPersistence.albuns = json.loads(f)
+                data = line.split(",")
+                c = Collector(data[1].rstrip(),id = int(data[0]))
+                CollectorPersistence.insert(c)
             
