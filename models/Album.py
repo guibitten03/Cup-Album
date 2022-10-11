@@ -8,9 +8,9 @@ class Album(Entity):
     def __init__(self, name, owner, **kwargs) -> None:
         super().__init__(Album, **kwargs)
 
-        self.name = name
-        self.owner = owner
-        self.album = []
+        self[name] = name
+        self[owner] = owner
+        self[album] = []
         # self.album = {}
         # self.positions = self.init_position_dict()
         self.album_size = 0
@@ -43,21 +43,20 @@ class Album(Entity):
 
     def stick(self, sticker) -> None:
         # if not (sticker.team in self.album.keys()):
-        #     self.album[sticker.team] = self.positions
-
-        # if not self.album[sticker.team]:
         #     self.album[sticker.team] = [self.positions.copy(), sticker]
+        #     self.album[sticker.team][sticker.position][0] += 1
         # else:
         #     if self.album[sticker.team][sticker.position][0] == self.album[sticker.team][sticker.position][1]:
         #         print(f"There is not more spaces to {sticker.position}s in {sticker.team}")
         #         return  
             
-        #     self.album[sticker.team][sticker.position].append(sticker)
+        #     self.album[sticker.team].append(sticker)
         #     self.album[sticker.team][sticker.position][0] += 1
 
         # self.album_size += 1
         self.album.append(sticker)
         self.album_size += 1
+
         
     def remove_sticker(self, name, team, position) -> None:
         # if not len(self.album[team]) > 0: 
@@ -79,37 +78,44 @@ class Album(Entity):
         # self.album[team][position].pop(index_player)
         # self.album[team][position][0] -= 1
         # self.album_size -= 1
-        # return True
         index = 0
-        for players in self.album:
-            if players.name == name:
-                if players.team == team:
-                    if players.position == position:
+        for player in self.album:
+            if player.name == name:
+                if player.team == team:
+                    if player.position == position:
                         self.album.pop(index)
-                        self.album_size -= 1 
-                        return 
+                        self.album_size += 1
+                        return True
 
-            index += 1       
-        print("There is not {name}, from {team}, of {position} in album")
+            index += 1
+        print(f"There is not player {name}, from {team}, of {position} in album")
 
-    # def sticker_in_album(self, name, team, position) -> Sticker:
-    #         if not len(self.album[team]) > 0: 
-    #             print(f"\n    There are any players in {team}...")
-    #             return None
-    #         if not self.album[team][position][0] > 0:
-    #             print(f"\n    There are any {position}s in {team}...")
-    #             return None
+
+
+    def sticker_in_album(self, name, team, position) -> bool:
+        for player in self.album:
+            if player.name == name:
+                if player.team == team:
+                    if player.position == position:
+                        return True
+        return None
+            # if not len(self.album[team]) > 0: 
+            #     print(f"\n    There are any players in {team}...")
+            #     return None
+            # if not self.album[team][position][0] > 0:
+            #     print(f"\n    There are any {position}s in {team}...")
+            #     return None
             
-    #         index_player : int
-    #         for player in range(2, len(self.album[team][position])):
-    #             if self.album[team][position][player].name == name:
-    #                 index_player = player
-    #                 break
-    #             if player == (len(self.album[team][position]) - 1):
-    #                 print(f"\n    There are any player with name {name}...")
-    #                 return None
+            # index_player : int
+            # for player in range(2, len(self.album[team][position])):
+            #     if self.album[team][position][player].name == name:
+            #         index_player = player
+            #         break
+            #     if player == (len(self.album[team][position]) - 1):
+            #         print(f"\n    There are any player with name {name}...")
+            #         return None
                 
-    #         return self.album[team][position][index_player]
+            # return self.album[team][position][index_player]
 
                 
                 

@@ -42,20 +42,23 @@ class AlbumPersistence(IPersistence):
     
     @staticmethod
     def save():
-        with open("album.txt", "w") as f:
-            for _,a in AlbumPersistence.collectors.items():
-                string = f"{a.id}, {a.name}, {a.owner},"
+        with open("data/album.txt", "w") as f:
+            for _,a in AlbumPersistence.albuns.items():
+                string = f"{a.id}, {a.name}, {a.owner}, "
                 for player in a.album:
-                    string += str(player.id) + "|"
-                f.write(string)
+                    string += f"{player.id}| "
+                
+            f.write(string)
 
     @staticmethod
     def load():
-        CollectorPersistence.collectors.clear()
-        with open("collector.txt","a+") as f:
+        AlbumPersistence.albuns.clear()
+        with open("data/album.txt","a+") as f:
             f.seek(0)
             for line in f:
                 data = line.split(",")
-                c = Collector(data[1].rstrip(),id = int(data[0]))
-                CollectorPersistence.insert(c)
+                c = Album(name = data[1].rstrip(), owner = data[2].rstrip(), id = int(data[0]))
+                players = data[3].split("|")
+                for player in players:
+                    
             
