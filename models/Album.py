@@ -8,9 +8,9 @@ class Album(Entity):
     def __init__(self, name, owner, **kwargs) -> None:
         super().__init__(Album, **kwargs)
 
-        self[name] = name
-        self[owner] = owner
-        self[album] = []
+        self.name = name
+        self.owner = owner
+        self.album = []
         # self.album = {}
         # self.positions = self.init_position_dict()
         self.album_size = 0
