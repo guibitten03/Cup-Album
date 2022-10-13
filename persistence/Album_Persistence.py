@@ -2,6 +2,7 @@ import json
 from models import Album
 from models.Sticker import Sticker
 from persistence.Persistence import IPersistence
+from persistence.Sticker_Persistence import StickerPersistence
 
 class AlbumPersistence(IPersistence):
     
@@ -45,20 +46,24 @@ class AlbumPersistence(IPersistence):
     def save():
         with open("data/album.txt", "w") as f:
             for _,a in AlbumPersistence.albuns.items():
-                f.write("h")
+                string : str = ""
+                string += f"{a.id}, {a.name}, {a.owner}"
+                for player in a.album:
+                    string += f", {player.id}"
+                string += "\n"
+                f.write(string)
                 
 
     @staticmethod
     def load():
         AlbumPersistence.albuns.clear()
-        try:
-            with open("data/album.txt","a+") as f:
-                f.seek(0)
-                for line in f:
-                    data = line.split(",")
-                    c = Album(name = data[1].rstrip(), owner = data[2].rstrip(), id = int(data[0]))
-                    players = data[3].split("|")
-                    for player in players:
-                        sticker = Sticker(player.name, player.team, player.position)
-                        c.stick(sticker)
-        except: pass    
+        with open("data/album.txt","a+") as f:
+            f.seek(0)
+            for line in f:
+                data = line.split(",")
+                a = Album(id = int(data[0]),
+                          name = data[1].rstrip(),
+                          owner = data[2].rstrip())
+                for id_player in data[3:]:
+                    a.stick(StickerPersistence.stickers[int(id_player.strip())])
+                AlbumPersistence.insert(a)

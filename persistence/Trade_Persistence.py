@@ -44,7 +44,7 @@ class TradePersistence(IPersistence):
     
     @staticmethod
     def save():
-        with open("trade.txt", "w") as f:
+        with open("data/trade.txt", "w") as f:
             for _,t in TradePersistence.trades.items():
                 f.write("{},{},{},{},{},{}\n".format(
                     t.id,t.date,t.collector1,t.sticker1,t.collector2,t.sticker2))
@@ -52,7 +52,7 @@ class TradePersistence(IPersistence):
     @staticmethod
     def load():
         TradePersistence.trades.clear()
-        with open("trade.txt","a+") as f:
+        with open("data/trade.txt","a+") as f:
             f.seek(0)
             for line in f:
                 data = line.split(",")

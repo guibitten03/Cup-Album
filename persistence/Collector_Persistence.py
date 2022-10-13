@@ -39,14 +39,14 @@ class CollectorPersistence(IPersistence):
     
     @staticmethod
     def save():
-        with open("collector.txt", "w") as f:
+        with open("data/collector.txt", "w") as f:
             for _,c in CollectorPersistence.collectors.items():
                 f.write("{},{}\n".format(c.id,c.name))
 
     @staticmethod
     def load():
         CollectorPersistence.collectors.clear()
-        with open("collector.txt","a+") as f:
+        with open("data/collector.txt","a+") as f:
             f.seek(0)
             for line in f:
                 data = line.split(",")

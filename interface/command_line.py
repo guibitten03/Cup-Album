@@ -480,10 +480,11 @@ class command_lines():
                             command_lines.__clear()
                             command_lines.__message('Remove sticker')
 
-                            print('\n', remove_sticker)
+                            print('\n', remove_sticker) 
 
                             if command_lines.__choice(['[1] Remove', '[2] Cancel']) == 0:
-                                remove_album.remove_sticker(name=remove_sticker.get_name(), team=remove_sticker.get_team, position=remove_sticker.get_position())
+                                command_lines.__message('Open')
+                                remove_album.remove_sticker(name=remove_sticker.get_name(), team=remove_sticker.get_time, position=remove_sticker.get_position())
                                 print('\n    Sticker successfully Remove')
                                 command_lines.__clear()
                             else:
@@ -504,7 +505,7 @@ class command_lines():
                     insert_name = command_lines.__get_input('Album name: ')
                     
                     if command_lines.__choice(['[1] Insert','[2] Cancel']) == 0:
-                        AlbumPersistence.insert(Album(insert_name, insert_collector))
+                        AlbumPersistence.insert(Album(insert_name, insert_collector.id))
                         print('    Album successfully inserted')
                         command_lines.__click_to_exit()
 

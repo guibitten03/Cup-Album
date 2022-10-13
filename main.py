@@ -7,9 +7,9 @@ from persistence.Sticker_Persistence import StickerPersistence
 from persistence.Trade_Persistence import TradePersistence
 
 def main():
+	StickerPersistence.load()
 	AlbumPersistence.load()
 	CollectorPersistence.load()
-	StickerPersistence.load()
 	TradePersistence.load()
 
 	command_lines.home()
