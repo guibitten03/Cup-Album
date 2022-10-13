@@ -8,7 +8,7 @@ class Album(Entity):
     def __init__(self, name, owner, **kwargs) -> None:
         super().__init__(Album, **kwargs)
 
-        self.name = name
+        self.name = name.strip()
         self.owner = owner
         self.album = []
         self.album_size = 0
@@ -27,8 +27,6 @@ class Album(Entity):
                         self.album.pop(index)
                         self.album_size -= 1
                         return True
-
-        print(f"There is not player {name}, from {team}, of {position} in album")
 
 
     def sticker_in_album(self, name, team, position) -> bool:

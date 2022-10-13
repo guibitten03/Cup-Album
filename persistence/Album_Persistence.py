@@ -47,9 +47,9 @@ class AlbumPersistence(IPersistence):
         with open("data/album.txt", "w") as f:
             for _,a in AlbumPersistence.albuns.items():
                 string : str = ""
-                string += f"{a.id}, {a.name}, {a.owner}"
+                string += f"{a.id},{a.name},{a.owner}"
                 for player in a.album:
-                    string += f", {player.id}"
+                    string += f",{player.id}"
                 string += "\n"
                 f.write(string)
                 
@@ -62,8 +62,8 @@ class AlbumPersistence(IPersistence):
             for line in f:
                 data = line.split(",")
                 a = Album(id = int(data[0]),
-                          name = data[1].rstrip(),
-                          owner = data[2].rstrip())
+                          name = data[1].strip(),
+                          owner = data[2].strip())
                 for id_player in data[3:]:
                     a.stick(StickerPersistence.stickers[int(id_player.strip())])
                 AlbumPersistence.insert(a)

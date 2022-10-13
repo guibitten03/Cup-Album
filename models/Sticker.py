@@ -2,7 +2,12 @@ from models.Entity import Entity
 
 class Sticker(Entity):
 
-    teams = ['Brasil', 'Argentina', '...'] 
+    teams = ["England","Germany","Spain","Portugal","Belgium","Sweden","Serbia", 
+            "France","Denmark","Switzerland","Iceland","Poland","Croatia","Russia", 
+            "Australia","Brazil","Argentina","Mexico","Colombia","Peru","Uruguay", 
+            "Costa Rica","Korea Republic","Iran","Morocco","Nigeria","Tunisia", 
+            "Egypt","Senegal","Saudi Arabia","Japan","Panama", ]
+             
     positions = ['Goalkeeper', 'Defender', 'Midfilder', 'Foward']
 
     def __init__(self, name, team, position, **kwargs) -> None:

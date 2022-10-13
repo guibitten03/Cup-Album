@@ -45,7 +45,7 @@ class StickerPersistence(IPersistence):
     def save():
         with open("data/sticker.txt", "w") as f:
             for _,sticker in StickerPersistence.stickers.items():
-                f.write(f"{sticker.id}, {sticker.name}, {sticker.team}, {sticker.position}\n")
+                f.write(f"{sticker.id},{sticker.name},{sticker.team},{sticker.position}\n")
 
     @staticmethod
     def load():
@@ -55,7 +55,7 @@ class StickerPersistence(IPersistence):
             for line in f:
                 data = line.split(",")
                 c = Sticker(id = int(data[0]), 
-                            name = data[1].rstrip(), 
-                            team = data[2].rstrip(), 
-                            position = data[3].rstrip())
+                            name = data[1].strip(), 
+                            team = data[2].strip(), 
+                            position = data[3].strip())
                 StickerPersistence.insert(c)
