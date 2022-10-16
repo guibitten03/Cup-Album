@@ -1,6 +1,7 @@
 import numpy as np
 from models.Entity import Entity
 from models.Sticker import *
+from interface import command_line
 
 
 class Album(Entity):

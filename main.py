@@ -1,6 +1,4 @@
-from typing import Collection
 from interface.command_line import command_lines
-from models.Album import Album
 from persistence.Album_Persistence import AlbumPersistence
 from persistence.Collector_Persistence import CollectorPersistence
 from persistence.Sticker_Persistence import StickerPersistence

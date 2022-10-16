@@ -483,12 +483,12 @@ class command_lines():
                             print('\n', remove_sticker)
 
                             if command_lines.__choice(['[1] Remove', '[2] Cancel']) == 0:
-                                remove_album.remove_sticker(name=remove_sticker.get_name(), team=remove_sticker.get_time, position=remove_sticker.get_position())
+                                remove_album.remove_sticker(name=remove_sticker.get_name(), team=remove_sticker.get_time(), position=remove_sticker.get_position())
                                 print('\n    Sticker successfully Removed')
-                                command_lines.__clear()
+                                command_lines.__click_to_exit()
                             else:
                                 print('\n    Sticker not Removed')
-                                command_lines.__clear()
+                                command_lines.__click_to_exit()
 
             elif user_choise == 2:
                 command_lines.__clear()
