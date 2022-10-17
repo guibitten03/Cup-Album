@@ -399,7 +399,7 @@ class command_lines():
 
     @staticmethod
     def Album() -> None:
-        options = ['[1] sticker paste', 
+        options = ['[1] Paste sticker', 
                    '[2] Remove sticker', 
                    '[3] Insert', 
                    '[4] Remove', 
@@ -416,7 +416,7 @@ class command_lines():
 
             if user_choise == 0:
                 command_lines.__clear()
-                command_lines.__message('sticker paste')
+                command_lines.__message('Paste sticker')
 
                 paste_id = (int)(command_lines.__get_input('Album id: ', int_type = True))
 
@@ -437,7 +437,7 @@ class command_lines():
 
                     else:
                         command_lines.__clear()
-                        command_lines.__message('sticker paste')
+                        command_lines.__message('Paste sticker')
 
                         print('\n', paste_sticker)
 
