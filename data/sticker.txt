@@ -1,3 +1,0 @@
-0,Alisson,Brasil,Goalkeeper
-1,Cr7,Portugal,Foward
-2,k,Portugal,Defender
