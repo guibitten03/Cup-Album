@@ -15,4 +15,4 @@ class Collector(Entity):
         self.name = name
 
     def __str__(self):
-        return "Id: {}, Name: {}".format(self.id, self.name)
+        return "Id: {}| Name: {}".format(self.id, self.name)

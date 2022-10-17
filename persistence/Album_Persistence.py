@@ -44,7 +44,7 @@ class AlbumPersistence(IPersistence):
     
     @staticmethod
     def save():
-        with open("data/album.txt", "w") as f:
+        with open("data/album.csv", "w") as f:
             for _,a in AlbumPersistence.albuns.items():
                 string : str = ""
                 string += f"{a.id},{a.name},{a.owner}"
@@ -57,7 +57,7 @@ class AlbumPersistence(IPersistence):
     @staticmethod
     def load():
         AlbumPersistence.albuns.clear()
-        with open("data/album.txt","a+") as f:
+        with open("data/album.csv","a+") as f:
             f.seek(0)
             for line in f:
                 data = line.split(",")

@@ -35,5 +35,5 @@ class Trade(Entity):
         self.sticker2 = sticker2
     
     def __str__(self):
-        return "Id: {}, {}, Collector1: {}, Sticker1: {}, Collector2: {}, Sticker2: {}".format(
+        return "Id: {}| {} | Collector1: {}| Sticker1: {}| Collector2: {}| Sticker2: {}".format(
                 self.id,self.date, self.collector1,self.sticker1,self.collector2,self.sticker2)

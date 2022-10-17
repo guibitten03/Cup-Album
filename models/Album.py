@@ -51,7 +51,7 @@ class Album(Entity):
     
 
     def __str__(self):
-        string = f"Id: {self.id}, Collector Id: {self.owner}, Album Name: {self.name}\nStickers: "
+        string = f"Id: {self.id}| Collector Id: {self.owner}| Album Name: {self.name}\nStickers: "
         for index, player in enumerate(self.album):
             if index == (self.album_size - 1): string += f"{player.id}"; break
             string += f" {player.id},"

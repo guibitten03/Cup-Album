@@ -43,14 +43,14 @@ class StickerPersistence(IPersistence):
             
     @staticmethod
     def save():
-        with open("data/sticker.txt", "w") as f:
+        with open("data/sticker.csv", "w") as f:
             for _,sticker in StickerPersistence.stickers.items():
                 f.write(f"{sticker.id},{sticker.name},{sticker.team},{sticker.position}\n")
 
     @staticmethod
     def load():
         StickerPersistence.stickers.clear()
-        with open("data/sticker.txt","a+") as f:
+        with open("data/sticker.csv","a+") as f:
             f.seek(0)
             for line in f:
                 data = line.split(",")
