@@ -15,11 +15,11 @@ class TradePersistence(IPersistence):
             TradePersistence.trades.pop(id)
     
     @staticmethod
-    def modify(id : int, c1 : str="", c2 : str="", s1 : int=-1, s2 : int=-1 ) -> None:
+    def modify(id : int, c1 : int=-1, c2 : int=-1, s1 : int=-1, s2 : int=-1 ) -> None:
         if id in TradePersistence.trades:
             trade = TradePersistence.trades[id]
-            trade.collector1 = c1 if c1 != "" else trade.collector1
-            trade.collector2 = c2 if c2 != "" else trade.collector2
+            trade.collector1 = c1 if c1 != -1 else trade.collector1
+            trade.collector2 = c2 if c2 != -1 else trade.collector2
             trade.sticker1 = s1 if s1 != -1 else trade.sticker1
             trade.sticker2 = s2 if s2 != -1 else trade.sticker2
 
@@ -30,10 +30,8 @@ class TradePersistence(IPersistence):
         return None
 
     @staticmethod
-    def search_by_str( c1: str="",c2: str="",date: str="") -> Trade:        
+    def search_by_str(date: str="") -> Trade:        
         for _,t in TradePersistence.trades.items():
-            if t.collector1 == c1: return t
-            if t.collector2 == c2: return t
             if t.date == date: return t
         return None
     
@@ -56,6 +54,6 @@ class TradePersistence(IPersistence):
             f.seek(0)
             for line in f:
                 data = line.split(",")
-                t = Trade(data[2],int(data[3]),data[4],
+                t = Trade(int(data[2]),int(data[3]),int(data[4]),
                         int(data[5]),data[1],id = int(data[0]))
                 TradePersistence.insert(t)

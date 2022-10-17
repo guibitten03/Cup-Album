@@ -661,11 +661,11 @@ class command_lines():
 
             if user_choise == 0:
 
-                trade1_collector_name = command_lines.__get_input('Collector 1 name: ')
-                trade1_collector = CollectorPersistence.search_by_str(trade1_collector_name)
+                trade1_collector_id = (int)(command_lines.__get_input('Collector 1 id: ', int_type=True))
+                trade1_collector = CollectorPersistence.search_by_id(trade1_collector_id)
 
                 if trade1_collector == None:
-                    print(f"\n    There is no collector with name {trade1_collector_name}")
+                    print(f"\n    There is no collector with id {trade1_collector_id}")
                     command_lines.__click_to_exit()
 
                 else:
@@ -677,11 +677,11 @@ class command_lines():
                         command_lines.__click_to_exit()
                     
                     else:
-                        trade2_collector_name = command_lines.__get_input('Collector 2 name: ')
-                        trade2_collector = CollectorPersistence.search_by_str(trade2_collector_name)
+                        trade2_collector_id = (int)(command_lines.__get_input('Collector 2 id: ', int_type=True))
+                        trade2_collector = CollectorPersistence.search_by_id(trade2_collector_id)
 
                         if trade2_collector == None:
-                            print(f"\n    There is no collector with name {trade2_collector_name}")
+                            print(f"\n    There is no collector with id {trade2_collector_id}")
                             command_lines.__click_to_exit()
 
                         else:
@@ -693,7 +693,7 @@ class command_lines():
                                 command_lines.__click_to_exit()
                     
                             else:
-                                trade_obj = Trade(trade1_collector.get_name(), trade1_sticker_id, trade2_collector.get_name(), trade2_sticker_id)
+                                trade_obj = Trade(trade1_collector.get_id(), trade1_sticker_id, trade2_collector.get_name(), trade2_sticker_id)
                                 command_lines.__clear()
                                 command_lines.__message('stickers')
                                 print(trade_obj)
@@ -754,17 +754,17 @@ class command_lines():
                             modify_loop = False
                         
                         elif modify_choice == 0:
-                            modify_collector1_name = command_lines.__get_input('New collector name: ')
-                            modify_collector1 = CollectorPersistence.search_by_str(modify_collector1_name)
+                            modify_collector1_id = (int)(command_lines.__get_input('New collector id: ', int_type=True))
+                            modify_collector1 = CollectorPersistence.search_by_id(modify_collector1_id)
                             if modify_collector1 == None:
-                                print(f'\n    There is no collector with name {modify_collector1_name}')
+                                print(f'\n    There is no collector with id {modify_collector1_id}')
                                 command_lines.__click_to_exit()
                             else:
                                 command_lines.__clear()
                                 command_lines.__message('Modify Trade')
                                 print(f'    New Collector\n{modify_collector1}')
                                 if command_lines.__choice(['[1] Modify','[2] Cancel']) == 0:
-                                    TradePersistence.modify(modify_id,c1=modify_collector1.get_name())
+                                    TradePersistence.modify(modify_id,c1=modify_collector1.get_id())
                                     print('\n    Trade successfully modify')
                                     command_lines.__click_to_exit()
 
@@ -773,17 +773,17 @@ class command_lines():
                                     command_lines.__click_to_exit()
 
                         elif modify_choice == 1:
-                            modify_collector2_name = command_lines.__get_input('New collector name: ')
-                            modify_collector2 = CollectorPersistence.search_by_str(modify_collector2_name)
+                            modify_collector2_id = (int)(command_lines.__get_input('New collector id: ', int_type=True))
+                            modify_collector2 = CollectorPersistence.search_by_id(modify_collector2_id)
                             if modify_collector2 == None:
-                                print(f'\n    There is no collector with name {modify_collector2_name}')
+                                print(f'\n    There is no collector with id {modify_collector2_id}')
                                 command_lines.__click_to_exit()
                             else:
                                 command_lines.__clear()
                                 command_lines.__message('Modify Trade')
                                 print(f'    New Collector\n{modify_collector2}')
                                 if command_lines.__choice(['[1] Modify','[2] Cancel']) == 0:
-                                    TradePersistence.modify(modify_id, c2=modify_collector2.get_name())
+                                    TradePersistence.modify(modify_id, c2=modify_collector2.get_id())
                                     print('\n    Trade successfully modify')
                                     command_lines.__click_to_exit()
 
@@ -833,7 +833,7 @@ class command_lines():
                 command_lines.__clear()
                 command_lines.__message('Search Trade')
 
-                search_choice = command_lines.__choice(['[1] Search by id','[2] Search by collector 1', '[3] Search by collector 2', '[4] show all trade'])
+                search_choice = command_lines.__choice(['[1] Search by id','[2] Search by date', '[4] show all trade'])
 
                 if search_choice == 0:
                     search_Trade_id = (int)(command_lines.__get_input('Trade id: ', int_type= True))
@@ -848,30 +848,18 @@ class command_lines():
                         command_lines.__click_to_exit()
 
                 elif search_choice == 1:
-                    search_collector1_name = command_lines.__get_input('collector 1 name: ')
-                    search_collector1 = TradePersistence.search_by_str(c1 = search_collector1_name)
-                    if search_collector1 == None:
-                        print(f'\n    There is no collector with name {search_collector1_name}')
+                    search_date = command_lines.__get_input('Date: ')
+                    search_date = TradePersistence.search_by_str(search_date)
+                    if search_date == None:
+                        print(f'\n    There is no trade with date {search_date}')
                         command_lines.__click_to_exit()
                     else:
                         command_lines.__clear()
                         command_lines.__message('Search Trade')
-                        print(f'\n{search_collector1}')
-                        command_lines.__click_to_exit()
-            
-                elif search_choice == 2:
-                    search_collector2_name = command_lines.__get_input('collector 2 name: ')
-                    search_collector2 = TradePersistence.search_by_str(c2 = search_collector2_name)
-                    if search_collector2 == None:
-                        print(f'\n    There is no collector with name {search_collector2_name}')
-                        command_lines.__click_to_exit()
-                    else:
-                        command_lines.__clear()
-                        command_lines.__message('Search Trade')
-                        print(f'\n{search_collector2}')
+                        print(f'\n{search_date}')
                         command_lines.__click_to_exit()
                 
-                elif search_choice == 3:
+                elif search_choice == 2:
                     TradePersistence.view_data()
                     command_lines.__click_to_exit()
 
