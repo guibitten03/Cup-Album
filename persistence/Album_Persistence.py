@@ -26,7 +26,7 @@ class AlbumPersistence(Persistence):
             return AlbumPersistence.albuns[id]
         return None
 
-    def search_by_str(self, name : str) -> Album:        
+    def search_by_str(self, name : str) -> Album:
         for _, album in AlbumPersistence.albuns.items():
             if album.name == name:
                 return album
