@@ -3,44 +3,40 @@ from persistence import *
 
 
 class AlbumPersistence(Persistence):
-    albuns = dict()
+    albuns: dict[int, Album] = dict()
 
-    @staticmethod
-    def insert(a: Album) -> None:
+    def __init__(self) -> None:
+        self.load()
+
+    def insert(self, a: Album) -> None:
         AlbumPersistence.albuns[a.id] = a
 
-    @staticmethod
-    def remove(id : int) -> None:
+    def remove(self, id : int) -> None:
         if id in AlbumPersistence.albuns:
             AlbumPersistence.albuns.pop(id)
 
-    @staticmethod
-    def modify(id : int, name : str = "", owner : str = "") -> None:
+    def modify(self, id : int, name : str = "", owner : str = "") -> None:
         if id in AlbumPersistence.albuns:
             album = AlbumPersistence.albuns[id]
             album.name = name if name != "" else album.name
             album.owner = owner if owner != "" else album.owner
 
-    @staticmethod
-    def search_by_id(id : int) -> Album:
+    def search_by_id(self, id : int) -> Album:
         if id in AlbumPersistence.albuns:
             return AlbumPersistence.albuns[id]
         return None
 
-    @staticmethod
-    def search_by_str(name : str) -> Album:        
+    def search_by_str(self, name : str) -> Album:        
         for _, album in AlbumPersistence.albuns.items():
             if album.name == name:
                 return album
         return None
 
-    @staticmethod
-    def view_data()-> None:
+    def view_data(self)-> None:
         for _, album in AlbumPersistence.albuns.items():
             print(album)
 
-    @staticmethod
-    def save():
+    def save(self):
         with open("data/album.csv", "w") as f:
             for _,a in AlbumPersistence.albuns.items():
                 string : str = ""
@@ -49,10 +45,8 @@ class AlbumPersistence(Persistence):
                     string += f",{player.id}"
                 string += "\n"
                 f.write(string)
-                
 
-    @staticmethod
-    def load():
+    def load(self):
         AlbumPersistence.albuns.clear()
         with open("data/album.csv","a+") as f:
             f.seek(0)
@@ -63,4 +57,4 @@ class AlbumPersistence(Persistence):
                           owner = data[2].strip())
                 for id_player in data[3:]:
                     a.stick(StickerPersistence.stickers[int(id_player.strip())])
-                AlbumPersistence.insert(a)
+                self.insert(a)

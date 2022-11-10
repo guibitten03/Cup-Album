@@ -6,6 +6,10 @@ from models import *
 class Persistence(ABC):
 
     @abstractmethod
+    def __init__(self) -> None:
+        pass
+
+    @abstractmethod
     def insert(e: Entity) -> None:
         pass
 

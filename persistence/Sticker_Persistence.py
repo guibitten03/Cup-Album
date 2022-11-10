@@ -3,51 +3,46 @@ from persistence import *
 
 
 class StickerPersistence(Persistence):
-    stickers = dict()
+    stickers: dict[int, Sticker] = dict()
 
-    @staticmethod
-    def insert(s: Sticker) -> None:
+    def __init__(self) -> None:
+        self.load()
+
+    def insert(self, s: Sticker) -> None:
         StickerPersistence.stickers[s.id] = s
 
-    @staticmethod
-    def remove(id : int) -> None:
+    def remove(self, id : int) -> None:
         if id in StickerPersistence.stickers:
             StickerPersistence.stickers.pop(id)
 
-    @staticmethod
-    def modify(id : int, name : str = "", team = "", position = "") -> None:
+    def modify(self, id: int, name: str = "", team: str = "", position: str = "") -> None:
         sticker: Sticker = StickerPersistence.stickers[id]
         if id in StickerPersistence.stickers:
             sticker.name = name if name != "" else sticker.name
             sticker.team = team if team != "" else sticker.team
             sticker.position = position if position != "" else sticker.position
 
-    @staticmethod
-    def search_by_id(id : int) -> Sticker:
+    def search_by_id(self, id: int) -> Sticker:
         if id in StickerPersistence.stickers:
             return StickerPersistence.stickers[id]
         return None
 
-    @staticmethod
-    def search_by_str(name : str) -> Sticker:
+    def search_by_str(self, name: str) -> Sticker:
         for _, s in StickerPersistence.stickers.items():
             if s.name == name:
                 return s
         return None
 
-    @staticmethod
-    def view_data()-> None:
+    def view_data(self)-> None:
         for _, s in StickerPersistence.stickers.items():
             print(s)
 
-    @staticmethod
-    def save():
+    def save(self) -> None:
         with open("data/sticker.csv", "w") as f:
-            for _,sticker in StickerPersistence.stickers.items():
+            for _, sticker in StickerPersistence.stickers.items():
                 f.write(f"{sticker.id},{sticker.name},{sticker.team},{sticker.position}\n")
 
-    @staticmethod
-    def load():
+    def load(self) -> None:
         StickerPersistence.stickers.clear()
         with open("data/sticker.csv","a+") as f:
             f.seek(0)
@@ -57,4 +52,4 @@ class StickerPersistence(Persistence):
                             name = data[1].strip(), 
                             team = data[2].strip(), 
                             position = data[3].strip())
-                StickerPersistence.insert(c)
+                self.insert(c)
