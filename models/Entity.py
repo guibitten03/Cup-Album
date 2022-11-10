@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from collections import defaultdict
 from typing import Type
 
+
 class Entity(ABC):
     """
     Description
@@ -36,8 +37,8 @@ class Entity(ABC):
             Entity.id_per_type[t] = Entity.id_per_type[t] + 1
 
     @abstractmethod
-    def __str__() -> str:
+    def __str__(self) -> str:
         pass
 
-    def get_id(self) -> id:
+    def get_id(self) -> int:
         return self.id

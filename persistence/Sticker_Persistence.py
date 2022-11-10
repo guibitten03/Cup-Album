@@ -1,23 +1,22 @@
-import json
-from models.Sticker import Sticker
-from persistence.Persistence import IPersistence
+from models import *
+from persistence import *
 
-class StickerPersistence(IPersistence):
-    
+
+class StickerPersistence(Persistence):
     stickers = dict()
 
     @staticmethod
     def insert(s: Sticker) -> None:
         StickerPersistence.stickers[s.id] = s
-    
+
     @staticmethod
     def remove(id : int) -> None:
         if id in StickerPersistence.stickers:
             StickerPersistence.stickers.pop(id)
-    
+
     @staticmethod
     def modify(id : int, name : str = "", team = "", position = "") -> None:
-        sticker = StickerPersistence.stickers[id]
+        sticker: Sticker = StickerPersistence.stickers[id]
         if id in StickerPersistence.stickers:
             sticker.name = name if name != "" else sticker.name
             sticker.team = team if team != "" else sticker.team
@@ -30,17 +29,17 @@ class StickerPersistence(IPersistence):
         return None
 
     @staticmethod
-    def search_by_str(name : str) -> Sticker:        
+    def search_by_str(name : str) -> Sticker:
         for _, s in StickerPersistence.stickers.items():
             if s.name == name:
                 return s
         return None
-    
+
     @staticmethod
     def view_data()-> None:
         for _, s in StickerPersistence.stickers.items():
             print(s)
-            
+
     @staticmethod
     def save():
         with open("data/sticker.csv", "w") as f:

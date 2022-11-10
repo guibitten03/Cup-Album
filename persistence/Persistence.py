@@ -1,24 +1,38 @@
 from abc import ABC, abstractmethod
 
+from models import *
 
-class IPersistence(ABC):
-	
-	@abstractmethod
-	def insert():
-		pass
 
-	@abstractmethod
-	def modify():
-		pass
+class Persistence(ABC):
 
-	@abstractmethod
-	def remove():
-		pass
+    @abstractmethod
+    def insert(e: Entity) -> None:
+        pass
 
-	@abstractmethod
-	def search_by_id(id: int):
-		pass
+    @abstractmethod
+    def modify(e: Entity) -> None:
+        pass
 
-	@abstractmethod
-	def search_by_str(s: str):
-		pass
+    @abstractmethod
+    def remove(e: Entity) -> None:
+        pass
+
+    @abstractmethod
+    def save() -> None:
+        pass
+
+    @abstractmethod
+    def load() -> None:
+        pass
+
+    @abstractmethod
+    def view_data() -> None:
+        pass
+
+    @abstractmethod
+    def search_by_id(id: int):
+        pass
+
+    @abstractmethod
+    def search_by_str(s: str):
+        pass

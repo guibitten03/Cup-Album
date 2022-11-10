@@ -1,19 +1,19 @@
-from models import Collector
-from persistence import IPersistence
+from models import *
+from persistence import *
 
-class CollectorPersistence(IPersistence):
 
+class CollectorPersistence(Persistence):
     collectors = dict()
 
     @staticmethod
     def insert(c : Collector) -> None:
         CollectorPersistence.collectors[c.id] = c
-    
+
     @staticmethod
     def remove(id : int) -> None:
         if id in CollectorPersistence.collectors:
             CollectorPersistence.collectors.pop(id)
-    
+
     @staticmethod
     def modify(id : int, name : str) -> None:
         if id in CollectorPersistence.collectors:
@@ -31,12 +31,12 @@ class CollectorPersistence(IPersistence):
             if c.name == name:
                 return c
         return None
-    
+
     @staticmethod
     def view_data()-> None:
         for _,c in CollectorPersistence.collectors.items():
             print(c)
-    
+
     @staticmethod
     def save():
         with open("data/collector.csv", "w") as f:
@@ -50,5 +50,5 @@ class CollectorPersistence(IPersistence):
             f.seek(0)
             for line in f:
                 data = line.split(",")
-                c = Collector(data[1].rstrip(),id = int(data[0]))
+                c = Collector(data[1].rstrip(), id = int(data[0]))
                 CollectorPersistence.insert(c)

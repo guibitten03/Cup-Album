@@ -1,22 +1,19 @@
-import json
-from models import Album
-from models.Sticker import Sticker
-from persistence.Persistence import IPersistence
-from persistence.Sticker_Persistence import StickerPersistence
+from models import *
+from persistence import *
 
-class AlbumPersistence(IPersistence):
-    
+
+class AlbumPersistence(Persistence):
     albuns = dict()
 
     @staticmethod
     def insert(a: Album) -> None:
         AlbumPersistence.albuns[a.id] = a
-    
+
     @staticmethod
     def remove(id : int) -> None:
         if id in AlbumPersistence.albuns:
             AlbumPersistence.albuns.pop(id)
-    
+
     @staticmethod
     def modify(id : int, name : str = "", owner : str = "") -> None:
         if id in AlbumPersistence.albuns:
@@ -36,12 +33,12 @@ class AlbumPersistence(IPersistence):
             if album.name == name:
                 return album
         return None
-    
+
     @staticmethod
     def view_data()-> None:
         for _, album in AlbumPersistence.albuns.items():
             print(album)
-    
+
     @staticmethod
     def save():
         with open("data/album.csv", "w") as f:
