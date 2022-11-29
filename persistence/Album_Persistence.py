@@ -1,6 +1,6 @@
 from models import *
 from persistence import *
-
+from utilities import check_type
 
 class AlbumPersistence(Persistence):
     albuns: dict[int, Album] = dict()
@@ -9,44 +9,36 @@ class AlbumPersistence(Persistence):
         self.load()
 
     def insert(self, e: Entity) -> None:
-        if not (isinstance(e, Album)):
-            raise Exception("Recived object is not of Album Type") 
+        check_type(e, Album)
 
         AlbumPersistence.albuns[e.id] = e
 
     def remove(self, e: Entity) -> None:
-        if not (isinstance(e, Album)):
-            raise Exception("Recived object is not of Album Type")
+        check_type(e, Album)
 
         if e.id in AlbumPersistence.albuns:
             AlbumPersistence.albuns.pop(e.id)
 
     def modify(self, e: Entity) -> None:
-        if not (isinstance(e, Album)):
-            raise Exception("Recived object is not of Album Type")
+        check_type(e, Album)
 
         AlbumPersistence.albuns[e.id] = e
 
-    def search_by_id(self, e: Entity) -> Album:
-        if not (isinstance(e, Album)):
-            raise Exception("Recived object is not of Album Type")
-
-        if e.id in AlbumPersistence.albuns:
-            return AlbumPersistence.albuns[e.id]
+    def search_by_id(self, id : int) -> Album:
+        if id in AlbumPersistence.albuns:
+            return AlbumPersistence.albuns[id]
         return None
 
-    def search_by_str(self, e: Entity) -> Album:
-        if not (isinstance(e, Album)):
-            raise Exception("Recived object is not of Album Type")
-
+    def search_by_str(self, name : str) -> Album:
         for _, album in AlbumPersistence.albuns.items():
-            if album.name == e.name:
+            if album.name == name:
                 return album
         return None
 
     def view_data(self)-> None:
         for _, album in AlbumPersistence.albuns.items():
             print(album)
+
 
     def save(self):
         with open("data/album.csv", "w") as f:

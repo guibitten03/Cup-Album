@@ -1,5 +1,6 @@
 from models import *
 from persistence import *
+from utilities import check_type
 
 
 class StickerPersistence(Persistence):
@@ -9,44 +10,36 @@ class StickerPersistence(Persistence):
         self.load()
 
     def insert(self, e: Entity) -> None:
-        if not (isinstance(e, Sticker)):
-            raise Exception("Recived object is not of Sticker Type")
+        check_type(e, Sticker)
 
         StickerPersistence.stickers[e.id] = e
 
     def remove(self, e: Entity) -> None:
-        if not (isinstance(e, Sticker)):
-            raise Exception("Recived object is not of Sticker Type")
+        check_type(e, Sticker)
 
         if e.id in StickerPersistence.stickers:
             StickerPersistence.stickers.pop(e.id)
 
     def modify(self, e: Entity) -> None:
-        if not (isinstance(e, Sticker)):
-            raise Exception("Recived object is not of Sticker Type")
+        check_type(e, Sticker)
 
         StickerPersistence.stickers[e.id] = e
 
-    def search_by_id(self, e: Entity) -> Sticker:
-        if not (isinstance(e, Sticker)):
-            raise Exception("Recived object is not of Sticker Type")
-
-        if e.id in StickerPersistence.stickers:
-            return StickerPersistence.stickers[e.id]
+    def search_by_id(self, id : int) -> Sticker:
+        if id in StickerPersistence.stickers:
+            return StickerPersistence.stickers[id]
         return None
 
-    def search_by_str(self, e: Entity) -> Sticker:
-        if not (isinstance(e, Sticker)):
-            raise Exception("Recived object is not of Sticker Type")
-
+    def search_by_str(self, name : str) -> Sticker:
         for _, s in StickerPersistence.stickers.items():
-            if s.name == e.name:
+            if s.name == name:
                 return s
         return None
 
     def view_data(self)-> None:
         for _, s in StickerPersistence.stickers.items():
             print(s)
+
 
     def save(self) -> None:
         with open("data/sticker.csv", "w") as f:

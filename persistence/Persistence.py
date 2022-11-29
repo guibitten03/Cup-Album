@@ -10,33 +10,33 @@ class Persistence(ABC):
         pass
 
     @abstractmethod
-    def insert(e: Entity) -> None:
+    def insert(self, e: Entity) -> None:
         pass
 
     @abstractmethod
-    def modify(e: Entity) -> None:
+    def modify(self, e: Entity) -> None:
         pass
 
     @abstractmethod
-    def remove(e: Entity) -> None:
+    def remove(self, e: Entity) -> None:
         pass
 
     @abstractmethod
-    def save() -> None:
+    def save(self) -> None:
         pass
 
     @abstractmethod
-    def load() -> None:
+    def load(self) -> None:
         pass
 
     @abstractmethod
-    def view_data() -> None:
+    def view_data(self) -> None:
         pass
 
     @abstractmethod
-    def search_by_id(id: int):
+    def search_by_id(self, id: int):
         pass
 
     @abstractmethod
-    def search_by_str(s: str):
+    def search_by_str(self, s: str):
         pass
