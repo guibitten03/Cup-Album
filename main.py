@@ -1,6 +1,6 @@
 import os
 
-from interface.command_line import CLI
+# from interface.command_line import CLI
 from persistence import *
 
 
@@ -15,7 +15,7 @@ def main():
     except Exception as e:
         print(f"Exception while trying to load file: {e}")
 
-    CLI.home(sp=sp_inst, ap=ap_inst, cp=cp_inst, tp=tp_inst)
+    # CLI.home(sp=sp_inst, ap=ap_inst, cp=cp_inst, tp=tp_inst)
 
     try:
         sp_inst.save()

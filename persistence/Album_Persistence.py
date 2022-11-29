@@ -8,27 +8,39 @@ class AlbumPersistence(Persistence):
     def __init__(self) -> None:
         self.load()
 
-    def insert(self, a: Album) -> None:
-        AlbumPersistence.albuns[a.id] = a
+    def insert(self, e: Entity) -> None:
+        if not (isinstance(e, Album)):
+            raise Exception("Recived object is not of Album Type") 
 
-    def remove(self, id : int) -> None:
-        if id in AlbumPersistence.albuns:
-            AlbumPersistence.albuns.pop(id)
+        AlbumPersistence.albuns[e.id] = e
 
-    def modify(self, id : int, name : str = "", owner : str = "") -> None:
-        if id in AlbumPersistence.albuns:
-            album = AlbumPersistence.albuns[id]
-            album.name = name if name != "" else album.name
-            album.owner = owner if owner != "" else album.owner
+    def remove(self, e: Entity) -> None:
+        if not (isinstance(e, Album)):
+            raise Exception("Recived object is not of Album Type")
 
-    def search_by_id(self, id : int) -> Album:
-        if id in AlbumPersistence.albuns:
-            return AlbumPersistence.albuns[id]
+        if e.id in AlbumPersistence.albuns:
+            AlbumPersistence.albuns.pop(e.id)
+
+    def modify(self, e: Entity) -> None:
+        if not (isinstance(e, Album)):
+            raise Exception("Recived object is not of Album Type")
+
+        AlbumPersistence.albuns[e.id] = e
+
+    def search_by_id(self, e: Entity) -> Album:
+        if not (isinstance(e, Album)):
+            raise Exception("Recived object is not of Album Type")
+
+        if e.id in AlbumPersistence.albuns:
+            return AlbumPersistence.albuns[e.id]
         return None
 
-    def search_by_str(self, name : str) -> Album:
+    def search_by_str(self, e: Entity) -> Album:
+        if not (isinstance(e, Album)):
+            raise Exception("Recived object is not of Album Type")
+
         for _, album in AlbumPersistence.albuns.items():
-            if album.name == name:
+            if album.name == e.name:
                 return album
         return None
 

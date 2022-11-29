@@ -8,28 +8,39 @@ class StickerPersistence(Persistence):
     def __init__(self) -> None:
         self.load()
 
-    def insert(self, s: Sticker) -> None:
-        StickerPersistence.stickers[s.id] = s
+    def insert(self, e: Entity) -> None:
+        if not (isinstance(e, Sticker)):
+            raise Exception("Recived object is not of Sticker Type")
 
-    def remove(self, id : int) -> None:
-        if id in StickerPersistence.stickers:
-            StickerPersistence.stickers.pop(id)
+        StickerPersistence.stickers[e.id] = e
 
-    def modify(self, id: int, name: str = "", team: str = "", position: str = "") -> None:
-        sticker: Sticker = StickerPersistence.stickers[id]
-        if id in StickerPersistence.stickers:
-            sticker.name = name if name != "" else sticker.name
-            sticker.team = team if team != "" else sticker.team
-            sticker.position = position if position != "" else sticker.position
+    def remove(self, e: Entity) -> None:
+        if not (isinstance(e, Sticker)):
+            raise Exception("Recived object is not of Sticker Type")
 
-    def search_by_id(self, id: int) -> Sticker:
-        if id in StickerPersistence.stickers:
-            return StickerPersistence.stickers[id]
+        if e.id in StickerPersistence.stickers:
+            StickerPersistence.stickers.pop(e.id)
+
+    def modify(self, e: Entity) -> None:
+        if not (isinstance(e, Sticker)):
+            raise Exception("Recived object is not of Sticker Type")
+
+        StickerPersistence.stickers[e.id] = e
+
+    def search_by_id(self, e: Entity) -> Sticker:
+        if not (isinstance(e, Sticker)):
+            raise Exception("Recived object is not of Sticker Type")
+
+        if e.id in StickerPersistence.stickers:
+            return StickerPersistence.stickers[e.id]
         return None
 
-    def search_by_str(self, name: str) -> Sticker:
+    def search_by_str(self, e: Entity) -> Sticker:
+        if not (isinstance(e, Sticker)):
+            raise Exception("Recived object is not of Sticker Type")
+
         for _, s in StickerPersistence.stickers.items():
-            if s.name == name:
+            if s.name == e.name:
                 return s
         return None
 
