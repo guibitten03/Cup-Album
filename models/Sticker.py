@@ -39,7 +39,7 @@ class Sticker(Entity):
         self.name = name
 
     def set_position(self, position: str) -> None:
-        self.position
+        self.position = position
 
     def __str__(self) -> None:
         return "Id: {}| Name: {}| Team: {}| Position: {}".format(self.id, self.name, self.team, self.position)

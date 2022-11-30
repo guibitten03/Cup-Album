@@ -13,27 +13,12 @@ class Album(Entity):
     def stick(self, stk: Sticker) -> None:
         self.album.append(stk)
 
-    def remove_sticker(self,stk: Sticker, name: str, team: str, position: str) -> None:
-        
+    def remove_sticker(self, stk: Sticker) -> None:
         if stk in self.album:
             self.album.remove(stk)
-        # for index, stk in enumerate(self.album):
-        #     if stk.name == name:
-        #         if stk.team == team:
-        #             if stk.position == position:
-        #                 self.album.pop(index)
-        #                 return True
 
-    def sticker_in_album(self, stk: Sticker, name: str, team: str, position: str) -> bool:
-        
+    def sticker_in_album(self, stk: Sticker) -> bool:
         return stk in self.album
-        
-        # for stk in self.album:
-        #     if stk.name == name:
-        #         if stk.team == team:
-        #             if stk.position == position:
-        #                 return True
-        # return False
 
     def get_name(self) -> str:
         return self.name
@@ -44,9 +29,6 @@ class Album(Entity):
     def get_album(self) -> list[Sticker]:
         return self.album
 
-    # def get_album_size(self) -> int:
-    #   return self.album_size
-
     def set_name(self, name: str) -> None:
         self.name = name
 
@@ -56,15 +38,12 @@ class Album(Entity):
     def set_album(self, album: list[Sticker]):
         self.album = album
 
-    # def set_album_size(self, size):
-    #   self.album_size = size
-
     def __str__(self):
         string = f"Id: {self.id}| Collector Id: {self.colr.id}| Album Name: {self.name}\nStickers: "
 
         for index, player in enumerate(self.album):
             if index == (len(self.album) - 1):
-                string += f"{player.id}";
+                string += f"{player.id}"
                 break
             string += f" {player.id},"
 
