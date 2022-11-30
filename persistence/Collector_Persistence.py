@@ -1,6 +1,6 @@
 from models import *
 from persistence import *
-
+from utilities import check_type
 
 class CollectorPersistence(Persistence):
     collectors: dict[int, Collector] = dict()
@@ -8,31 +8,34 @@ class CollectorPersistence(Persistence):
     def __init__(self) -> None:
         self.load()
 
-    def insert(self, c : Collector) -> None:
-        CollectorPersistence.collectors[c.id] = c
+    def insert(self, e : Entity) -> None:
+        check_type(e, Collector)
 
-    def remove(self, id : int) -> None:
-        if id in CollectorPersistence.collectors:
-            CollectorPersistence.collectors.pop(id)
+        CollectorPersistence.collectors[e.id] = e
 
-    def modify(self, id : int, name : str) -> None:
-        if id in CollectorPersistence.collectors:
-            CollectorPersistence.collectors[id].name = name
+    def remove(self, e: Entity) -> None:
+        check_type(e, Collector)
+        if e.id in CollectorPersistence.collectors:
+            CollectorPersistence.collectors.pop(e.id)
+
+    def modify(self, e: Entity) -> None:
+        check_type(e, Collector)
+        CollectorPersistence.collectors[e.id] = e
 
     def search_by_id(self, id : int) -> Collector:
         if id in CollectorPersistence.collectors:
             return CollectorPersistence.collectors[id]
         return None
 
-    def search_by_str(self, name : str) -> Collector:        
-        for _,c in CollectorPersistence.collectors.items():
-            if c.name == name:
-                return c
+    def search_by_str(self, s: str) -> Collector:        
+        for _,clt in CollectorPersistence.collectors.items():
+            if clt.name == s:
+                return clt
         return None
 
     def view_data(self)-> None:
-        for _,c in CollectorPersistence.collectors.items():
-            print(c)
+        for _,clt in CollectorPersistence.collectors.items():
+            print(clt)
 
     def save(self):
         with open("data/collector.csv", "w") as f:

@@ -30,15 +30,15 @@ class StickerPersistence(Persistence):
             return StickerPersistence.stickers[id]
         return None
 
-    def search_by_str(self, name : str) -> Sticker:
-        for _, s in StickerPersistence.stickers.items():
-            if s.name == name:
-                return s
+    def search_by_str(self, s: str) -> Sticker:
+        for _, stk in StickerPersistence.stickers.items():
+            if stk.name == s:
+                return stk
         return None
 
     def view_data(self)-> None:
-        for _, s in StickerPersistence.stickers.items():
-            print(s)
+        for _, stk in StickerPersistence.stickers.items():
+            print(stk)
 
 
     def save(self) -> None:

@@ -1,5 +1,6 @@
 from models import *
 from persistence import *
+from utilities import check_type
 
 
 class TradePersistence(Persistence):
@@ -8,29 +9,29 @@ class TradePersistence(Persistence):
     def __init__(self) -> None:
         self.load()
 
-    def insert(self, t: Trade) -> None:
-        TradePersistence.trades[t.get_id()] = t
+    def insert(self, e: Entity) -> None:
+        check_type(e, Trade)
 
-    def remove(self, id: int) -> None:
-        if id in TradePersistence.trades:
-            TradePersistence.trades.pop(id)
+        TradePersistence.trades[e.id] = e
 
-    def modify(self, id: int, c1: int = -1, c2: int = -1, s1: int = -1, s2: int = -1) -> None:
-        if id in TradePersistence.trades:
-            trade = TradePersistence.trades[id]
-            trade.collector1 = c1 if c1 != -1 else trade.collector1
-            trade.collector2 = c2 if c2 != -1 else trade.collector2
-            trade.sticker1 = s1 if s1 != -1 else trade.sticker1
-            trade.sticker2 = s2 if s2 != -1 else trade.sticker2
+    def remove(self, e: Entity) -> None:
+        check_type(e, Trade)
+        
+        if e.id in TradePersistence.trades:
+            TradePersistence.trades.pop(e.id)
 
-    def search_by_id(self, id: int) -> Trade:
+    def modify(self, e: Entity) -> None:
+        check_type(e, Trade)
+        TradePersistence.trades[e.id] = e
+        
+    def search_by_id(self, id: int) -> Entity:
         if id in TradePersistence.trades:
             return TradePersistence.trades[id]
         return None
 
-    def search_by_str(self, date: str = "") -> Trade:
+    def search_by_str(self, s: str = "") -> Entity:
         for _, t in TradePersistence.trades.items():
-            if t.date == date:
+            if t.date == s:
                 return t
         return None
 
