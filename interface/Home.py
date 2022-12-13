@@ -1,5 +1,6 @@
 from Class_interface import Interface
 from Collector_interface import CollectorInterface
+from Trade_interface import TradeInterface
 from tkinter import *
 
 class HomeInterface(Frame):
@@ -14,7 +15,7 @@ class HomeInterface(Frame):
         self.Sticker = CollectorInterface(parent, 'Sticker', self)
         self.Collector = CollectorInterface(parent, 'Collector', self)
         self.Album = CollectorInterface(parent, 'Album', self)
-        self.Trade = CollectorInterface(parent, 'Trade', self)
+        self.Trade = TradeInterface(parent, 'Trade', self)
         
         self.home()
         
