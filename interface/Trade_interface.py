@@ -1,4 +1,5 @@
 from Class_interface import Interface
+from controle import *
 from tkinter import *
 
 class TradeInterface(Frame, Interface):
@@ -11,6 +12,7 @@ class TradeInterface(Frame, Interface):
         self.Remove = Frame(self.parent)
         self.Modify = Frame(self.parent)
         self.Search = Frame(self.parent)
+        self.trade_controler = TradeControle()
         
         self.home_interface = home_interface
         self.nome = nome

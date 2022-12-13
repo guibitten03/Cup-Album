@@ -1,4 +1,5 @@
 from Class_interface import Interface
+from controle import *
 from tkinter import *
 
 class CollectorInterface(Frame, Interface):
@@ -11,6 +12,7 @@ class CollectorInterface(Frame, Interface):
         self.Remove = Frame(self.parent)
         self.Modify = Frame(self.parent)
         self.Search = Frame(self.parent)
+        self.collector_controler = CollectorControle()
         
         self.home_interface = home_interface
         self.nome = nome
@@ -29,7 +31,7 @@ class CollectorInterface(Frame, Interface):
 
         self.search()
         self.Search.grid_forget()
-
+      
     def home(self):
 
         self.Home.grid()
@@ -66,83 +68,83 @@ class CollectorInterface(Frame, Interface):
         self.Insert.grid()
 
         Label(self.Insert, text='Collector insert').grid(row=0,columnspan=5)
-        Label(self.Insert,text='Collector Name:').grid(row=1, column=0, pady=5, padx=5)
+        Label(self.Insert,text='Collector Name:').grid(row=2, column=0, pady=5, padx=5)
 
         self.insert_name_collector=Entry(self.Insert, width=10)
-        self.insert_name_collector.grid(row=1, column=1, sticky=E+W, pady=5, padx=5)
+        self.insert_name_collector.grid(row=2, column=1, sticky=E+W, pady=5, padx=5)
         self.insert_name_collector.focus_force()
 
         self.confirm_insert = Button(self.Insert, text="Insert", fg="red")
         self.confirm_insert.bind("<Button-1>", lambda event: self.insert_event(event, self.insert_name_collector))
-        self.confirm_insert.grid(row=2,column=0, sticky=W,pady=5,padx=5)
+        self.confirm_insert.grid(row=4,column=0, sticky=W,pady=5,padx=5)
 
         self.exit_insert = Button(self.Insert, text="Exit", fg="red")
         self.exit_insert.bind("<Button-1>", lambda event, future_frame=self.Home: 
                                             self.muda_tela(event, self.Insert, future_frame))
-        self.exit_insert.grid(row=2,column=1, sticky=E,pady=5,padx=5)
+        self.exit_insert.grid(row=4,column=1, sticky=E,pady=5,padx=5)
 
     def remove(self):
 
         self.Remove.grid()
 
         Label(self.Remove, text='Collector remove').grid(row=0,columnspan=5)
-        Label(self.Remove,text='Collector ID:').grid(row=1, column=0, pady=5, padx=5)
+        Label(self.Remove,text='Collector ID:').grid(row=2, column=0, pady=5, padx=5)
 
         vcmd = (self.Remove.register(self.callback))
         self.remove_id_collector=Entry(self.Remove, width=10, validate='all', validatecommand=(vcmd, '%P'))
-        self.remove_id_collector.grid(row=1, column=1, sticky=E+W, pady=5, padx=5)
+        self.remove_id_collector.grid(row=2, column=1, sticky=E+W, pady=5, padx=5)
         self.remove_id_collector.focus_force()
 
         self.confirm_remove = Button(self.Remove, text="Remove", fg="red")
         self.confirm_remove.bind("<Button-1>", lambda event: self.remove_event(event, self.remove_id_collector))
-        self.confirm_remove.grid(row=2,column=0, sticky=W,pady=5,padx=5)
+        self.confirm_remove.grid(row=4,column=0, sticky=W,pady=5,padx=5)
 
         self.exit_remove = Button(self.Remove, text="Exit", fg="red")
         self.exit_remove.bind("<Button-1>", lambda event, future_frame=self.Home: 
                                             self.muda_tela(event, self.Remove, future_frame))
-        self.exit_remove.grid(row=2,column=1, sticky=E,pady=5,padx=5)
+        self.exit_remove.grid(row=4,column=1, sticky=E,pady=5,padx=5)
     
     def modify(self):
 
         self.Modify.grid()
 
         Label(self.Modify, text='Collector modify').grid(row=0,columnspan=5)
-        Label(self.Modify,text='Collector ID:').grid(row=1, column=0, pady=5, padx=5)
+        Label(self.Modify,text='Collector ID:').grid(row=2, column=0, pady=5, padx=5)
 
         vcmd = (self.Modify.register(self.callback))
         self.modify_id_collector=Entry(self.Modify, width=10, validate='all', validatecommand=(vcmd, '%P'))
-        self.modify_id_collector.grid(row=1, column=1, sticky=E+W, pady=5, padx=5)
+        self.modify_id_collector.grid(row=2, column=1, sticky=E+W, pady=5, padx=5)
         self.modify_id_collector.focus_force()
 
         self.confirm_remove = Button(self.Modify, text="Modify", fg="red")
         self.confirm_remove.bind("<Button-1>", lambda event: self.modify_event(event, self.modify_id_collector))
-        self.confirm_remove.grid(row=2,column=0, sticky=W,pady=5,padx=5)
+        self.confirm_remove.grid(row=4,column=0, sticky=W,pady=5,padx=5)
 
         self.exit_modify = Button(self.Modify, text="Exit", fg="red")
         self.exit_modify.bind("<Button-1>", lambda event, future_frame=self.Home: 
                                      self.muda_tela(event, self.Modify, future_frame))
-        self.exit_modify.grid(row=2,column=1, sticky=E,pady=5,padx=5)
+        self.exit_modify.grid(row=4,column=1, sticky=E,pady=5,padx=5)
     
     def search(self):
 
         self.Search.grid()
 
         Label(self.Search, text='Collector search').grid(row=0,columnspan=5)
-        Label(self.Search,text='Collector ID:').grid(row=1, column=0, pady=5, padx=5)
+        Label(self.Search,text='Collector ID:').grid(row=2, column=0, pady=5, padx=5)
 
         vcmd = (self.Search.register(self.callback))
         self.search_id_collector=Entry(self.Search, width=10, validate='all', validatecommand=(vcmd, '%P'))
-        self.search_id_collector.grid(row=1, column=1, sticky=E+W, pady=5, padx=5)
+        self.search_id_collector.grid(row=2, column=1, sticky=E+W, pady=5, padx=5)
         self.search_id_collector.focus_force()
 
         self.confirm_remove = Button(self.Search, text="search", fg="red")
         self.confirm_remove.bind("<Button-1>", lambda event: self.search_event(event, self.search_id_collector))
-        self.confirm_remove.grid(row=2,column=0, sticky=W,pady=5,padx=5)
+        self.confirm_remove.grid(row=4,column=0, sticky=W,pady=5,padx=5)
 
         self.exit_search = Button(self.Search, text="Exit", fg="red")
         self.exit_search.bind("<Button-1>", lambda event, future_frame=self.Home: 
                                      self.muda_tela(event, self.Search, future_frame))
-        self.exit_search.grid(row=2,column=1, sticky=E,pady=5,padx=5)
+        self.exit_search.grid(row=4,column=1, sticky=E,pady=5,padx=5)
 
     def callback(self, P):
         if str.isdigit(P) or P == "":
@@ -155,7 +157,9 @@ class CollectorInterface(Frame, Interface):
         future_frame.grid()
 
     def insert_event(self, event, text):
-        print(text.get())
+        if(text.get()!= ""):
+
+            print(text.get())
         text.delete(0, END)
         text.insert(0, "")
     
