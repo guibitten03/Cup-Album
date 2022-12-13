@@ -1,5 +1,4 @@
-from models import *
-
+from models import Entity
 
 class Collector(Entity):
 

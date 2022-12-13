@@ -29,7 +29,7 @@ class CollectorInterface(Frame, Interface):
 
         self.search()
         self.Search.grid_forget()
-      
+
     def home(self):
 
         self.Home.grid()

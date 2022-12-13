@@ -14,16 +14,21 @@ class TradePersistence(Persistence):
 
         TradePersistence.trades[e.id] = e
 
-    def remove(self, e: Entity) -> None:
+    def remove(self, e: Entity) -> bool:
         check_type(e, Trade)
         
         if e.id in TradePersistence.trades:
             TradePersistence.trades.pop(e.id)
+            return True
+        return False
 
     def modify(self, e: Entity) -> None:
         check_type(e, Trade)
-        TradePersistence.trades[e.id] = e
-        
+        if e.id in TradePersistence.trades.keys():
+            TradePersistence.trades[e.id] = e
+            return True
+        return False
+    
     def search_by_id(self, id: int) -> Entity:
         if id in TradePersistence.trades:
             return TradePersistence.trades[id]
@@ -39,22 +44,31 @@ class TradePersistence(Persistence):
         for _, t in TradePersistence.trades.items():
             print(t)
 
-    def save(self) -> None:
-        with open("data/trade.csv", "w") as f:
-            for _, t in TradePersistence.trades.items():
-                f.write(
-                    "{},{},{},{},{},{}\n" \
-                    .format(t.id, t.date, t.collector1, t.sticker1, t.collector2, t.sticker2)
-                )
+    def save(self) -> bool:
+        try:
+            with open("data/trade.csv", "w") as f:
+                for _, t in TradePersistence.trades.items():
+                    f.write(
+                        "{},{},{},{},{},{}\n" \
+                        .format(t.id, t.date, t.collector1, t.sticker1, t.collector2, t.sticker2)
+                    )
+            return True
+        except:
+            return False
 
-    def load(self) -> None:
-        TradePersistence.trades.clear()
-        with open("data/trade.csv", "a+") as f:
-            f.seek(0)
-            for line in f:
-                data = line.split(",")
-                t = Trade(
-                    int(data[2]), int(data[3]), int(data[4]),
-                    int(data[5]), data[1], id = int(data[0])
-                )
-                self.insert(t)
+    def load(self) -> bool:
+
+        try:
+            TradePersistence.trades.clear()
+            with open("data/trade.csv", "a+") as f:
+                f.seek(0)
+                for line in f:
+                    data = line.split(",")
+                    t = Trade(
+                        int(data[2]), int(data[3]), int(data[4]),
+                        int(data[5]), data[1], id = int(data[0])
+                    )
+                    self.insert(t)
+            return True
+        except:
+            return False

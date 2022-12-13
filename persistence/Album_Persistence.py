@@ -13,23 +13,30 @@ class AlbumPersistence(Persistence):
 
         AlbumPersistence.albuns[e.id] = e
 
-    def remove(self, e: Entity) -> None:
+    def remove(self, e: Entity) -> bool:
         check_type(e, Album)
 
         if e.id in AlbumPersistence.albuns:
             AlbumPersistence.albuns.pop(e.id)
+            return True
 
-    def modify(self, e: Entity) -> None:
+        return False
+
+    def modify(self, e: Entity) -> bool:
         check_type(e, Album)
+        
+        if e.id in AlbumPersistence.albuns.keys():
+            AlbumPersistence.albuns[e.id] = e
+            return True
+        
+        return False
 
-        AlbumPersistence.albuns[e.id] = e
-
-    def search_by_id(self, id : int) -> Album:
+    def search_by_id(self, id : int) -> Entity:
         if id in AlbumPersistence.albuns:
             return AlbumPersistence.albuns[id]
         return None
 
-    def search_by_str(self, s : str) -> Album:
+    def search_by_str(self, s : str) -> Entity:
         for _, album in AlbumPersistence.albuns.items():
             if album.name == s:
                 return album
@@ -39,26 +46,34 @@ class AlbumPersistence(Persistence):
         for _, album in AlbumPersistence.albuns.items():
             print(album)
 
+    def save(self)  -> bool:
+        try:
+            with open("data/album.csv", "w") as f:
+                for _,a in AlbumPersistence.albuns.items():
+                    string : str = ""
+                    string += f"{a.id},{a.name},{a.owner}"
+                    for player in a.album:
+                        string += f",{player.id}"
+                    string += "\n"
+                    f.write(string)
+            return True
+        except:
+            return False
 
-    def save(self):
-        with open("data/album.csv", "w") as f:
-            for _,a in AlbumPersistence.albuns.items():
-                string : str = ""
-                string += f"{a.id},{a.name},{a.owner}"
-                for player in a.album:
-                    string += f",{player.id}"
-                string += "\n"
-                f.write(string)
+    def load(self)  -> bool:
 
-    def load(self):
-        AlbumPersistence.albuns.clear()
-        with open("data/album.csv","a+") as f:
-            f.seek(0)
-            for line in f:
-                data = line.split(",")
-                a = Album(id = int(data[0]),
-                          name = data[1].strip(),
-                          owner = data[2].strip())
-                for id_player in data[3:]:
-                    a.stick(StickerPersistence.stickers[int(id_player.strip())])
-                self.insert(a)
+        try:
+            AlbumPersistence.albuns.clear()
+            with open("data/album.csv","a+") as f:
+                f.seek(0)
+                for line in f:
+                    data = line.split(",")
+                    a = Album(id = int(data[0]),
+                            name = data[1].strip(),
+                            owner = data[2].strip())
+                    for id_player in data[3:]:
+                        a.stick(StickerPersistence.stickers[int(id_player.strip())])
+                    self.insert(a)
+            return True
+        except:
+            return False

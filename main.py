@@ -1,10 +1,21 @@
 import os
-
 # from interface.command_line import CLI
 from persistence import *
-
+from controle import *
+from models import *
 
 def main():
+
+    x = CollectorControle()
+    c = Collector('yan')
+    x.load()
+    
+    c1 = x.search_by_id(0)
+    
+    x.remove(c1)
+    x.save()
+
+def main2():
     os.makedirs("data", exist_ok=True)
 
     try:

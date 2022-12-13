@@ -13,14 +13,21 @@ class CollectorPersistence(Persistence):
 
         CollectorPersistence.collectors[e.id] = e
 
-    def remove(self, e: Entity) -> None:
+    def remove(self, e: Entity) -> bool:
         check_type(e, Collector)
+
         if e.id in CollectorPersistence.collectors:
             CollectorPersistence.collectors.pop(e.id)
+            return True
+        return False
 
-    def modify(self, e: Entity) -> None:
+    def modify(self, e: Entity) -> bool:
         check_type(e, Collector)
-        CollectorPersistence.collectors[e.id] = e
+
+        if e.id in CollectorPersistence.collectors.key():
+            CollectorPersistence.collectors[e.id] = e
+            return True
+        return False
 
     def search_by_id(self, id : int) -> Collector:
         if id in CollectorPersistence.collectors:
@@ -37,16 +44,25 @@ class CollectorPersistence(Persistence):
         for _,clt in CollectorPersistence.collectors.items():
             print(clt)
 
-    def save(self):
-        with open("data/collector.csv", "w") as f:
-            for _,c in CollectorPersistence.collectors.items():
-                f.write("{},{}\n".format(c.id,c.name))
-
-    def load(self):
-        CollectorPersistence.collectors.clear()
-        with open("data/collector.csv","a+") as f:
-            f.seek(0)
-            for line in f:
-                data = line.split(",")
-                c = Collector(data[1].rstrip(), id = int(data[0]))
-                self.insert(c)
+    def save(self) -> bool:
+        try:
+            with open("data/collector.csv", "w") as f:
+                for _,c in CollectorPersistence.collectors.items():
+                    f.write("{},{}\n".format(c.id,c.name))
+            return True
+        except:
+            return False
+    
+    def load(self) -> bool:
+        
+        try:
+            CollectorPersistence.collectors.clear()
+            with open("data/collector.csv","a+") as f:
+                f.seek(0)
+                for line in f:
+                    data = line.split(",")
+                    c = Collector(data[1].rstrip(), id = int(data[0]))
+                    self.insert(c)
+            return True
+        except:
+            return False

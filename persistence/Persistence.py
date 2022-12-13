@@ -2,7 +2,6 @@ from abc import ABC, abstractmethod
 
 from models import *
 
-
 class Persistence(ABC):
 
     @abstractmethod
@@ -14,19 +13,19 @@ class Persistence(ABC):
         pass
 
     @abstractmethod
-    def modify(self, e: Entity) -> None:
+    def modify(self, e: Entity) -> bool:
         pass
 
     @abstractmethod
-    def remove(self, e: Entity) -> None:
+    def remove(self, e: Entity) -> bool:
         pass
 
     @abstractmethod
-    def save(self) -> None:
+    def save(self) -> bool:
         pass
 
     @abstractmethod
-    def load(self) -> None:
+    def load(self) -> bool:
         pass
 
     @abstractmethod
@@ -34,9 +33,9 @@ class Persistence(ABC):
         pass
 
     @abstractmethod
-    def search_by_id(self, id: int):
+    def search_by_id(self, id: int) -> Entity:
         pass
 
     @abstractmethod
-    def search_by_str(self, s: str):
+    def search_by_str(self, s: str) -> Entity:
         pass

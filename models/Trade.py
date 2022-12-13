@@ -1,6 +1,8 @@
 from datetime import datetime
 
-from models import *
+from models import Entity
+from models import Collector
+from models import Sticker
 
 
 class Trade(Entity):
