@@ -1,8 +1,10 @@
 import os
 # from interface.command_line import CLI
+from tkinter import *
 from persistence import *
 from controle import *
 from models import *
+from interface import *
 
 def main():
 
@@ -27,6 +29,12 @@ def main2():
         print(f"Exception while trying to load file: {e}")
 
     # CLI.home(sp=sp_inst, ap=ap_inst, cp=cp_inst, tp=tp_inst)
+    root = Tk()
+
+    m = HomeInterface(root)
+    m.grid()
+
+    m.mainloop()
 
     try:
         sp_inst.save()
@@ -37,4 +45,4 @@ def main2():
         print(f"Exception while trying to save file: {e}")
 
 if __name__ == '__main__':
-    main()
+    main2()

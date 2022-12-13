@@ -1,6 +1,8 @@
-from Class_interface import Interface
+from interface import *
+#from Class_interface import Interface
 from controle import *
 from tkinter import *
+from models import *
 
 class CollectorInterface(Frame, Interface):
     def __init__(self, parent, nome, home_interface):
@@ -158,13 +160,16 @@ class CollectorInterface(Frame, Interface):
 
     def insert_event(self, event, text):
         if(text.get()!= ""):
-
+            #janela2 = Tk() criar janela
+            self.collector_controler.insert(Collector(text.get()))
             print(text.get())
         text.delete(0, END)
         text.insert(0, "")
     
     def remove_event(self, event, text):
-        print(text.get())
+        if(text.get() == ""):
+            return
+        self.collector_controler.search_by_id(text.get())
         text.delete(0, END)
         text.insert(0, "")
 

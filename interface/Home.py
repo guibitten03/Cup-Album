@@ -1,6 +1,7 @@
-from Class_interface import Interface
-from Collector_interface import CollectorInterface
-from Trade_interface import TradeInterface
+from interface import *
+# from Class_interface import Interface
+# from Collector_interface import CollectorInterface
+# from Trade_interface import TradeInterface
 from controle import *
 from tkinter import *
 
