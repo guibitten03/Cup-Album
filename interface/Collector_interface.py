@@ -181,39 +181,47 @@ class CollectorInterface(Frame, Interface):
         self.search_msg_id = Label(self.Search,text='Collector ID:')
         self.search_msg_id.grid(row=2, column=0, pady=5, padx=5)
         self.search_msg_id.grid_forget()
+        self.search_msg_id.visibol = 0
 
         vcmd = (self.Search.register(self.callback))
         self.search_id_collector=Entry(self.Search, width=10, validate='all', validatecommand=(vcmd, '%P'))
         self.search_id_collector.grid(row=2, column=2, sticky=E+W, pady=5, padx=5)
         self.search_id_collector.focus_force()
         self.search_id_collector.grid_forget()
+        self.search_id_collector.visibol = 0
 
         self.search_msg_name = Label(self.Search,text='Collector ID:')
         self.search_msg_name.grid(row=2, column=0, pady=5, padx=5)
         self.search_msg_name.grid_forget()
+        self.search_msg_name.visibol = 0
 
         vcmd = (self.Search.register(self.callback))
-        self.search_id_collector=Entry(self.Search, width=10, validate='all', validatecommand=(vcmd, '%P'))
-        self.search_id_collector.grid(row=2, column=2, sticky=E+W, pady=5, padx=5)
-        self.search_id_collector.focus_force()
-        self.search_id_collector.grid_forget()
+        self.search_name_collector=Entry(self.Search, width=10, validate='all', validatecommand=(vcmd, '%P'))
+        self.search_name_collector.grid(row=2, column=2, sticky=E+W, pady=5, padx=5)
+        self.search_name_collector.focus_force()
+        self.search_name_collector.grid_forget()
+        self.search_name_collector.visibol = 0
 
         self.confirm_search = Button(self.Search, text="search", fg="red")
         self.confirm_search.bind("<Button-1>", lambda event: self.search_event(event, self.search_id_collector))
         self.confirm_search.grid(row=4,column=0, sticky=W,pady=5,padx=5)
         self.confirm_search.grid_forget()
+        self.confirm_search.visibol = 0
 
-        self.search_id_Button = Button(self.Search, text="search", fg="red")
-        self.search_id_Button.bind("<Button-1>", lambda event: self.search_event(event, self.search_id_collector))
-        self.search_id_Button.grid(row=4,column=0, sticky=W,pady=5,padx=5)
+        self.search_id_button = Button(self.Search, text="search by id", fg="red")
+        self.search_id_button.bind("<Button-1>", lambda event: self.search_event_show(event, self.search_id_button))
+        self.search_id_button.grid(row=4,column=0, sticky=W,pady=5,padx=5)
+        self.search_id_button.visibol = 1
 
-        self.search_str_button = Button(self.Search, text="search", fg="red")
-        self.search_str_button.bind("<Button-1>", lambda event: self.search_event(event, self.search_id_collector))
+        self.search_str_button = Button(self.Search, text="search by str", fg="red")
+        self.search_str_button.bind("<Button-1>", lambda event: self.search_event_show(event, self.search_str_button))
         self.search_str_button.grid(row=4,column=1, sticky=W,pady=5,padx=5)
+        self.search_str_button.visibol = 1
 
         self.exit_search = Button(self.Search, text="Exit", fg="red")
+        self.exit_search.bind("<Button-1>", self.search_event_to_normal)
         self.exit_search.bind("<Button-1>", lambda event, future_frame=self.Home: 
-                                     self.muda_tela(event, self.Search, future_frame))
+                                     self.muda_tela(event, self.Search, future_frame), add='+')
         self.exit_search.grid(row=4,column=2, sticky=E,pady=5,padx=5)
 
     def callback(self, P):
@@ -363,6 +371,58 @@ class CollectorInterface(Frame, Interface):
         text.delete(0, END)
         text.insert(0, "")
 
+    def search_event_show(self, event, chosen_whidget):
+        if chosen_whidget == self.search_str_button:
+            self.search_chosen = 1 #1 = str
+            
+            self.search_msg_name.grid(row=2, column=0, pady=5, padx=5)
+            self.search_msg_name.visibol = 1
+            
+            self.search_name_collector.grid(row=2, column=2, sticky=E+W, pady=5, padx=5)
+            self.search_name_collector.visibol = 1
+
+        else: 
+            self.search_chosen = 2 #2 = id
+
+            self.search_msg_id.grid(row=2, column=0, pady=5, padx=5)
+            self.search_msg_id.visibol = 1
+            
+            self.search_id_collector.grid(row=2, column=2, sticky=E+W, pady=5, padx=5)
+            self.search_id_collector.visibol = 1
+
+        self.search_id_button.grid_forget()
+        self.search_id_button.visibol = 0
+        self.search_str_button.grid_forget()
+        self.search_str_button.visibol = 0
+        self.confirm_search.grid(row=4,column=0, sticky=W,pady=5,padx=5)
+        self.confirm_search.visibol = 1
 
     
+    def search_event_to_normal(self, event):
 
+        if self.confirm_search.visibol == 1:
+            self.confirm_search.grid_forget()
+            self.confirm_search.visibol = 0
+
+        if (self.search_msg_id.visibol == 1) or (self.search_id_collector.visibol == 1):
+            self.search_msg_id.grid_forget()
+            self.search_msg_id.visibol = 0
+            
+            self.search_id_collector.grid_forget()
+            self.search_id_collector.visibol = 0
+
+
+        if (self.search_msg_name.visibol == 1) or (self.search_name_collector.visibol == 1):
+            self.search_msg_name.grid_forget()
+            self.search_msg_name.visibol = 0
+            
+            self.search_name_collector.grid_forget()
+            self.search_name_collector.visibol = 0
+
+        if (self.search_id_button.visibol == 0) or (self.search_str_button.visibol == 0):
+            self.search_id_button.grid()
+
+            self.search_id_button.grid(row=4,column=0, sticky=W,pady=5,padx=5)
+            self.search_id_button.visibol = 1
+            self.search_str_button.grid(row=4,column=1, sticky=W,pady=5,padx=5)
+            self.search_str_button.visibol = 1
