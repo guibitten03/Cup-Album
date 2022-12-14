@@ -13,7 +13,9 @@ class StickerInterface(Frame, Interface):
         self.Remove = Frame(self.parent)
         self.Modify = Frame(self.parent)
         self.Search = Frame(self.parent)
-        self.album_controler = StickerControle()
+        self.Modify_Window = Frame(self.parent)
+        self.sticker_controler = StickerControle()
+        self.widgets_make_invisible = []
         
         self.home_interface = home_interface
         self.nome = nome
@@ -29,6 +31,9 @@ class StickerInterface(Frame, Interface):
 
         self.modify()
         self.Modify.grid_forget()
+        
+        self.modify_window()
+        self.Modify_Window.grid_forget()
 
         self.search()
         self.Search.grid_forget()
@@ -69,26 +74,40 @@ class StickerInterface(Frame, Interface):
         self.Insert.grid()
 
         Label(self.Insert, text='Sticker insert').grid(row=0,columnspan=5)
+        
+        self.insert_msg_error = Label(self.Insert, text='Please enter a name, team and position for Sticker', fg='red')
+        self.insert_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+        self.insert_msg_error.grid_forget()
+        self.insert_msg_error.visibol = 0
+        self.widgets_make_invisible.append(self.insert_msg_error)
+
+        self.insert_msg_hit = Label(self.Insert, text='Sticker inserted successfully')
+        self.insert_msg_hit.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+        self.insert_msg_hit.grid_forget()
+        self.insert_msg_hit.visibol = 0
+        self.widgets_make_invisible.append(self.insert_msg_hit)
+        
         Label(self.Insert,text='Sticker Name:').grid(row=2, column=0, pady=5, padx=5)
 
-        self.insert_id_collector=Entry(self.Insert, width=10)
-        self.insert_id_collector.grid(row=2, column=1, sticky=E+W, pady=5, padx=5)
-        self.insert_id_collector.focus_force()
+        self.insert_name_sticker = Entry(self.Insert, width=10)
+        self.insert_name_sticker.grid(row=2, column=1, sticky=E+W, pady=5, padx=5)
+        self.insert_name_sticker.focus_force()
         
         Label(self.Insert,text='Sticker Team:').grid(row=4, column=0, pady=5, padx=5)
 
-        self.insert_name_album=Entry(self.Insert, width=10)
-        self.insert_name_album.grid(row=4, column=1, sticky=E+W, pady=5, padx=5)
-        self.insert_name_album.focus_force()
+        self.insert_team_sticker=Entry(self.Insert, width=10)
+        self.insert_team_sticker.grid(row=4, column=1, sticky=E+W, pady=5, padx=5)
+        self.insert_team_sticker.focus_force()
         
         Label(self.Insert,text='Sticker Position:').grid(row=6, column=0, pady=5, padx=5)
 
-        self.insert_name_album=Entry(self.Insert, width=10)
-        self.insert_name_album.grid(row=6, column=1, sticky=E+W, pady=5, padx=5)
-        self.insert_name_album.focus_force()
+        self.insert_position_sticker=Entry(self.Insert, width=10)
+        self.insert_position_sticker.grid(row=6, column=1, sticky=E+W, pady=5, padx=5)
+        self.insert_position_sticker.focus_force()
 
         self.confirm_insert = Button(self.Insert, text="Insert", fg="red")
-        self.confirm_insert.bind("<Button-1>", lambda event: self.insert_event(event, self.insert_name_collector))
+        self.confirm_insert.bind("<Button-1>", 
+                                 lambda event: self.insert_event(event, self.insert_name_sticker, self.insert_team_sticker, self.insert_position_sticker))
         self.confirm_insert.grid(row=8,column=0, sticky=W,pady=5,padx=5)
 
         self.exit_insert = Button(self.Insert, text="Exit", fg="red")
@@ -101,6 +120,19 @@ class StickerInterface(Frame, Interface):
         self.Remove.grid()
 
         Label(self.Remove, text='Sticker remove').grid(row=0,columnspan=5)
+        
+        self.remove_msg_error = Label(self.Remove, text='Please enter a valid Id for Sticker', fg='red')
+        self.remove_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+        self.remove_msg_error.grid_forget()
+        self.remove_msg_error.visibol = 0
+        self.widgets_make_invisible.append(self.remove_msg_error)
+
+        self.remove_msg_hit = Label(self.Remove, text='Sticker removed successfully')
+        self.remove_msg_hit.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+        self.remove_msg_hit.grid_forget()
+        self.remove_msg_hit.visibol = 0
+        self.widgets_make_invisible.append(self.remove_msg_hit)
+        
         Label(self.Remove,text='Sticker ID:').grid(row=2, column=0, pady=5, padx=5)
 
         vcmd = (self.Remove.register(self.callback))
@@ -122,6 +154,19 @@ class StickerInterface(Frame, Interface):
         self.Modify.grid()
 
         Label(self.Modify, text='Sticker modify').grid(row=0,columnspan=5)
+        
+        self.modify_msg_error = Label(self.Modify, text='Please enter a valid Id for Sticker', fg='red')
+        self.modify_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+        self.modify_msg_error.grid_forget()
+        self.modify_msg_error.visibol = 0
+        self.widgets_make_invisible.append(self.modify_msg_error)
+
+        self.modify_msg_hit = Label(self.Modify, text='Sticker modified successfully')
+        self.modify_msg_hit.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+        self.modify_msg_hit.grid_forget()
+        self.modify_msg_hit.visibol = 0
+        self.widgets_make_invisible.append(self.modify_msg_hit)
+        
         Label(self.Modify,text='Sticker ID:').grid(row=2, column=0, pady=5, padx=5)
 
         vcmd = (self.Modify.register(self.callback))
@@ -137,6 +182,58 @@ class StickerInterface(Frame, Interface):
         self.exit_modify.bind("<Button-1>", lambda event, future_frame=self.Home: 
                                      self.muda_tela(event, self.Modify, future_frame))
         self.exit_modify.grid(row=4,column=1, sticky=E,pady=5,padx=5)
+        
+    def modify_window(self):
+        
+        self.Modify_Window.grid()
+        
+        Label(self.Modify_Window, text='Sticker Modify Traits').grid(row=0,columnspan=5)
+        
+        self.modifyS_msg_error = Label(self.Modify_Window, text='Sticker was not modified', fg='red')
+        self.modifyS_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+        self.modifyS_msg_error.grid_forget()
+        self.modifyS_msg_error.visibol = 0
+        self.widgets_make_invisible.append(self.modifyS_msg_error)
+
+        self.modifyS_msg_hit = Label(self.Modify_Window, text='Sticker modified successfully')
+        self.modifyS_msg_hit.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+        self.modifyS_msg_hit.grid_forget()
+        self.modifyS_msg_hit.visibol = 0
+        self.widgets_make_invisible.append(self.modifyS_msg_hit)
+        
+        Label(self.Modify_Window,text='Modify Name:').grid(row=2, column=0, pady=5, padx=5)
+
+        self.modify_name_sticker = Entry(self.Modify_Window, width=10, validate='all')
+        self.modify_name_sticker.grid(row=2, column=1, sticky=E+W, pady=5, padx=5)
+        self.modify_name_sticker.focus_force()
+        
+        Label(self.Modify_Window,text='Modify Team:').grid(row=4, column=0, pady=5, padx=5)
+
+        self.modify_team_sticker = Entry(self.Modify_Window, width=10, validate='all')
+        self.modify_team_sticker.grid(row=4, column=1, sticky=E+W, pady=5, padx=5)
+        self.modify_team_sticker.focus_force()
+        
+        Label(self.Modify_Window,text='Modify Position:').grid(row=6, column=0, pady=5, padx=5)
+
+        self.modify_position_sticker = Entry(self.Modify_Window, width=10, validate='all')
+        self.modify_position_sticker.grid(row=6, column=1, sticky=E+W, pady=5, padx=5)
+        self.modify_position_sticker.focus_force()
+
+
+        self.confirm_modify_window = Button(self.Modify_Window, text="Modify Sticker", fg="red")
+        self.confirm_modify_window.bind("<Button-1>", lambda event: 
+                        self.confirm_modify_envent(event, 
+                                                   self.modify_name_sticker, 
+                                                   self.modify_team_sticker, 
+                                                   self.modify_position_sticker
+                                                   ))
+        self.confirm_modify_window.grid(row=8,column=0, sticky=W,pady=5,padx=5)
+
+        self.exit_modify_window = Button(self.Modify_Window, text="Exit", fg="red")
+        self.exit_modify_window.bind("<Button-1>", lambda event, future_frame=self.Modify: 
+                                     self.muda_tela(event, self.Modify_Window, future_frame))
+        self.exit_modify_window.grid(row=8,column=1, sticky=E,pady=5,padx=5)
+        
     
     def search(self):
 
@@ -168,24 +265,113 @@ class StickerInterface(Frame, Interface):
     def muda_tela(self, event, current_frame, future_frame):
         current_frame.grid_forget()
         future_frame.grid()
+        
+        for w in self.widgets_make_invisible:
+            if w.visibol == 1:
+                w.grid_forget()
+                w.visibol == 0
+                
 
-    def insert_event(self, event, text):
-        if(text.get()!= ""):
-            #janela2 = Tk() criar janela
-            # self.collector_controler.insert(Collector(text.get()))
-            print(text.get())
-        text.delete(0, END)
-        text.insert(0, "")
+    def insert_event(self, event, name, team, position):
+        if (name.get()!= "") & (team.get() != "") & (position.get() != ""):
+            self.sticker_controler.insert(Sticker(name.get(), team.get(), position.get()))
+            if self.insert_msg_error.visibol == 1:
+                self.insert_msg_error.grid_forget()
+                self.insert_msg_error.visibol = 0
+            self.insert_msg_hit.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+            self.insert_msg_hit.visibol = 1
+        else:
+            if self.insert_msg_hit.visibol == 1:
+                self.insert_msg_hit.grid_forget()
+                self.insert_msg_hit.visibol = 0
+            self.insert_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+            self.insert_msg_error.visibol = 1
+        name.delete(0, END)
+        name.insert(0, "")
+        
+        team.delete(0, END)
+        team.insert(0, "")
+        
+        position.delete(0, END)
+        position.insert(0, "")
     
     def remove_event(self, event, text):
-        if(text.get() == ""):
-            return
-        # self.collector_controler.search_by_id(text.get())
+        if text.get() == "":
+            if self.remove_msg_hit.visibol == 1:
+                self.remove_msg_hit.grid_forget()
+                self.remove_msg_hit.visibol = 0
+            self.remove_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+            self.remove_msg_error.visibol = 1
+        else:
+            
+            sticker_remove = self.sticker_controler.search_by_id(int(text.get()))
+
+            if sticker_remove == None:
+                if self.remove_msg_hit.visibol == 1:
+                    self.remove_msg_hit.grid_forget()
+                    self.remove_msg_hit.visibol = 0
+                self.remove_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+                self.remove_msg_error.visibol = 1
+            else: 
+                print(text.get())
+                if self.remove_msg_error.visibol == 1:
+                    self.remove_msg_error.grid_forget()
+                    self.remove_msg_error.visibol = 0
+                self.remove_msg_hit.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+                self.remove_msg_hit.visibol = 1
+
+                self.sticker_controler.remove(sticker_remove)
+
         text.delete(0, END)
         text.insert(0, "")
-
+        
+    def confirm_modify_envent(self, event, name, team, position):
+        e = Sticker(name.get(), team.get(), position.get())
+        e.id = self.current_modified_id
+        confirm = self.sticker_controler.modify(e)
+        
+        if not confirm:
+            if self.modifyS_msg_hit.visibol == 1:
+                self.modifyS_msg_hit.grid_forget()
+                self.modifyS_msg_hit.visibol = 0
+            self.modifyS_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+            self.modifyS_msg_error.visibol = 1
+        else:
+            if self.modifyS_msg_error.visibol == 1:
+                self.modifyS_msg_error.grid_forget()
+                self.modifyS_msg_error.visibol = 0
+            self.modifyS_msg_hit.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+            self.modifyS_msg_hit.visibol = 1
+        
+        
     def modify_event(self, event, text):
-        print(text.get())
+        if text.get() == "":
+            if self.modify_msg_hit.visibol == 1:
+                self.modify_msg_hit.grid_forget()
+                self.modify_msg_hit.visibol = 0
+            self.modify_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+            self.modify_msg_error.visibol = 1
+        else:
+            
+            sticker_modify = self.sticker_controler.search_by_id(int(text.get()))
+
+            if sticker_modify == None:
+                if self.modify_msg_hit.visibol == 1:
+                    self.modify_msg_hit.grid_forget()
+                    self.modify_msg_hit.visibol = 0
+                self.modify_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+                self.modify_msg_error.visibol = 1
+            else: 
+                self.current_modified_id = int(text.get())
+                self.muda_tela(None, self.Modify, self.Modify_Window)
+                
+                if self.modify_msg_error.visibol == 1:
+                    self.modify_msg_error.grid_forget()
+                    self.modify_msg_error.visibol = 0
+                self.modify_msg_hit.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+                self.modify_msg_hit.visibol = 1
+
+
         text.delete(0, END)
         text.insert(0, "")
 

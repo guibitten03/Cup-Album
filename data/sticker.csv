@@ -1,12 +1,9 @@
-0,Conor Coady,England,Defender
-1,Fikayo Tomori,England,Defender
 2,Harry Maguire,England,Defender
 3,James Justin,England,Defender
 4,John Stones,England,Defender
 5,Kieran Trippier,England,Defender
 6,Kyle Walker,England,Defender
 7,Marc Guehi,England,Defender
-8,Reece James,England,Defender
 9,Trent Alexander-Arnold,England,Defender
 10,Harry Kane,England,Forward
 11,Jarrod Bowen,England,Forward
@@ -65,7 +62,6 @@
 64,Raul de Tomas,Spain,Forward
 65,David Raya Martin,Spain,Goalkeeper
 66,Robert Sanchez,Spain,Goalkeeper
-67,Unai Simon,Spain,Goalkeeper
 68,Carlos Soler,Spain,Midfielder
 69,Dani Olmo,Spain,Midfielder
 70,Gavi,Spain,Midfielder
@@ -74,11 +70,9 @@
 73,Pablo Sarabia,Spain,Midfielder
 74,Rodri,Spain,Midfielder
 75,Sergio Busquets,Spain,Midfielder
-76,David Carmo,Portugal,Defender
 77,Diogo Dalot,Portugal,Defender
 78,Domingos Duarte,Portugal,Defender
 79,Joao Cancelo,Portugal,Defender
-80,Nuno Mendes,Portugal,Defender
 81,Pepe,Portugal,Defender
 82,Raphael Guerreiro,Portugal,Defender
 83,Andre Silva,Portugal,Forward
@@ -98,7 +92,7 @@
 97,Matheus Nunes,Portugal,Midfielder
 98,Otavio,Portugal,Midfielder
 99,Ruben Neves,Portugal,Midfielder
-100,Vitor Ferreira,Portugal,Midfielder
+100,f,f,f
 101,William Carvalho,Portugal,Midfielder
 102,Arthur Theate,Belgium,Defender
 103,Brandon Mechele,Belgium,Defender
@@ -827,3 +821,4 @@
 826,Ricardo Avila,Panama,Midfielder
 827,Valentin Pimentel,Panama,Midfielder
 828,Edgar Yoel Barcenas,Panama,Midfielder
+829,f,f,f
