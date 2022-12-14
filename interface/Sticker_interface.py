@@ -14,12 +14,16 @@ class StickerInterface(Frame, Interface):
         self.Modify = Frame(self.parent)
         self.Search = Frame(self.parent)
         self.Modify_Window = Frame(self.parent)
+        self.Search_Window_ID = Frame(self.parent)
+        self.Search_Window_Name = Frame(self.parent)
+        self.Show_Sticker = Frame(self.parent)
         self.sticker_controler = StickerControle()
         self.widgets_make_invisible = []
         
         self.home_interface = home_interface
         self.nome = nome
-
+        
+        
         self.home()
         self.Home.grid_forget()
 
@@ -37,6 +41,18 @@ class StickerInterface(Frame, Interface):
 
         self.search()
         self.Search.grid_forget()
+        
+        self.search_by_id()
+        self.Search_Window_ID.grid_forget()
+        
+        self.search_by_name()
+        self.Search_Window_Name.grid_forget()
+        
+        self.show_sticker()
+        self.Show_Sticker.grid_forget()
+        
+        
+        
       
     def home(self):
 
@@ -234,33 +250,6 @@ class StickerInterface(Frame, Interface):
                                      self.muda_tela(event, self.Modify_Window, future_frame))
         self.exit_modify_window.grid(row=8,column=1, sticky=E,pady=5,padx=5)
         
-    
-    def search(self):
-
-        self.Search.grid()
-
-        Label(self.Search, text='Sticker search').grid(row=0,columnspan=5)
-        Label(self.Search, text='Sticker ID:').grid(row=2, column=0, pady=5, padx=5)
-        
-        self.search_msg_error = Label(self.Search, text='Please enter a valid Id for Sticker', fg='red')
-        self.search_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
-        self.search_msg_error.grid_forget()
-        self.search_msg_error.visibol = 0
-        self.widgets_make_invisible.append(self.search_msg_error)
-
-        vcmd = (self.Search.register(self.callback))
-        self.search_id_sticker=Entry(self.Search, width=10, validate='all', validatecommand=(vcmd, '%P'))
-        self.search_id_sticker.grid(row=2, column=1, sticky=E+W, pady=5, padx=5)
-        self.search_id_sticker.focus_force()
-
-        self.confirm_search = Button(self.Search, text="search", fg="red")
-        self.confirm_search.bind("<Button-1>", lambda event: self.search_event(event, self.search_id_sticker))
-        self.confirm_search.grid(row=4,column=0, sticky=W,pady=5,padx=5)
-
-        self.exit_search = Button(self.Search, text="Exit", fg="red")
-        self.exit_search.bind("<Button-1>", lambda event, future_frame=self.Home: 
-                                     self.muda_tela(event, self.Search, future_frame))
-        self.exit_search.grid(row=4,column=1, sticky=E,pady=5,padx=5)
 
     def callback(self, P):
         if str.isdigit(P) or P == "":
@@ -349,9 +338,6 @@ class StickerInterface(Frame, Interface):
             self.modifyS_msg_hit.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
             self.modifyS_msg_hit.visibol = 1
         
-    def show_sticker_search():
-        
-        
     def modify_event(self, event, text):
         if text.get() == "":
             if self.modify_msg_hit.visibol == 1:
@@ -382,8 +368,87 @@ class StickerInterface(Frame, Interface):
 
         text.delete(0, END)
         text.insert(0, "")
-
+        
+        
     def search_event(self, event, text):
-        print(text.get())
+        if text.get() == "":
+            if self.search_msg_hit.visibol == 1:
+                self.search_msg_hit.grid_forget()
+                self.search_msg_hit.visibol = 0
+            self.search_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+            self.search_msg_error.visibol = 1
+        else:
+            collector_search = self.collector_controler.search_by_id(int(text.get()))
+
+            if collector_search == None:
+                if self.search_msg_hit.visibol == 1:
+                    self.search_msg_hit.grid_forget()
+                    self.search_msg_hit.visibol = 0
+                self.search_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+                self.search_msg_error.visibol = 1
+            else: 
+                if self.search_msg_error.visibol == 1:
+                    self.search_msg_error.grid_forget()
+                    self.search_msg_error.visibol = 0
+                self.search_msg_hit.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+                self.search_msg_hit.visibol = 1
+
+                #self.collector_controler.search(collector_search)
+
         text.delete(0, END)
         text.insert(0, "")
+
+    def search_event_show(self, event, chosen_whidget):
+        if chosen_whidget == self.search_str_button:
+            self.search_chosen = 1 #1 = str
+            
+            self.search_msg_name.grid(row=2, column=0, pady=5, padx=5)
+            self.search_msg_name.visibol = 1
+            
+            self.search_name_collector.grid(row=2, column=2, sticky=E+W, pady=5, padx=5)
+            self.search_name_collector.visibol = 1
+
+        else: 
+            self.search_chosen = 2 #2 = id
+
+            self.search_msg_id.grid(row=2, column=0, pady=5, padx=5)
+            self.search_msg_id.visibol = 1
+            
+            self.search_id_collector.grid(row=2, column=2, sticky=E+W, pady=5, padx=5)
+            self.search_id_collector.visibol = 1
+
+        self.search_id_button.grid_forget()
+        self.search_id_button.visibol = 0
+        self.search_str_button.grid_forget()
+        self.search_str_button.visibol = 0
+        self.confirm_search.grid(row=4,column=0, sticky=W,pady=5,padx=5)
+        self.confirm_search.visibol = 1
+
+    def search_event_to_normal(self, event):
+
+        if self.confirm_search.visibol == 1:
+            self.confirm_search.grid_forget()
+            self.confirm_search.visibol = 0
+
+        if (self.search_msg_id.visibol == 1) or (self.search_id_collector.visibol == 1):
+            self.search_msg_id.grid_forget()
+            self.search_msg_id.visibol = 0
+            
+            self.search_id_collector.grid_forget()
+            self.search_id_collector.visibol = 0
+
+
+        if (self.search_msg_name.visibol == 1) or (self.search_name_collector.visibol == 1):
+            self.search_msg_name.grid_forget()
+            self.search_msg_name.visibol = 0
+            
+            self.search_name_collector.grid_forget()
+            self.search_name_collector.visibol = 0
+
+        if (self.search_id_button.visibol == 0) or (self.search_str_button.visibol == 0):
+            self.search_id_button.grid()
+
+            self.search_id_button.grid(row=4,column=0, sticky=W,pady=5,padx=5)
+            self.search_id_button.visibol = 1
+            self.search_str_button.grid(row=4,column=1, sticky=W,pady=5,padx=5)
+            self.search_str_button.visibol = 1
