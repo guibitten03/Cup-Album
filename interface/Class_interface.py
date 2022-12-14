@@ -47,10 +47,7 @@ class Interface(ABC):
         pass
 
     @abstractmethod
-    def search_id_event(self, event, text):
+    def search_event(self, event, text):
         pass
 
-    @abstractmethod
-    def search_str_event(self, event, text):
-        pass
 
