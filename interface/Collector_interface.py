@@ -14,6 +14,7 @@ class CollectorInterface(Frame, Interface):
         self.Remove = Frame(self.parent)
         self.Modify = Frame(self.parent)
         self.Search = Frame(self.parent)
+        self.Modify_aux = Frame(self.parent)
         self.collector_controler = CollectorControle()
         self.widgets_make_invisible = []
         
@@ -34,6 +35,9 @@ class CollectorInterface(Frame, Interface):
 
         self.search()
         self.Search.grid_forget()
+
+        self.__modify_aux__()
+        self.Modify_aux.grid_forget()
       
     def home(self):
 
@@ -138,6 +142,19 @@ class CollectorInterface(Frame, Interface):
         self.Modify.grid()
 
         Label(self.Modify, text='Collector modify').grid(row=0,columnspan=5)
+
+        self.modify_msg_error = Label(self.Modify, text='Collector not found', fg='red')
+        self.modify_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+        self.modify_msg_error.grid_forget()
+        self.modify_msg_error.visibol = 0
+        self.widgets_make_invisible.append(self.modify_msg_error)
+
+        self.modify_msg_hit = Label(self.Modify, text='Collector successfully modified')
+        self.modify_msg_hit.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+        self.modify_msg_hit.grid_forget()
+        self.modify_msg_hit.visibol = 0
+        self.widgets_make_invisible.append(self.modify_msg_hit)
+
         Label(self.Modify,text='Collector ID:').grid(row=2, column=0, pady=5, padx=5)
 
         vcmd = (self.Modify.register(self.callback))
@@ -145,9 +162,9 @@ class CollectorInterface(Frame, Interface):
         self.modify_id_collector.grid(row=2, column=1, sticky=E+W, pady=5, padx=5)
         self.modify_id_collector.focus_force()
 
-        self.confirm_remove = Button(self.Modify, text="Modify", fg="red")
-        self.confirm_remove.bind("<Button-1>", lambda event: self.modify_event(event, self.modify_id_collector))
-        self.confirm_remove.grid(row=4,column=0, sticky=W,pady=5,padx=5)
+        self.confirm_modify = Button(self.Modify, text="Modify", fg="red")
+        self.confirm_modify.bind("<Button-1>", lambda event: self.modify_event(event, self.modify_id_collector))
+        self.confirm_modify.grid(row=4,column=0, sticky=W,pady=5,padx=5)
 
         self.exit_modify = Button(self.Modify, text="Exit", fg="red")
         self.exit_modify.bind("<Button-1>", lambda event, future_frame=self.Home: 
@@ -236,11 +253,68 @@ class CollectorInterface(Frame, Interface):
         text.insert(0, "")
 
     def modify_event(self, event, text):
-        print(text.get())
+        if text.get() == "":
+            if self.modify_msg_hit.visibol == 1:
+                self.modify_msg_hit.grid_forget()
+                self.modify_msg_hit.visibol = 0
+            self.modify_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+            self.modify_msg_error.visibol = 1
+
+            text.delete(0, END)
+            text.insert(0, "")
+        else:
+
+            if self.collector_controler.search_by_id(int(text.get())) == None:
+                if self.modify_msg_hit.visibol == 1:
+                    self.modify_msg_hit.grid_forget()
+                    self.modify_msg_hit.visibol = 0
+                self.modify_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+                self.modify_msg_error.visibol = 1
+
+                text.delete(0, END)
+                text.insert(0, "")
+            else: 
+                self.Modify.grid_forget()
+                self.Modify_aux.grid()
+
+    def __modify_aux__(self):
+
+        self.Modify_aux.grid()
+
+        Label(self.Modify_aux,text='New name:').grid(row=0, column=0, pady=5, padx=5)
+
+        self.modify_aux_name_collector=Entry(self.Modify_aux, width=10)
+        self.modify_aux_name_collector.grid(row=0, column=1, sticky=E+W, pady=5, padx=5)
+        self.modify_aux_name_collector.focus_force()
+
+        self.confirm_modify_aux = Button(self.Modify_aux, text="Modify", fg="red")
+        self.confirm_modify_aux.bind("<Button-1>", lambda event: self.__modify_event_aux__(event, self.modify_aux_name_collector))
+        self.confirm_modify_aux.grid(row=4,column=1, sticky=W,pady=5,padx=5)
+
+
+
+    def __modify_event_aux__(self, event, text):
+
+        modify_collector = self.collector_controler.search_by_id(int(self.modify_id_collector.get()))
+        modify_collector.set_name(text.get())
+
         text.delete(0, END)
         text.insert(0, "")
+        
+        self.modify_id_collector.delete(0, END)
+        self.modify_id_collector.insert(0, "")
+
+        self.Modify_aux.grid_forget()
+        self.Modify.grid()
+
+        if self.modify_msg_error.visibol == 1:
+                self.modify_msg_error.grid_forget()
+                self.modify_msg_error.visibol = 0
+        self.modify_msg_hit.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+        self.modify_msg_hit.visibol = 1
 
     def search_event(self, event, text):
         print(text.get())
         text.delete(0, END)
         text.insert(0, "")
+
