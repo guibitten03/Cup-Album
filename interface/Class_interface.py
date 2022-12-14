@@ -50,3 +50,4 @@ class Interface(ABC):
     def search_event(self, event, text):
         pass
 
+
