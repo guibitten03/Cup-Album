@@ -15,6 +15,7 @@ class CollectorInterface(Frame, Interface):
         self.Modify = Frame(self.parent)
         self.Search = Frame(self.parent)
         self.collector_controler = CollectorControle()
+        self.widgets_make_invisible = []
         
         self.home_interface = home_interface
         self.nome = nome
@@ -70,6 +71,19 @@ class CollectorInterface(Frame, Interface):
         self.Insert.grid()
 
         Label(self.Insert, text='Collector insert').grid(row=0,columnspan=5)
+
+        self.insert_msg_error = Label(self.Insert, text='Please enter a name for the collector', fg='red')
+        self.insert_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+        self.insert_msg_error.grid_forget()
+        self.insert_msg_error.visibol = 0
+        self.widgets_make_invisible.append(self.insert_msg_error)
+
+        self.insert_msg_hit = Label(self.Insert, text='collector inserted successfully')
+        self.insert_msg_hit.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+        self.insert_msg_hit.grid_forget()
+        self.insert_msg_hit.visibol = 0
+        self.widgets_make_invisible.append(self.insert_msg_hit)
+
         Label(self.Insert,text='Collector Name:').grid(row=2, column=0, pady=5, padx=5)
 
         self.insert_name_collector=Entry(self.Insert, width=10)
@@ -90,6 +104,19 @@ class CollectorInterface(Frame, Interface):
         self.Remove.grid()
 
         Label(self.Remove, text='Collector remove').grid(row=0,columnspan=5)
+
+        self.remove_msg_error = Label(self.Remove, text='Collector not found', fg='red')
+        self.remove_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+        self.remove_msg_error.grid_forget()
+        self.remove_msg_error.visibol = 0
+        self.widgets_make_invisible.append(self.remove_msg_error)
+
+        self.remove_msg_hit = Label(self.Remove, text='Collector successfully removed')
+        self.remove_msg_hit.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+        self.remove_msg_hit.grid_forget()
+        self.remove_msg_hit.visibol = 0
+        self.widgets_make_invisible.append(self.remove_msg_hit)
+
         Label(self.Remove,text='Collector ID:').grid(row=2, column=0, pady=5, padx=5)
 
         vcmd = (self.Remove.register(self.callback))
@@ -158,18 +185,53 @@ class CollectorInterface(Frame, Interface):
         current_frame.grid_forget()
         future_frame.grid()
 
+        for w in self.widgets_make_invisible:
+            if w.visibol == 1:
+                w.grid_forget()
+                w.visibol == 0
+
     def insert_event(self, event, text):
-        if(text.get()!= ""):
-            #janela2 = Tk() criar janela
+        if text.get()!= "":
             self.collector_controler.insert(Collector(text.get()))
-            print(text.get())
+            if self.insert_msg_error.visibol == 1:
+                self.insert_msg_error.grid_forget()
+                self.insert_msg_error.visibol = 0
+            self.insert_msg_hit.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+            self.insert_msg_hit.visibol = 1
+        else:
+            if self.insert_msg_hit.visibol == 1:
+                self.insert_msg_hit.grid_forget()
+                self.insert_msg_hit.visibol = 0
+            self.insert_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+            self.insert_msg_error.visibol = 1
         text.delete(0, END)
         text.insert(0, "")
     
     def remove_event(self, event, text):
-        if(text.get() == ""):
-            return
-        self.collector_controler.search_by_id(text.get())
+        if text.get() == "":
+            if self.remove_msg_hit.visibol == 1:
+                self.remove_msg_hit.grid_forget()
+                self.remove_msg_hit.visibol = 0
+            self.remove_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+            self.remove_msg_error.visibol = 1
+        else:
+            collector_remove = self.collector_controler.search_by_id(int(text.get()))
+
+            if collector_remove == None:
+                if self.remove_msg_hit.visibol == 1:
+                    self.remove_msg_hit.grid_forget()
+                    self.remove_msg_hit.visibol = 0
+                self.remove_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+                self.remove_msg_error.visibol = 1
+            else: 
+                if self.remove_msg_error.visibol == 1:
+                    self.remove_msg_error.grid_forget()
+                    self.remove_msg_error.visibol = 0
+                self.remove_msg_hit.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+                self.remove_msg_hit.visibol = 1
+
+                self.collector_controler.remove(collector_remove)
+
         text.delete(0, END)
         text.insert(0, "")
 
