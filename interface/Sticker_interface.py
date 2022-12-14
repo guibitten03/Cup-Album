@@ -239,17 +239,23 @@ class StickerInterface(Frame, Interface):
 
         self.Search.grid()
 
-        Label(self.Search, text='Collector search').grid(row=0,columnspan=5)
-        Label(self.Search,text='Collector ID:').grid(row=2, column=0, pady=5, padx=5)
+        Label(self.Search, text='Sticker search').grid(row=0,columnspan=5)
+        Label(self.Search, text='Sticker ID:').grid(row=2, column=0, pady=5, padx=5)
+        
+        self.search_msg_error = Label(self.Search, text='Please enter a valid Id for Sticker', fg='red')
+        self.search_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+        self.search_msg_error.grid_forget()
+        self.search_msg_error.visibol = 0
+        self.widgets_make_invisible.append(self.search_msg_error)
 
         vcmd = (self.Search.register(self.callback))
-        self.search_id_collector=Entry(self.Search, width=10, validate='all', validatecommand=(vcmd, '%P'))
-        self.search_id_collector.grid(row=2, column=1, sticky=E+W, pady=5, padx=5)
-        self.search_id_collector.focus_force()
+        self.search_id_sticker=Entry(self.Search, width=10, validate='all', validatecommand=(vcmd, '%P'))
+        self.search_id_sticker.grid(row=2, column=1, sticky=E+W, pady=5, padx=5)
+        self.search_id_sticker.focus_force()
 
-        self.confirm_remove = Button(self.Search, text="search", fg="red")
-        self.confirm_remove.bind("<Button-1>", lambda event: self.search_event(event, self.search_id_collector))
-        self.confirm_remove.grid(row=4,column=0, sticky=W,pady=5,padx=5)
+        self.confirm_search = Button(self.Search, text="search", fg="red")
+        self.confirm_search.bind("<Button-1>", lambda event: self.search_event(event, self.search_id_sticker))
+        self.confirm_search.grid(row=4,column=0, sticky=W,pady=5,padx=5)
 
         self.exit_search = Button(self.Search, text="Exit", fg="red")
         self.exit_search.bind("<Button-1>", lambda event, future_frame=self.Home: 
@@ -342,6 +348,8 @@ class StickerInterface(Frame, Interface):
                 self.modifyS_msg_error.visibol = 0
             self.modifyS_msg_hit.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
             self.modifyS_msg_hit.visibol = 1
+        
+    def show_sticker_search():
         
         
     def modify_event(self, event, text):
