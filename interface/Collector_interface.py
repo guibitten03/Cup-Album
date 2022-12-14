@@ -1,5 +1,4 @@
 from interface import *
-#from Class_interface import Interface
 from controle import *
 from tkinter import *
 from models import *

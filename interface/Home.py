@@ -1,9 +1,7 @@
 from interface import *
-# from Class_interface import Interface
-# from Collector_interface import CollectorInterface
-# from Trade_interface import TradeInterface
 from controle import *
 from tkinter import *
+from models import *
 
 class HomeInterface(Frame):
     def __init__(self, parent):
@@ -14,9 +12,9 @@ class HomeInterface(Frame):
 
         self.parent.title('Cup Album')
         
-        self.Sticker = CollectorInterface(parent, 'Sticker', self)
+        self.Sticker = StickerInterface(parent, 'Sticker', self)
         self.Collector = CollectorInterface(parent, 'Collector', self)
-        self.Album = CollectorInterface(parent, 'Album', self)
+        self.Album = AlbumInterface(parent, 'Album', self)
         self.Trade = TradeInterface(parent, 'Trade', self)
         
         self.home()
