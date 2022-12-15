@@ -4,7 +4,7 @@ from tkinter import *
 from models import *
 
 class AlbumInterface(Frame, Interface):
-    def __init__(self, parent, nome, home_interface):
+    def __init__(self, parent, nome,cControle, sControle, aControle, home_interface):
         super().__init__(parent)
 
         self.parent = parent
@@ -16,9 +16,9 @@ class AlbumInterface(Frame, Interface):
         self.Modify_aux = Frame(self.parent)
         self.Paste_Sticker = Frame(self.parent)
         self.Remove_Sticker = Frame(self.parent)
-        self.album_controler = AlbumControle()
-        self.collector_controler = CollectorControle()
-        self.sticker_controler = StickerControle()
+        self.album_controler = aControle
+        self.collector_controler = cControle
+        self.sticker_controler = sControle
         self.widgets_make_invisible = []
         self.widgets_make_visibol = []
         

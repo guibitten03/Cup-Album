@@ -4,7 +4,7 @@ from tkinter import *
 from models import *
 
 class TradeInterface(Frame, Interface):
-    def __init__(self, parent, nome, home_interface):
+    def __init__(self, parent, nome, cControle, sControle, tControle, home_interface):
         super().__init__(parent)
 
         self.parent = parent
@@ -14,9 +14,9 @@ class TradeInterface(Frame, Interface):
         self.Modify = Frame(self.parent)
         self.Search = Frame(self.parent)
         self.Modify_aux = Frame(self.parent)
-        self.trade_controler = TradeControle()
-        self.collector_controler = CollectorControle()
-        self.sticker_controler = StickerControle()
+        self.trade_controler = tControle
+        self.collector_controler = cControle
+        self.sticker_controler = sControle
         self.widgets_make_invisible = []
         self.widgets_make_visibol = []
         

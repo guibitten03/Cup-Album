@@ -12,14 +12,29 @@ class HomeInterface(Frame):
 
         self.parent.title('Cup Album')
         
-        self.Sticker = StickerInterface(parent, 'Sticker', self)
-        self.Collector = CollectorInterface(parent, 'Collector', self)
-        self.Album = AlbumInterface(parent, 'Album', self)
-        self.Trade = TradeInterface(parent, 'Trade', self)
+        self.cControle = CollectorControle()
+        self.sControle = StickerControle()
+        self.aControle = AlbumControle()
+        self.tControle = TradeControle()
         
+        self.Sticker = StickerInterface(parent, 'Sticker',self.sControle, self)
+        self.Collector = CollectorInterface(parent, 'Collector', self.cControle, self)
+        self.Album = AlbumInterface(parent, 'Album', self.cControle, self.sControle, self.aControle, self)
+        self.Trade = TradeInterface(parent, 'Trade', self.cControle, self.sControle, self.tControle, self)
+
         self.home()
         
     def home(self):
+        
+        #Add mensagem de erro
+        if not self.cControle.load():
+            print("Erro ao carregar o arquivo")
+        if not self.sControle.load():
+            print("Erro ao carregar o arquivo")
+        if not self.aControle.load():
+            print("Erro ao carregar o arquivo")
+        if not self.tControle.load():
+            print("Erro ao carregar o arquivo")
 
         self.Home.grid()
 
@@ -42,9 +57,24 @@ class HomeInterface(Frame):
         self.to_trade.bind("<Button-1>", lambda event, future_frame=self.Trade.Home: self.muda_tela(event, future_frame))
         self.to_trade.grid(row=1,column=3)
 
-        self.exit = Button(self.Home, text="Exit", fg="red", command=self.parent.quit)
+        self.exit = Button(self.Home, text="Exit", fg="red", command=self.fim)
         self.exit.grid(row=1,column=4)
 
+    def fim(self):
+    
+        #Add mensagem de erro
+        if not self.cControle.save():
+            print("Erro ao salvar o arquivo")
+        if not self.sControle.save():
+            print("Erro ao salvar o arquivo")
+        if not self.aControle.save():
+            print("Erro ao salvar o arquivo")
+        if not self.tControle.save():
+            print("Erro ao salvar o arquivo")
+
+        exit()
+    
+    
     def muda_tela(self, event, future_frame):
         self.Home.grid_forget()
         future_frame.grid()

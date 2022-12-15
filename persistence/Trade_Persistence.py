@@ -50,7 +50,7 @@ class TradePersistence(Persistence):
                 for _, t in TradePersistence.trades.items():
                     f.write(
                         "{},{},{},{},{},{}\n" \
-                        .format(t.id, t.date, t.collector1, t.sticker1, t.collector2, t.sticker2)
+                        .format(t.id,t.date,t.colr1.id,t.stk1.id,t.colr2.id,t.stk2.id)
                     )
             return True
         except:
@@ -65,8 +65,9 @@ class TradePersistence(Persistence):
                 for line in f:
                     data = line.split(",")
                     t = Trade(
-                        int(data[2]), int(data[3]), int(data[4]),
-                        int(data[5]), data[1], id = int(data[0])
+                        CollectorPersistence.collectors[int(data[2])], StickerPersistence.stickers[int(data[3])], 
+                        CollectorPersistence.collectors[int(data[4])], StickerPersistence.stickers[int(data[5])],
+                        data[1], id = int(data[0])
                     )
                     self.insert(t)
             return True

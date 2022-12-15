@@ -4,7 +4,7 @@ from tkinter import *
 from models import *
 
 class CollectorInterface(Frame, Interface):
-    def __init__(self, parent, nome, home_interface):
+    def __init__(self, parent, nome, controle, home_interface):
         super().__init__(parent)
 
         self.parent = parent
@@ -14,7 +14,7 @@ class CollectorInterface(Frame, Interface):
         self.Modify = Frame(self.parent)
         self.Search = Frame(self.parent)
         self.Modify_aux = Frame(self.parent)
-        self.collector_controler = CollectorControle()
+        self.collector_controler = controle
         self.widgets_make_invisible = []
         self.widgets_make_visibol = []
         
