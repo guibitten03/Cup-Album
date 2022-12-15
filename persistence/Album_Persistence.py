@@ -2,6 +2,7 @@ from models import *
 from persistence import *
 from utilities import check_type
 
+
 class AlbumPersistence(Persistence):
     albuns: dict[int, Album] = dict()
 
@@ -46,12 +47,12 @@ class AlbumPersistence(Persistence):
         for _, album in AlbumPersistence.albuns.items():
             print(album)
 
-    def save(self)  -> bool:
+    def save(self)-> bool:
         try:
             with open("data/album.csv", "w") as f:
                 for _,a in AlbumPersistence.albuns.items():
                     string : str = ""
-                    string += f"{a.id},{a.name},{a.owner}"
+                    string += f"{a.id},{a.name},{a.colr.id},{a.colr.name}"
                     for player in a.album:
                         string += f",{player.id}"
                     string += "\n"
@@ -67,11 +68,15 @@ class AlbumPersistence(Persistence):
             with open("data/album.csv","a+") as f:
                 f.seek(0)
                 for line in f:
-                    data = line.split(",")
-                    a = Album(id = int(data[0]),
-                            name = data[1].strip(),
-                            owner = data[2].strip())
-                    for id_player in data[3:]:
+                    data = line.rstrip('\n').split(",")
+                    
+                    colr = Collector(id = data[2].strip(), name = data[3].strip())
+                    
+                    a = Album(id = int(data[0]), 
+                              name = data[1], 
+                              colr = colr)
+                
+                    for id_player in data[4:]:
                         a.stick(StickerPersistence.stickers[int(id_player.strip())])
                     self.insert(a)
             return True
