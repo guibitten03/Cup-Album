@@ -111,8 +111,8 @@ class AlbumInterface(Frame, Interface):
         
         Label(self.Insert,text='Collector ID:').grid(row=2, column=0, pady=5, padx=5)
 
-        vcmd = (self.Remove.register(self.callback))
-        self.insert_collector_id = Entry(self.Insert, width=10, validatecommand=(vcmd, '%P'))
+        vcmd = (self.Insert.register(self.callback))
+        self.insert_collector_id = Entry(self.Insert, width=10,validate='all', validatecommand=(vcmd, '%P'))
         self.insert_collector_id.grid(row=2, column=1, sticky=E+W, pady=5, padx=5)
         self.insert_collector_id.focus_force()
         
@@ -186,7 +186,7 @@ class AlbumInterface(Frame, Interface):
         self.modify_msg_hit.visibol = 0
         self.widgets_make_invisible.append(self.modify_msg_hit)
 
-        Label(self.Modify,text='album ID:').grid(row=2, column=0, pady=5, padx=5)
+        Label(self.Modify,text='Album ID:').grid(row=2, column=0, pady=5, padx=5)
 
         vcmd = (self.Modify.register(self.callback))
         self.modify_id_album=Entry(self.Modify, width=10, validate='all', validatecommand=(vcmd, '%P'))
@@ -280,13 +280,15 @@ class AlbumInterface(Frame, Interface):
         
         Label(self.Paste_Sticker,text='Album ID:').grid(row=2, column=0, pady=5, padx=5)
         
-        self.paste_album_id = Entry(self.Paste_Sticker, width=10)
+        vcmd = (self.Paste_Sticker.register(self.callback))
+        self.paste_album_id = Entry(self.Paste_Sticker, width=10, validate='all', validatecommand=(vcmd, '%P'))
         self.paste_album_id.grid(row=2, column=1, sticky=E+W, pady=5, padx=5)
         self.paste_album_id.focus_force()
         
         Label(self.Paste_Sticker,text='Sticker ID:').grid(row=4, column=0, pady=5, padx=5)
         
-        self.paste_sticker_id = Entry(self.Paste_Sticker, width=10)
+        vcmd = (self.Paste_Sticker.register(self.callback))
+        self.paste_sticker_id = Entry(self.Paste_Sticker, width=10, validate='all',validatecommand=(vcmd, '%P'))
         self.paste_sticker_id.grid(row=4, column=1, sticky=E+W, pady=5, padx=5)
         self.paste_sticker_id.focus_force()
         
@@ -322,13 +324,15 @@ class AlbumInterface(Frame, Interface):
         
         Label(self.Remove_Sticker,text='Album ID:').grid(row=2, column=0, pady=5, padx=5)
         
-        self.remove_album_id = Entry(self.Remove_Sticker, width=10)
+        vcmd = (self.Remove_Sticker.register(self.callback))
+        self.remove_album_id = Entry(self.Remove_Sticker, width=10, validate='all',validatecommand=(vcmd, '%P'))
         self.remove_album_id.grid(row=2, column=1, sticky=E+W, pady=5, padx=5)
         self.remove_album_id.focus_force()
         
         Label(self.Remove_Sticker,text='Sticker ID:').grid(row=4, column=0, pady=5, padx=5)
         
-        self.remove_sticker_id = Entry(self.Remove_Sticker, width=10)
+        vcmd = (self.Remove_Sticker.register(self.callback))
+        self.remove_sticker_id = Entry(self.Remove_Sticker, width=10, validate='all',validatecommand=(vcmd, '%P'))
         self.remove_sticker_id.grid(row=4, column=1, sticky=E+W, pady=5, padx=5)
         self.remove_sticker_id.focus_force()
         
@@ -637,5 +641,37 @@ class AlbumInterface(Frame, Interface):
         sticker.insert(0, "")
         
         
-    def remove_sticker_event(a,b,c):
-        pass
+    def remove_sticker_event(self, event, album, sticker):
+        if (album.get() != "") & (sticker.get() != ""):
+            if (self.album_controler.search_by_id(int(album.get())) != None) & (self.sticker_controler.search_by_id(int(sticker.get())) != None):
+                current_sticker = self.sticker_controler.search_by_id(int(sticker.get()))
+                current_album = self.album_controler.search_by_id(int(album.get()))
+                
+                current_album.remove_sticker(current_sticker)
+                
+                if self.remove_msg_error.visibol == 1:
+                    self.remove_msg_error.grid_forget()
+                    self.remove_msg_error.visibol = 0
+                self.remove_msg_hit.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+                self.remove_msg_hit.visibol = 1
+                
+                
+            else:
+                if self.remove_msg_hit.visibol == 1:
+                    self.remove_msg_hit.grid_forget()
+                    self.remove_msg_hit.visibol = 0
+                self.remove_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+                self.remove_msg_error.visibol = 1
+            
+        else:
+            if self.remove_msg_hit.visibol == 1:
+                self.remove_msg_hit.grid_forget()
+                self.remove_msg_hit.visibol = 0
+            self.remove_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
+            self.remove_msg_error.visibol = 1
+            
+        album.delete(0, END)
+        album.insert(0, "")
+            
+        sticker.delete(0, END)
+        sticker.insert(0, "")
