@@ -1,5 +1,4 @@
 import os
-# from interface.command_line import CLI
 from tkinter import *
 from persistence import *
 from controle import *

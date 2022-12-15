@@ -183,12 +183,6 @@ class CollectorInterface(Frame, Interface):
         self.search_msg_error.visibol = 0
         self.widgets_make_invisible.append(self.search_msg_error)
 
-        # self.search_msg_error_str = Label(self.Search, text='Collector successfully modified')
-        # self.search_msg_error_str.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
-        # self.search_msg_error_str.grid_forget()
-        # self.search_msg_error_str.visibol = 0
-        # self.widgets_make_invisible.append(self.search_msg_error_str)
-
         self.search_msg_id = Label(self.Search,text='Collector ID:')
         self.search_msg_id.grid(row=2, column=0, pady=5, padx=5)
         self.search_msg_id.grid_forget()
@@ -201,7 +195,7 @@ class CollectorInterface(Frame, Interface):
         self.search_id_collector.grid_forget()
         self.search_id_collector.visibol = 0
 
-        self.search_msg_name = Label(self.Search,text='Collector ID:')
+        self.search_msg_name = Label(self.Search,text='Collector Name:')
         self.search_msg_name.grid(row=2, column=0, pady=5, padx=5)
         self.search_msg_name.grid_forget()
         self.search_msg_name.visibol = 0
@@ -338,6 +332,7 @@ class CollectorInterface(Frame, Interface):
 
         modify_collector = self.collector_controler.search_by_id(int(self.modify_id_collector.get()))
         modify_collector.set_name(text.get())
+        self.collector_controler.modify(modify_collector)
 
         text.delete(0, END)
         text.insert(0, "")
