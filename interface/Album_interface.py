@@ -4,8 +4,9 @@ from tkinter import *
 from models import *
 
 class AlbumInterface(Frame, Interface):
-    def __init__(self, parent, nome,cControle, sControle, aControle, home_interface):
-        super().__init__(parent)
+    def __init__(self, parent, nome, controle, home_interface):
+        Frame.__init__(self,parent)
+        Interface.__init__(self,controle, home_interface)
 
         self.parent = parent
         self.Home = Frame(self.parent)
@@ -16,9 +17,6 @@ class AlbumInterface(Frame, Interface):
         self.Modify_aux = Frame(self.parent)
         self.Paste_Sticker = Frame(self.parent)
         self.Remove_Sticker = Frame(self.parent)
-        self.album_controler = aControle
-        self.collector_controler = cControle
-        self.sticker_controler = sControle
         self.widgets_make_invisible = []
         self.widgets_make_visibol = []
         
@@ -366,7 +364,7 @@ class AlbumInterface(Frame, Interface):
 
     def insert_event(self, event, name, id):
         
-        if self.collector_controler.search_by_id(int(id.get())) == None:
+        if CollectorControle().search_by_id(int(id.get())) == None:
             if self.insert_msg_hit.visibol == 1:
                 self.insert_msg_hit.grid_forget()
                 self.insert_msg_hit.visibol = 0
@@ -375,8 +373,8 @@ class AlbumInterface(Frame, Interface):
             
         else:
             if (name.get()!= "") & (id.get() != ""):
-                collector = self.collector_controler.search_by_id(int(id.get()))
-                self.album_controler.insert(Album(name.get(), collector))
+                collector = CollectorControle().search_by_id(int(id.get()))
+                self.controle.insert(Album(name.get(), collector))
                 
                 if self.insert_msg_error.visibol == 1:
                     self.insert_msg_error.grid_forget()
@@ -407,7 +405,7 @@ class AlbumInterface(Frame, Interface):
             self.remove_msg_error.visibol = 1
         else:
             
-            album_remove = self.album_controler.search_by_id(int(text.get()))
+            album_remove = self.controle.search_by_id(int(text.get()))
 
             if album_remove == None:
                 if self.remove_msg_hit.visibol == 1:
@@ -422,7 +420,7 @@ class AlbumInterface(Frame, Interface):
                 self.remove_msg_hit.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
                 self.remove_msg_hit.visibol = 1
 
-                self.album_controler.remove(album_remove)
+                self.controle.remove(album_remove)
 
         text.delete(0, END)
         text.insert(0, "")
@@ -439,7 +437,7 @@ class AlbumInterface(Frame, Interface):
             text.insert(0, "")
         else:
 
-            if self.album_controler.search_by_id(int(text.get())) == None:
+            if self.controle.search_by_id(int(text.get())) == None:
                 if self.modify_msg_hit.visibol == 1:
                     self.modify_msg_hit.grid_forget()
                     self.modify_msg_hit.visibol = 0
@@ -470,7 +468,7 @@ class AlbumInterface(Frame, Interface):
 
     def __modify_event_aux__(self, event, name):
 
-        modify_album = self.album_controler.search_by_id(int(self.modify_id_album.get()))
+        modify_album = self.controle.search_by_id(int(self.modify_id_album.get()))
         modify_album.set_name(name.get())
 
         name.delete(0, END)
@@ -495,7 +493,7 @@ class AlbumInterface(Frame, Interface):
                 self.search_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
                 self.search_msg_error.visibol = 1
             else:
-                album_search_name_ = self.album_controler.search_by_str(self.search_name_album.get())
+                album_search_name_ = self.controle.search_by_str(self.search_name_album.get())
 
                 if album_search_name_ == None:
                     self.search_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
@@ -515,7 +513,7 @@ class AlbumInterface(Frame, Interface):
                 self.search_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
                 self.search_msg_error.visibol = 1
             else:
-                album_search_id_ = self.album_controler.search_by_id(int(self.search_id_album.get()))
+                album_search_id_ = self.controle.search_by_id(int(self.search_id_album.get()))
 
                 if album_search_id_ == None:
                     self.search_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
@@ -609,9 +607,9 @@ class AlbumInterface(Frame, Interface):
 
     def paste_event(self, event, album, sticker):
         if (album.get() != "") & (sticker.get() != ""):
-            if (self.album_controler.search_by_id(int(album.get())) != None) & (self.sticker_controler.search_by_id(int(sticker.get())) != None):
-                current_album = self.album_controler.search_by_id(int(album.get()))
-                current_album.album.append(self.sticker_controler.search_by_id(int(sticker.get())))
+            if (self.controle.search_by_id(int(album.get())) != None) & (StickerControle().search_by_id(int(sticker.get())) != None):
+                current_album = self.controle.search_by_id(int(album.get()))
+                current_album.album.append(StickerControle().search_by_id(int(sticker.get())))
                 
                 if self.paste_msg_error.visibol == 1:
                     self.paste_msg_error.grid_forget()
@@ -643,9 +641,9 @@ class AlbumInterface(Frame, Interface):
         
     def remove_sticker_event(self, event, album, sticker):
         if (album.get() != "") & (sticker.get() != ""):
-            if (self.album_controler.search_by_id(int(album.get())) != None) & (self.sticker_controler.search_by_id(int(sticker.get())) != None):
-                current_sticker = self.sticker_controler.search_by_id(int(sticker.get()))
-                current_album = self.album_controler.search_by_id(int(album.get()))
+            if (self.controle.search_by_id(int(album.get())) != None) & (StickerControle().search_by_id(int(sticker.get())) != None):
+                current_sticker = StickerControle().search_by_id(int(sticker.get()))
+                current_album = self.controle.search_by_id(int(album.get()))
                 
                 current_album.remove_sticker(current_sticker)
                 

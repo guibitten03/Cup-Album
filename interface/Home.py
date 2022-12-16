@@ -19,8 +19,8 @@ class HomeInterface(Frame):
         
         self.Sticker = StickerInterface(parent, 'Sticker',self.sControle, self)
         self.Collector = CollectorInterface(parent, 'Collector', self.cControle, self)
-        self.Album = AlbumInterface(parent, 'Album', self.cControle, self.sControle, self.aControle, self)
-        self.Trade = TradeInterface(parent, 'Trade', self.cControle, self.sControle, self.tControle, self)
+        self.Album = AlbumInterface(parent, 'Album', self.aControle, self)
+        self.Trade = TradeInterface(parent, 'Trade', self.tControle, self)
 
         self.home()
         
@@ -32,7 +32,7 @@ class HomeInterface(Frame):
         if not self.sControle.load():
             print("Erro ao carregar o arquivo")
         if not self.aControle.load():
-            print("Erro ao carregar o arquivo")
+            print("Erro ao carregar o arquivo a")
         if not self.tControle.load():
             print("Erro ao carregar o arquivo")
 

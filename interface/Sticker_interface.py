@@ -5,7 +5,8 @@ from models import *
 
 class StickerInterface(Frame, Interface):
     def __init__(self, parent, nome, controle, home_interface):
-        super().__init__(parent)
+        Frame.__init__(self,parent)
+        Interface.__init__(self,controle, home_interface)
 
         self.parent = parent
         self.Home = Frame(self.parent)
@@ -14,11 +15,9 @@ class StickerInterface(Frame, Interface):
         self.Modify = Frame(self.parent)
         self.Search = Frame(self.parent)
         self.Modify_aux = Frame(self.parent)
-        self.sticker_controler = controle
         self.widgets_make_invisible = []
         self.widgets_make_visibol = []
         
-        self.home_interface = home_interface
         self.nome = nome
               
         self.home()
@@ -263,7 +262,7 @@ class StickerInterface(Frame, Interface):
 
     def insert_event(self, event, name, team, position):
         if (name.get()!= "") & (team.get() != "") & (position.get() != ""):
-            self.sticker_controler.insert(Sticker(name.get(), team.get(), position.get()))
+            self.controle.insert(Sticker(name.get(), team.get(), position.get()))
             if self.insert_msg_error.visibol == 1:
                 self.insert_msg_error.grid_forget()
                 self.insert_msg_error.visibol = 0
@@ -293,7 +292,7 @@ class StickerInterface(Frame, Interface):
             self.remove_msg_error.visibol = 1
         else:
             
-            sticker_remove = self.sticker_controler.search_by_id(int(text.get()))
+            sticker_remove = self.controle.search_by_id(int(text.get()))
 
             if sticker_remove == None:
                 if self.remove_msg_hit.visibol == 1:
@@ -308,7 +307,7 @@ class StickerInterface(Frame, Interface):
                 self.remove_msg_hit.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
                 self.remove_msg_hit.visibol = 1
 
-                self.sticker_controler.remove(sticker_remove)
+                self.controle.remove(sticker_remove)
 
         text.delete(0, END)
         text.insert(0, "")
@@ -325,7 +324,7 @@ class StickerInterface(Frame, Interface):
             text.insert(0, "")
         else:
 
-            if self.sticker_controler.search_by_id(int(text.get())) == None:
+            if self.controle.search_by_id(int(text.get())) == None:
                 if self.modify_msg_hit.visibol == 1:
                     self.modify_msg_hit.grid_forget()
                     self.modify_msg_hit.visibol = 0
@@ -368,7 +367,7 @@ class StickerInterface(Frame, Interface):
 
     def __modify_event_aux__(self, event, name, team, position):
 
-        modify_sticker = self.sticker_controler.search_by_id(int(self.modify_id_sticker.get()))
+        modify_sticker = self.controle.search_by_id(int(self.modify_id_sticker.get()))
         modify_sticker.set_name(name.get())
         modify_sticker.set_time(team.get())
         modify_sticker.set_position(position.get())
@@ -401,7 +400,7 @@ class StickerInterface(Frame, Interface):
                 self.search_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
                 self.search_msg_error.visibol = 1
             else:
-                sticker_search_name_ = self.sticker_controler.search_by_str(self.search_name_sticker.get())
+                sticker_search_name_ = self.controle.search_by_str(self.search_name_sticker.get())
 
                 if sticker_search_name_ == None:
                     self.search_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
@@ -421,7 +420,7 @@ class StickerInterface(Frame, Interface):
                 self.search_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
                 self.search_msg_error.visibol = 1
             else:
-                sticker_search_id_ = self.sticker_controler.search_by_id(int(self.search_id_sticker.get()))
+                sticker_search_id_ = self.controle.search_by_id(int(self.search_id_sticker.get()))
 
                 if sticker_search_id_ == None:
                     self.search_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)

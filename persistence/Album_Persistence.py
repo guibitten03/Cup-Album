@@ -62,20 +62,17 @@ class AlbumPersistence(Persistence):
             return False
 
     def load(self)  -> bool:
-
         try:
             AlbumPersistence.albuns.clear()
             with open("data/album.csv","a+") as f:
                 f.seek(0)
                 for line in f:
                     data = line.rstrip('\n').split(",")
-                    
-                    colr = Collector(id = data[2].strip(), name = data[3].strip())
-                    
+                    colr = Collector(id = int(data[2].strip()), name = data[3].strip())
                     a = Album(id = int(data[0]), 
                               name = data[1], 
                               colr = colr)
-                
+                    
                     for id_player in data[4:]:
                         a.stick(StickerPersistence.stickers[int(id_player.strip())])
                     self.insert(a)

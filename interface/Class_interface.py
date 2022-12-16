@@ -2,9 +2,9 @@ from abc import ABC, abstractmethod
 
 class Interface(ABC):
 
-    @abstractmethod
-    def __init__(self) -> None:
-        pass
+    def __init__(self, controle, home_interface) -> None:
+        self.controle = controle
+        self.home_interface = home_interface
 
     @abstractmethod
     def home(self) -> None:

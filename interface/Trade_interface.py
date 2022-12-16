@@ -4,8 +4,9 @@ from tkinter import *
 from models import *
 
 class TradeInterface(Frame, Interface):
-    def __init__(self, parent, nome, cControle, sControle, tControle, home_interface):
-        super().__init__(parent)
+    def __init__(self, parent, nome, controle, home_interface):
+        Frame.__init__(self,parent)
+        Interface.__init__(self,controle, home_interface)
 
         self.parent = parent
         self.Home = Frame(self.parent)
@@ -14,9 +15,6 @@ class TradeInterface(Frame, Interface):
         self.Modify = Frame(self.parent)
         self.Search = Frame(self.parent)
         self.Modify_aux = Frame(self.parent)
-        self.trade_controler = tControle
-        self.collector_controler = cControle
-        self.sticker_controler = sControle
         self.widgets_make_invisible = []
         self.widgets_make_visibol = []
         
@@ -304,9 +302,9 @@ class TradeInterface(Frame, Interface):
                 self.insert_msg_error[index].visibol = 1
             else:
                 if (index == 0) or (index == 2):
-                    ENT[index] = self.collector_controler.search_by_id(int(text[index].get()))
+                    ENT[index] = CollectorControle().search_by_id(int(text[index].get()))
                 else:
-                    ENT[index] = self.sticker_controler.search_by_id(int(text[index].get()))
+                    ENT[index] = StickerControle().search_by_id(int(text[index].get()))
                 
                 if ENT[index] == None:
                     invalid = 1
@@ -314,7 +312,7 @@ class TradeInterface(Frame, Interface):
                     self.insert_msg_error[index].visibol = 1
 
         if invalid == 0:
-            self.trade_controler.insert(Trade(colr1=ENT[0], stk1=ENT[1], colr2=ENT[2], stk2=ENT[3]))
+            self.controle.insert(Trade(colr1=ENT[0], stk1=ENT[1], colr2=ENT[2], stk2=ENT[3]))
             self.insert_msg_hit.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
             self.insert_msg_hit.visibol = 1
 
@@ -330,7 +328,7 @@ class TradeInterface(Frame, Interface):
             self.remove_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
             self.remove_msg_error.visibol = 1
         else:
-            trade_remove = self.trade_controler.search_by_id(int(text.get()))
+            trade_remove = self.controle.search_by_id(int(text.get()))
 
             if trade_remove == None:
                 if self.remove_msg_hit.visibol == 1:
@@ -345,7 +343,7 @@ class TradeInterface(Frame, Interface):
                 self.remove_msg_hit.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
                 self.remove_msg_hit.visibol = 1
 
-                self.trade_controler.remove(trade_remove)
+                self.controle.remove(trade_remove)
 
         text.delete(0, END)
         text.insert(0, "")
@@ -362,7 +360,7 @@ class TradeInterface(Frame, Interface):
             text.insert(0, "")
         else:
 
-            if self.trade_controler.search_by_id(int(text.get())) == None:
+            if self.controle.search_by_id(int(text.get())) == None:
                 if self.modify_msg_hit.visibol == 1:
                     self.modify_msg_hit.grid_forget()
                     self.modify_msg_hit.visibol = 0
@@ -446,7 +444,7 @@ class TradeInterface(Frame, Interface):
 
     def __modify_event_aux__(self, event, text):
 
-        modify_trade = self.trade_controler.search_by_id(int(self.modify_id_trade.get()))
+        modify_trade = self.controle.search_by_id(int(self.modify_id_trade.get()))
 
         self.modify_aux_msg_hit.grid_forget()
         self.modify_aux_msg_hit.visibol = 0
@@ -458,7 +456,7 @@ class TradeInterface(Frame, Interface):
         invalit = 0
         ENT = [None,None,None,None, modify_trade.get_date()]
         if text[0].get() != "":
-            ENT[0] = self.collector_controler.search_by_id(int(text[0].get()))
+            ENT[0] = CollectorControle().search_by_id(int(text[0].get()))
 
             if ENT[0] == None:
                 self.__modify_aux__text[0].grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
@@ -468,7 +466,7 @@ class TradeInterface(Frame, Interface):
             ENT[0] = modify_trade.get_colr1()
 
         if text[1].get() != "":
-            ENT[1] = self.collector_controler.search_by_id(int(text[1].get()))
+            ENT[1] = StickerControle().search_by_id(int(text[1].get()))
 
             if ENT[1] == None:
                 self.__modify_aux__text[1].grid(row=3,columnspan=5, sticky=E+W, padx=5, pady=5)
@@ -478,7 +476,7 @@ class TradeInterface(Frame, Interface):
             ENT[1] = modify_trade.get_stk1()
 
         if text[2].get() != "":
-            ENT[2] = self.collector_controler.search_by_id(int(text[2].get()))
+            ENT[2] = CollectorControle().search_by_id(int(text[2].get()))
 
             if ENT[2] == None:
                 self.__modify_aux__text[2].grid(row=5,columnspan=5, sticky=E+W, padx=5, pady=5)
@@ -488,7 +486,7 @@ class TradeInterface(Frame, Interface):
             ENT[2] = modify_trade.get_colr2()
 
         if text[3].get() != "":
-            ENT[3] = self.collector_controler.search_by_id(int(text[3].get()))
+            ENT[3] = StickerControle().search_by_id(int(text[3].get()))
 
             if ENT[3] == None:
                 self.__modify_aux__text[3].grid(row=7,columnspan=5, sticky=E+W, padx=5, pady=5)
@@ -503,7 +501,7 @@ class TradeInterface(Frame, Interface):
             modify_trade.set_colr2(ENT[2])
             modify_trade.set_stk2(ENT[3])
 
-            self.trade_controler.modify(modify_trade)
+            self.controle.modify(modify_trade)
 
             self.modify_msg_error.grid_forget()
             self.modify_msg_error.visibol = 0
@@ -542,7 +540,7 @@ class TradeInterface(Frame, Interface):
                 self.search_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
                 self.search_msg_error.visibol = 1
             else:
-                Trade_search_name_ = self.trade_controler.search_by_str(self.search_name_trade.get())
+                Trade_search_name_ = self.controle.search_by_str(self.search_name_trade.get())
 
                 if Trade_search_name_ == None:
                     self.search_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
@@ -562,7 +560,7 @@ class TradeInterface(Frame, Interface):
                 self.search_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
                 self.search_msg_error.visibol = 1
             else:
-                trade_search_id_ = self.trade_controler.search_by_id(int(self.search_id_trade.get()))
+                trade_search_id_ = self.controle.search_by_id(int(self.search_id_trade.get()))
 
                 if trade_search_id_ == None:
                     self.search_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)

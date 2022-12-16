@@ -5,7 +5,8 @@ from models import *
 
 class CollectorInterface(Frame, Interface):
     def __init__(self, parent, nome, controle, home_interface):
-        super().__init__(parent)
+        Frame.__init__(self,parent)
+        Interface.__init__(self,controle, home_interface)
 
         self.parent = parent
         self.Home = Frame(self.parent)
@@ -14,11 +15,9 @@ class CollectorInterface(Frame, Interface):
         self.Modify = Frame(self.parent)
         self.Search = Frame(self.parent)
         self.Modify_aux = Frame(self.parent)
-        self.collector_controler = controle
         self.widgets_make_invisible = []
         self.widgets_make_visibol = []
         
-        self.home_interface = home_interface
         self.nome = nome
 
         self.home()
@@ -246,7 +245,7 @@ class CollectorInterface(Frame, Interface):
 
     def insert_event(self, event, text):
         if text.get()!= "":
-            self.collector_controler.insert(Collector(text.get()))
+            self.controle.insert(Collector(text.get()))
             if self.insert_msg_error.visibol == 1:
                 self.insert_msg_error.grid_forget()
                 self.insert_msg_error.visibol = 0
@@ -269,7 +268,7 @@ class CollectorInterface(Frame, Interface):
             self.remove_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
             self.remove_msg_error.visibol = 1
         else:
-            collector_remove = self.collector_controler.search_by_id(int(text.get()))
+            collector_remove = self.controle.search_by_id(int(text.get()))
 
             if collector_remove == None:
                 if self.remove_msg_hit.visibol == 1:
@@ -284,7 +283,7 @@ class CollectorInterface(Frame, Interface):
                 self.remove_msg_hit.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
                 self.remove_msg_hit.visibol = 1
 
-                self.collector_controler.remove(collector_remove)
+                self.controle.remove(collector_remove)
 
         text.delete(0, END)
         text.insert(0, "")
@@ -301,7 +300,7 @@ class CollectorInterface(Frame, Interface):
             text.insert(0, "")
         else:
 
-            if self.collector_controler.search_by_id(int(text.get())) == None:
+            if self.controle.search_by_id(int(text.get())) == None:
                 if self.modify_msg_hit.visibol == 1:
                     self.modify_msg_hit.grid_forget()
                     self.modify_msg_hit.visibol = 0
@@ -341,7 +340,7 @@ class CollectorInterface(Frame, Interface):
     def __modify_event_aux__(self, event, text):
 
         if text.get() != "":
-            modify_collector = self.collector_controler.search_by_id(int(self.modify_id_collector.get()))
+            modify_collector = self.controle.search_by_id(int(self.modify_id_collector.get()))
             modify_collector.set_name(text.get())
 
         self.modify_msg_aux_hit.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
@@ -372,7 +371,7 @@ class CollectorInterface(Frame, Interface):
                 self.search_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
                 self.search_msg_error.visibol = 1
             else:
-                collector_search_name_ = self.collector_controler.search_by_str(self.search_name_collector.get())
+                collector_search_name_ = self.controle.search_by_str(self.search_name_collector.get())
 
                 if collector_search_name_ == None:
                     self.search_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
@@ -392,7 +391,7 @@ class CollectorInterface(Frame, Interface):
                 self.search_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
                 self.search_msg_error.visibol = 1
             else:
-                collector_search_id_ = self.collector_controler.search_by_id(int(self.search_id_collector.get()))
+                collector_search_id_ = self.controle.search_by_id(int(self.search_id_collector.get()))
 
                 if collector_search_id_ == None:
                     self.search_msg_error.grid(row=1,columnspan=5, sticky=E+W, padx=5, pady=5)
